@@ -31,7 +31,7 @@ Canonical Number Derivation Rules
 
 import fs from 'fs';
 import path from 'path';
-import { toCanonical } from './numbers.js';
+import { toCanonical, toDecimal } from './numbers.js';
 
 function isDerivedFrom(a, b) {
   // First check decimal value comparison
@@ -45,29 +45,40 @@ function isDerivedFrom(a, b) {
 }
 
 function findParents(n) {
-  const parents = [];
+  if (n <= 4) return [];
+  if (n === 5) return [4];
 
-  // Check all smaller numbers for derivation
-  for (let i = 1; i < n; i++) {
-    if (isDerivedFrom(n, i)) {
-      // Check if this is a direct derivation
-      let isParent = true;
+  const canonical = toCanonical(n);
 
-      // Look through all numbers between i and n
-      for (let j = i + 1; j < n; j++) {
-        if (isDerivedFrom(n, j) && isDerivedFrom(j, i)) {
-          isParent = false;
-          break;
-        }
-      }
+  // Helper to find the matching closing parenthesis
+  function findClosingParen(str, start) {
+    let depth = 1;
+    let i = start + 1;
+    while (depth > 0 && i < str.length) {
+      if (str[i] === '(') depth++;
+      if (str[i] === ')') depth--;
+      i++;
+    }
+    return i - 1;
+  }
 
-      if (isParent) {
-        parents.push(i);
-      }
+  // Parse the canonical form to find parents
+  if (canonical[0] === '(') {
+    const closingIndex = findClosingParen(canonical, 0);
+
+    if (closingIndex === canonical.length - 1) {
+      // Form (A): parents are A and 5
+      const inner = canonical.slice(1, closingIndex);
+      return [toDecimal(inner), 5];
+    } else {
+      // Form (A)B: parents are A and B
+      const prefix = canonical.slice(0, closingIndex + 1);
+      const suffix = canonical.slice(closingIndex + 1);
+      return [toDecimal(prefix), toDecimal(suffix)];
     }
   }
 
-  return parents.sort((a, b) => a - b);
+  return [];
 }
 
 function findAncestors(n) {
