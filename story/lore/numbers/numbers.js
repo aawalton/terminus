@@ -113,46 +113,42 @@ function toDecimal(repr) {
 
 // Convert from decimal to canonical representation
 function toCanonical(n) {
-  // Handle base cases 1-4
+  // Keep existing base cases
   if (n <= 4) return n.toString();
 
-  // Find the largest Fibonacci number <= n
+  // First, try pure Fibonacci representation (highest priority)
   let maxFibIndex = 1;
   while (getFibonacci(maxFibIndex + 1) <= n) {
     maxFibIndex++;
   }
 
   const fibValue = getFibonacci(maxFibIndex);
-  const diff = n - fibValue;
-
-  // If this is exactly a Fibonacci number with index > 4
-  if (diff === 0 && maxFibIndex > 4) {
-    // Find the representation of the previous Fibonacci number
+  if (fibValue === n && maxFibIndex > 4) {
     const prevFibIndex = maxFibIndex - 1;
     return `(${toCanonical(prevFibIndex)})`;
   }
 
-  // For numbers like 13 = ((4)1), we need to check if it can be represented
-  // as a nested expression plus a small number
-  for (let i = 4; i >= 1; i--) {
-    const base = `((${i}))`;  // Try double nesting
-    const baseValue = toDecimal(base);
+  // Try all possible larger prefixes first (implementing rule 3b)
+  for (let i = maxFibIndex; i >= 4; i--) {
+    const currentFib = getFibonacci(i);
+    if (currentFib > n) continue;
 
-    // If adding a small number (1-4) to the base gives us our target
-    if (baseValue < n && n <= baseValue + 4) {
-      const remainder = n - baseValue;
-      if (remainder > 0) {
-        return `((${i})${remainder})`;
-      }
-      return base;
+    // Try combinations with the current Fibonacci number
+    const remaining = n - currentFib;
+    if (remaining === 0) {
+      return toCanonical(currentFib);
     }
-  }
 
-  // For numbers that are sum of a Fibonacci number and a small number (1-4)
-  if (diff >= 1 && diff <= 4) {
-    // Find representation of the Fibonacci part
-    const fibRepr = toCanonical(fibValue);
-    return `${fibRepr}${diff}`;
+    // Try adding small numbers (1-4)
+    if (remaining <= 4) {
+      return `${toCanonical(currentFib)}${remaining}`;
+    }
+
+    // Try nested representation
+    const nestedRepr = toCanonical(remaining);
+    if (nestedRepr) {
+      return `${toCanonical(currentFib)}${nestedRepr}`;
+    }
   }
 
   return null;
