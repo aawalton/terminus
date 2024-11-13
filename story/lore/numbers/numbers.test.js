@@ -72,7 +72,7 @@ describe('getFibonacci', () => {
   });
 });
 
-describe.skip('toDecimal', () => {
+describe('toDecimal', () => {
   test('converts basic digits 1-4', () => {
     expect(toDecimal('1')).toBe(1);
     expect(toDecimal('2')).toBe(2);
