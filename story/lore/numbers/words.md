@@ -49,8 +49,8 @@ The numerical language is built on five primitive concepts (1-5). All other numb
 | 29 | Abundance (growth + matter) |
 | 30 | Stability (growth + earth) |
 | 31 | Freedom (growth + air) |
-| 32 | Passion (growth + fire) |
-| 33 | Adaptation (growth + water) |
+| 32 | Radiance (abundance + light) |
+| 33 | Depth (abundance + dark) |
 
 ## Ascension & Transcendence (34-54)
 | Number | Meaning |
@@ -65,16 +65,16 @@ The numerical language is built on five primitive concepts (1-5). All other numb
 | 41 | Rebirth (ascension + life) |
 | 42 | Material transcendence (ascension + matter) |
 | 43 | Earthly ascension (ascension + earth) |
-| 44 | Spiritual freedom (ascension + air) |
-| 45 | Divine power (ascension + fire) |
-| 46 | Divine wisdom (ascension + water) |
+| 44 | Liberation (material transcendence + others) |
+| 45 | Glory (material transcendence + light) |
+| 46 | Mystery (material transcendence + dark) |
 | 47 | Transcendent suffering (ascension + pain) |
 | 48 | Inner divinity (ascension + personal suffering) |
-| 49 | Divine judgment (ascension + cruelty) |
-| 50 | Divine purification (ascension + purifying pain) |
+| 49 | Justice (transcendent suffering + others) |
+| 50 | Redemption (transcendent suffering + light) |
 | 51 | Fall from grace (ascension + corrupting pain) |
 | 52 | Divine transformation (ascension + transformative suffering) |
-| 53 | Final death (ascension + fatal pain) |
+| 53 | Annihilation (transcendent suffering + death) |
 | 54 | Eternal life (ascension + vital pain) |
 
 ## Material Transformation (55-75)
@@ -98,16 +98,16 @@ The numerical language is built on five primitive concepts (1-5). All other numb
 | 70 | Violence (physical transformation + cruelty) |
 | 71 | Mending, repair (physical transformation + purifying pain) |
 | 72 | Disease, plague (physical transformation + corrupting pain) |
-| 73 | Metamorphosis, physical refinement (physical transformation + transformative suffering) |
-| 74 | Decomposition (physical transformation + fatal pain) |
-| 75 | Physical rebirth (physical transformation + vital pain) |
+| 73 | Transmutation (physical transformation + change) |
+| 74 | Dissolution (physical pain + death) |
+| 75 | Renewal (physical pain + life) |
 
 ## Physical Development (76-88)
 | Number | Meaning |
 |--------|---------|
 | 76 | Physical development (physical transformation + growth) |
 | 77 | Training, exercise (physical development + self) |
-| 78 | Teaching, instruction (physical development + others) |
+| 78 | Discipline (physical development + others) |
 | 79 | Perfection, excellence (physical development + light) |
 | 80 | Strain, stress (physical development + darkness) |
 | 81 | Practice, repetition (physical development + change) |
@@ -122,15 +122,15 @@ The numerical language is built on five primitive concepts (1-5). All other numb
 ## Spiritual Development (89-100)
 | Number | Meaning |
 |--------|---------|
-| 89 | Spiritual transformation (air + change) |
+| 89 | Physical suffering (physical development + pain) |
 | 90 | Spirit, soul (spiritual transformation + self) |
 | 91 | Community, congregation (spiritual transformation + others) |
-| 92 | Inspiration, revelation (spiritual transformation + light) |
+| 92 | Illumination (physical suffering + light) |
 | 93 | Doubt, uncertainty (spiritual transformation + darkness) |
 | 94 | Meditation, contemplation (spiritual transformation + change) |
 | 95 | Sacrifice, letting go (spiritual transformation + death) |
 | 96 | Faith, belief (spiritual transformation + life) |
 | 97 | Manifestation (spiritual transformation + matter) |
 | 98 | Grounding, centering (spiritual transformation + earth) |
-| 99 | Liberation, transcendence (spiritual transformation + air) |
-| 100 | Zeal, spiritual fervor (spiritual transformation + fire) |
+| 99 | Transcendence (physical suffering + air) |
+| 100 | Awakening (physical suffering + light) |
