@@ -154,7 +154,7 @@ function generateNumbersData() {
     numbers.push({
       number: n,
       canonical: toCanonical(n),
-      parents: findParents(n)
+      parents: findParentSets(n)
     });
   }
 
