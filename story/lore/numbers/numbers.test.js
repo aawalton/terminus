@@ -48,7 +48,7 @@ describe('getFibonacciIndex', () => {
   });
 });
 
-describe.skip('getFibonacci', () => {
+describe('getFibonacci', () => {
   test('returns correct Fibonacci numbers for base cases', () => {
     expect(getFibonacci(0)).toBe(0);
     expect(getFibonacci(1)).toBe(1);
