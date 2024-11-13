@@ -1,4 +1,5 @@
-import { isDerivedFrom, findParents, findAncestors } from './derivations';
+import { isDerivedFrom, findParents, findAncestors, generateNumbersData, findParentSets } from './derivations';
+import { toCanonical, toDecimal } from './numbers';
 
 describe('isDerivedFrom', () => {
   // Valid derivations from documentation (arguments swapped)
@@ -104,4 +105,63 @@ describe('Parent and Ancestor relationships', () => {
     expect(ancestors).toEqual([4, 5]); // 8 ((4)) can be derived from 4 and 5
   });
 
+});
+
+describe('Longest Prefix Rule', () => {
+  test('77 uses longest valid prefix as first parent', () => {
+    // 77 = ((((4))1)((4)2))1 should use 76 as first parent, not 55
+    const parents = findParents(77);
+    expect(parents).toEqual([76, 1]);
+  });
+
+  test('78 uses longest valid prefix as first parent', () => {
+    // 78 = ((((4))1)((4)2))2 should use 76 as first parent, not 55
+    const parents = findParents(78);
+    expect(parents).toEqual([76, 2]);
+  });
+
+  test('complex number with multiple possible prefixes', () => {
+    // 95 = (((4))2)(4)1 can be split multiple ways
+    const parentSets = findParentSets(95);
+    expect(parentSets).toContainEqual([94, 1]);  // (((4))2)(4) and 1
+    expect(parentSets).toContainEqual([89, 6]);  // (((4))2) and (4)1
+  });
+
+  test('verifies semantic hierarchy through parent chain', () => {
+    // Test that 77's meaning comes from modifying 76 with 1
+    const parents77 = findParents(77);
+    expect(parents77).toEqual([76, 1]);
+
+    // Test that 76's meaning comes from modifying 55 with 21
+    const parents76 = findParents(76);
+    expect(parents76).toEqual([55, 21]);
+
+    // This creates the chain: 77 (training) <- 76 (physical development) <- 55 (physical transformation)
+    // Rather than: 77 <- 55 (physical transformation) <- 22 (self-improvement)
+  });
+});
+
+describe('Multiple Parent Sets', () => {
+  test('95 has multiple valid parent sets', () => {
+    const parentSets = findParentSets(95);
+    expect(parentSets).toContainEqual([94, 1]);  // (((4))2)(4) and 1
+    expect(parentSets).toContainEqual([89, 6]);  // (((4))2) and (4)1
+  });
+
+  test('77 has multiple valid parent sets', () => {
+    const parentSets = findParentSets(77);
+    expect(parentSets).toContainEqual([76, 1]);  // ((((4))1)((4)2)) and 1
+    expect(parentSets).toContainEqual([55, 22]); // (((4))1) and ((4)2)1
+  });
+
+  test('simple numbers have one parent set', () => {
+    expect(findParentSets(8)).toEqual([[5, 5]]);  // ((4)) has one interpretation
+    expect(findParentSets(13)).toEqual([[6, 5]]); // ((4)1) has one interpretation
+  });
+
+  test('primitive numbers have expected parent sets', () => {
+    expect(findParentSets(1)).toEqual([]);     // No parents
+    expect(findParentSets(4)).toEqual([]);     // No parents
+    expect(findParentSets(5)).toEqual([[4]]);  // One parent
+  });
 });
