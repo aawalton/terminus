@@ -1,67 +1,123 @@
 import { getFibonacci, toDecimal, toCanonical } from './numbers.js';
+const testCases = [
+  [1, '1'],
+  [2, '2'],
+  [3, '3'],
+  [4, '4'],
+  [5, '(4)'],
+  [6, '(4)1'],
+  [7, '(4)2'],
+  [8, '((4))'],
+  [9, '((4))1'],
+  [10, '((4))2'],
+  [11, '((4))3'],
+  [12, '((4))4'],
+  [13, '((4)1)'],
+  [14, '((4)1)1'],
+  [15, '((4)1)2'],
+  [16, '((4)1)3'],
+  [17, '((4)1)4'],
+  [18, '((4)1)(4)'],
+  [19, '((4)1)(4)1'],
+  [20, '((4)1)(4)2'],
+  [21, '((4)2)'],
+  [22, '((4)2)1'],
+  [23, '((4)2)2'],
+  [24, '((4)2)3'],
+  [25, '((4)2)4'],
+  [26, '((4)2)(4)'],
+  [27, '((4)2)(4)1'],
+  [28, '((4)2)(4)2'],
+  [29, '((4)2)((4))'],
+  [30, '((4)2)((4))1'],
+  [34, '(((4)))'],
+  [35, '(((4)))1'],
+  [36, '(((4)))2'],
+  [37, '(((4)))3'],
+  [38, '(((4)))4'],
+  [39, '(((4)))(4)'],
+  [40, '(((4)))(4)1'],
+  [41, '(((4)))(4)2'],
+  [42, '(((4)))(4)3'],
+  [43, '(((4)))(4)4'],
+  [44, '(((4)))((4))'],
+  [45, '(((4)))((4))1'],
+  [46, '(((4)))((4))2'],
+  [47, '(((4)))((4))3'],
+  [48, '(((4)))((4))4'],
+  [49, '(((4)))((4)1)'],
+  [50, '(((4)))((4)1)1'],
+  [51, '(((4)))((4)1)2'],
+  [52, '(((4)))((4)1)3'],
+  [53, '(((4)))((4)1)4'],
+  [54, '(((4)))((4)1)(4)'],
+  [55, '(((4)))((4)2)'],
+  [56, '(((4)))((4)2)1'],
+  [57, '(((4)))((4)2)2'],
+  [58, '(((4)))((4)2)3'],
+  [59, '(((4)))((4)2)4'],
+  [60, '(((4)))((4)2)(4)'],
+  [61, '(((4)))((4)2)(4)1'],
+  [62, '(((4)))((4)2)(4)2'],
+  [63, '(((4)))((4)2)((4))'],
+  [64, '(((4)))((4)2)((4))1'],
+  [65, '(((4)))((4)2)((4))2'],
+  [66, '(((4)))((4)2)((4))3'],
+  [67, '(((4)))((4)2)((4))4'],
+  [68, '(((4)))(((4)))'],
+  [69, '(((4)))(((4)))1'],
+  [70, '(((4)))(((4)))2'],
+  [71, '(((4)))(((4)))3'],
+  [72, '(((4)))(((4)))4'],
+  [73, '(((4)))(((4)))(4)'],
+  [74, '(((4)))(((4)))(4)1'],
+  [75, '(((4)))(((4)))(4)2'],
+  [76, '(((4)))(((4)))(4)3'],
+  [77, '(((4)))(((4)))(4)4'],
+  [78, '(((4)))(((4)))((4))'],
+  [79, '(((4)))(((4)))((4))1'],
+  [80, '(((4)))(((4)))((4))2'],
+  [81, '(((4)))(((4)))((4))3'],
+  [82, '(((4)))(((4)))((4))4'],
+  [83, '(((4)))(((4)))((4)1)'],
+  [84, '(((4)))(((4)))((4)1)1'],
+  [85, '(((4)))(((4)))((4)1)2'],
+  [86, '(((4)))(((4)))((4)1)3'],
+  [87, '(((4)))(((4)))((4)1)4'],
+  [88, '(((4)))(((4)))((4)1)(4)'],
+  [89, '(((4)))(((4)))((4)1)(4)1'],
+  [90, '(((4)))(((4)))((4)1)(4)2'],
+  [91, '(((4)))(((4)))((4)2)'],
+  [92, '(((4)))(((4)))((4)2)1'],
+  [93, '(((4)))(((4)))((4)2)2'],
+  [94, '(((4)))(((4)))((4)2)3'],
+  [95, '(((4)))(((4)))((4)2)4'],
+  [96, '(((4)))(((4)))((4)2)(4)'],
+  [97, '(((4)))(((4)))((4)2)(4)1'],
+  [98, '(((4)))(((4)))((4)2)(4)2'],
+  [99, '(((4)))(((4)))((4)2)((4))'],
+  [100, '(((4)))(((4)))((4)2)((4))1']
+];
 
 describe('getFibonacci', () => {
-  test('returns correct Fibonacci numbers for small indices', () => {
+  test('returns correct Fibonacci numbers', () => {
     expect(getFibonacci(0)).toBe(0);
     expect(getFibonacci(1)).toBe(1);
     expect(getFibonacci(2)).toBe(2);
     expect(getFibonacci(3)).toBe(3);
     expect(getFibonacci(4)).toBe(5);
     expect(getFibonacci(5)).toBe(8);
-  });
-
-  test('handles larger indices', () => {
     expect(getFibonacci(6)).toBe(13);
     expect(getFibonacci(7)).toBe(21);
   });
 });
 
-describe('toDecimal', () => {
-  test('handles simple numbers', () => {
-    expect(toDecimal('1')).toBe(1);
-    expect(toDecimal('2')).toBe(2);
-    expect(toDecimal('3')).toBe(3);
-    expect(toDecimal('4')).toBe(4);
+describe('toCanonical and toDecimal comprehensive tests', () => {
+  test.each(testCases)('converts decimal %i to canonical %s', (decimal, canonical) => {
+    expect(toCanonical(decimal)).toBe(canonical);
   });
 
-  test('handles parentheses', () => {
-    expect(toDecimal('(1)')).toBe(1);
-    expect(toDecimal('(2)')).toBe(2);
-    expect(toDecimal('(3)')).toBe(3);
-    expect(toDecimal('(4)')).toBe(5);
-  });
-
-  test('handles nested expressions', () => {
-    expect(toDecimal('((1))')).toBe(1);
-    expect(toDecimal('((2))')).toBe(2);
-    expect(toDecimal('((3)1)')).toBe(5);
-  });
-});
-
-describe('toCanonical', () => {
-  test('converts simple numbers', () => {
-    expect(toCanonical(1)).toBe('1');
-    expect(toCanonical(2)).toBe('2');
-    expect(toCanonical(3)).toBe('3');
-    expect(toCanonical(4)).toBe('4');
-  });
-
-  test('converts Fibonacci numbers', () => {
-    expect(toCanonical(5)).toBe('(4)');
-    expect(toCanonical(8)).toBe('((4))');
-    expect(toCanonical(13)).toBe('((4)1)');
-  });
-
-  test('converts complex numbers', () => {
-    expect(toCanonical(6)).toBe('(4)1');
-    expect(toCanonical(7)).toBe('(4)2');
-    expect(toCanonical(9)).toBe('((4))1');
-  });
-
-  test('property: toDecimal(toCanonical(n)) === n', () => {
-    const testValues = [0, 1, 5, 8, 13, 21, 34, 55];
-    for (const n of testValues) {
-      expect(toDecimal(toCanonical(n))).toBe(n);
-    }
+  test.each(testCases)('converts canonical %s to decimal %i', (decimal, canonical) => {
+    expect(toDecimal(canonical)).toBe(decimal);
   });
 }); 
