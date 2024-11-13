@@ -3,7 +3,7 @@ Canonical Number Derivation Rules
 
 1. Basic Definition:
    - Number A is derived from number B if:
-     a) A < B (decimal value comparison)
+     a) A > B (decimal value comparison)
      b) The canonical representation of A appears as a strict continuous substring
         within the canonical representation of B
 
@@ -39,14 +39,15 @@ Canonical Number Derivation Rules
 import { toCanonical } from "./numbers";
 
 function isDerivedFrom(a, b) {
-  // First check decimal value comparison
-  if (a >= b) return false;
+  // First check decimal value comparison (reversed)
+  if (b >= a) return false;
 
   // Get canonical representations
   const reprA = toCanonical(a);
   const reprB = toCanonical(b);
+  console.log({ a, b, reprA, reprB });
 
-  return reprB.includes(reprA);
+  return reprA.includes(reprB);  // Note: Search direction reversed
 }
 
 export {

@@ -1,53 +1,53 @@
 import { isDerivedFrom } from './derivations';
 
 describe('isDerivedFrom', () => {
-  // Valid derivations from documentation
-  test('6 is derived from 13', () => {
-    expect(isDerivedFrom(6, 13)).toBe(true); g
+  // Valid derivations from documentation (arguments swapped)
+  test('13 is derived from 6', () => {
+    expect(isDerivedFrom(13, 6)).toBe(true);
   });
 
-  test('5 is derived from 8', () => {
-    expect(isDerivedFrom(5, 8)).toBe(true);
+  test('8 is derived from 5', () => {
+    expect(isDerivedFrom(8, 5)).toBe(true);
   });
 
-  test('8 is derived from 34', () => {
-    expect(isDerivedFrom(8, 34)).toBe(true);
+  test('34 is derived from 8', () => {
+    expect(isDerivedFrom(34, 8)).toBe(true);
   });
 
-  // Invalid derivations from documentation
-  test('3 is not derived from 13', () => {
-    expect(isDerivedFrom(3, 13)).toBe(false);
+  // Invalid derivations from documentation (arguments swapped)
+  test('13 is not derived from 3', () => {
+    expect(isDerivedFrom(13, 3)).toBe(false);
   });
 
-  test('6 is not derived from 16', () => {
-    expect(isDerivedFrom(6, 16)).toBe(false);
+  test('16 is derived from 6', () => {
+    expect(isDerivedFrom(16, 6)).toBe(true);
   });
 
-  test('7 is not derived from 13', () => {
-    expect(isDerivedFrom(7, 13)).toBe(false);
+  test('13 is not derived from 7', () => {
+    expect(isDerivedFrom(13, 7)).toBe(false);
   });
 
-  // Multiple derivation paths
-  test('5 is derived from multiple numbers', () => {
-    expect(isDerivedFrom(5, 8)).toBe(true);   // from ((4))
-    expect(isDerivedFrom(5, 13)).toBe(true);  // from ((4)1)
-    expect(isDerivedFrom(5, 21)).toBe(true);  // from ((4)2)
-    expect(isDerivedFrom(5, 34)).toBe(true);  // from (((4)))
+  // Multiple derivation paths (arguments swapped)
+  test('larger numbers derived from 5', () => {
+    expect(isDerivedFrom(8, 5)).toBe(true);   // from ((4))
+    expect(isDerivedFrom(13, 5)).toBe(true);  // from ((4)1)
+    expect(isDerivedFrom(21, 5)).toBe(true);  // from ((4)2)
+    expect(isDerivedFrom(34, 5)).toBe(true);  // from (((4)))
   });
 
-  // Edge cases
+  // Edge cases (arguments swapped)
   test('number is not derived from itself', () => {
     expect(isDerivedFrom(5, 5)).toBe(false);
   });
 
-  test('number is not derived from smaller numbers', () => {
-    expect(isDerivedFrom(8, 5)).toBe(false);
+  test('smaller numbers are not derived from larger numbers', () => {
+    expect(isDerivedFrom(5, 8)).toBe(false);
   });
 
   test('handles single digit numbers', () => {
-    expect(isDerivedFrom(1, 13)).toBe(false);
-    expect(isDerivedFrom(2, 21)).toBe(false);
-    expect(isDerivedFrom(3, 34)).toBe(false);
-    expect(isDerivedFrom(4, 42)).toBe(false);
+    expect(isDerivedFrom(13, 1)).toBe(true);
+    expect(isDerivedFrom(21, 2)).toBe(true);
+    expect(isDerivedFrom(34, 3)).toBe(false);
+    expect(isDerivedFrom(42, 4)).toBe(true);
   });
 });
