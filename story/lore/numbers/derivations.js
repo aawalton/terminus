@@ -47,7 +47,6 @@ function isDerivedFrom(a, b) {
   // Get canonical representations
   const reprA = toCanonical(a);
   const reprB = toCanonical(b);
-  console.log({ a, b, reprA, reprB });
 
   return reprA.includes(reprB);  // Note: Search direction reversed
 }
@@ -62,7 +61,7 @@ function generateNumbersData() {
 
     // Check all smaller numbers for derivation
     for (let i = 1; i < n; i++) {
-      if (isDerivedFrom(i, n)) {
+      if (isDerivedFrom(n, i)) {
         derivedFrom.push(i);
       }
     }
@@ -70,7 +69,7 @@ function generateNumbersData() {
     numbers.push({
       number: n,
       canonical,
-      derivedFrom
+      derivedFrom: derivedFrom.reverse()
     });
   }
 
