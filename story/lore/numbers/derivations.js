@@ -98,7 +98,7 @@ function generateNumbersData() {
   const numbers = [];
 
   // Generate data for first 100 numbers
-  for (let n = 1; n <= 100; n++) {
+  for (let n = 1; n <= 1000; n++) {
     numbers.push({
       number: n,
       canonical: toCanonical(n),
