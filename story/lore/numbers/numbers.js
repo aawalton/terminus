@@ -150,31 +150,30 @@ function toCanonical(n) {
     return `(${indexCanonical})`;
   }
 
-  // For non-Fibonacci numbers, try all possible decompositions
-  // starting from the largest possible Fibonacci number
-  let bestRepresentation = '';
-  let bestPrefix = 0;
+  // For non-Fibonacci numbers, we only need to check two cases:
+  // 1. The largest Fibonacci number <= n
+  // 2. The next largest Fibonacci number that's > 4
+  const remainder = n - fib;
+  const largestPrefix = toCanonical(fib) + (remainder > 0 ? toCanonical(remainder) : '');
 
-  // Try each Fibonacci number as a prefix, starting from the largest
-  let currentIndex = fibIndex;
-  while (currentIndex > 0) {
-    const currentFib = getFibonacci(currentIndex);
-    if (currentFib <= n) {
-      const remainder = n - currentFib;
-      const currentRepr = currentFib > 4
-        ? toCanonical(currentFib) + (remainder > 0 ? toCanonical(remainder) : '')
-        : currentFib.toString() + (remainder > 0 ? toCanonical(remainder) : '');
+  // Only check the next largest if it might give a better result
+  if (fibIndex > 4) {
+    const nextFib = getFibonacci(fibIndex - 1);
+    if (nextFib > 4) {
+      const nextRemainder = n - nextFib;
+      const nextPrefix = toCanonical(nextFib) + toCanonical(nextRemainder);
 
-      // If this is our first valid representation or if this prefix is larger
-      if (!bestRepresentation || currentFib > bestPrefix) {
-        bestRepresentation = currentRepr;
-        bestPrefix = currentFib;
+      // Compare the decimal values of the prefixes
+      const largestPrefixValue = getFibonacci(getFibonacciIndex(toDecimal(toCanonical(fib))));
+      const nextPrefixValue = getFibonacci(getFibonacciIndex(toDecimal(toCanonical(nextFib))));
+
+      if (nextPrefixValue > largestPrefixValue) {
+        return nextPrefix;
       }
     }
-    currentIndex--;
   }
 
-  return bestRepresentation;
+  return largestPrefix;
 }
 
 export {
