@@ -36,9 +36,9 @@ Canonical Number Derivation Rules
      * 34 (represented as (((4))))
 */
 
-import { toCanonical } from "./numbers";
 import fs from 'fs';
 import path from 'path';
+import { toCanonical } from './numbers.js';
 
 function isDerivedFrom(a, b) {
   // First check decimal value comparison

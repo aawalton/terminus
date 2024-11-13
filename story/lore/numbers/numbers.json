@@ -1,0 +1,504 @@
+{
+  "numbers": [
+    {
+      "number": 1,
+      "canonical": "1",
+      "derivedFrom": []
+    },
+    {
+      "number": 2,
+      "canonical": "2",
+      "derivedFrom": []
+    },
+    {
+      "number": 3,
+      "canonical": "3",
+      "derivedFrom": []
+    },
+    {
+      "number": 4,
+      "canonical": "4",
+      "derivedFrom": []
+    },
+    {
+      "number": 5,
+      "canonical": "(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 6,
+      "canonical": "(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 7,
+      "canonical": "(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 8,
+      "canonical": "((4))",
+      "derivedFrom": []
+    },
+    {
+      "number": 9,
+      "canonical": "((4))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 10,
+      "canonical": "((4))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 11,
+      "canonical": "((4))3",
+      "derivedFrom": []
+    },
+    {
+      "number": 12,
+      "canonical": "((4))4",
+      "derivedFrom": []
+    },
+    {
+      "number": 13,
+      "canonical": "((4)1)",
+      "derivedFrom": []
+    },
+    {
+      "number": 14,
+      "canonical": "((4)1)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 15,
+      "canonical": "((4)1)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 16,
+      "canonical": "((4)1)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 17,
+      "canonical": "((4)1)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 18,
+      "canonical": "((4)1)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 19,
+      "canonical": "((4)1)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 20,
+      "canonical": "((4)1)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 21,
+      "canonical": "((4)2)",
+      "derivedFrom": []
+    },
+    {
+      "number": 22,
+      "canonical": "((4)2)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 23,
+      "canonical": "((4)2)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 24,
+      "canonical": "((4)2)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 25,
+      "canonical": "((4)2)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 26,
+      "canonical": "((4)2)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 27,
+      "canonical": "((4)2)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 28,
+      "canonical": "((4)2)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 29,
+      "canonical": "((4)2)((4))",
+      "derivedFrom": []
+    },
+    {
+      "number": 30,
+      "canonical": "((4)2)((4))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 31,
+      "canonical": "((4)2)((4))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 32,
+      "canonical": "((4)2)((4))3",
+      "derivedFrom": []
+    },
+    {
+      "number": 33,
+      "canonical": "((4)2)((4))4",
+      "derivedFrom": []
+    },
+    {
+      "number": 34,
+      "canonical": "(((4)))",
+      "derivedFrom": []
+    },
+    {
+      "number": 35,
+      "canonical": "(((4)))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 36,
+      "canonical": "(((4)))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 37,
+      "canonical": "(((4)))3",
+      "derivedFrom": []
+    },
+    {
+      "number": 38,
+      "canonical": "(((4)))4",
+      "derivedFrom": []
+    },
+    {
+      "number": 39,
+      "canonical": "(((4)))(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 40,
+      "canonical": "(((4)))(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 41,
+      "canonical": "(((4)))(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 42,
+      "canonical": "(((4)))((4))",
+      "derivedFrom": []
+    },
+    {
+      "number": 43,
+      "canonical": "(((4)))((4))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 44,
+      "canonical": "(((4)))((4))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 45,
+      "canonical": "(((4)))((4))3",
+      "derivedFrom": []
+    },
+    {
+      "number": 46,
+      "canonical": "(((4)))((4))4",
+      "derivedFrom": []
+    },
+    {
+      "number": 47,
+      "canonical": "(((4)))((4)1)",
+      "derivedFrom": []
+    },
+    {
+      "number": 48,
+      "canonical": "(((4)))((4)1)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 49,
+      "canonical": "(((4)))((4)1)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 50,
+      "canonical": "(((4)))((4)1)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 51,
+      "canonical": "(((4)))((4)1)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 52,
+      "canonical": "(((4)))((4)1)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 53,
+      "canonical": "(((4)))((4)1)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 54,
+      "canonical": "(((4)))((4)1)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 55,
+      "canonical": "(((4))1)",
+      "derivedFrom": []
+    },
+    {
+      "number": 56,
+      "canonical": "(((4))1)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 57,
+      "canonical": "(((4))1)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 58,
+      "canonical": "(((4))1)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 59,
+      "canonical": "(((4))1)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 60,
+      "canonical": "(((4))1)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 61,
+      "canonical": "(((4))1)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 62,
+      "canonical": "(((4))1)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 63,
+      "canonical": "(((4))1)((4))",
+      "derivedFrom": []
+    },
+    {
+      "number": 64,
+      "canonical": "(((4))1)((4))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 65,
+      "canonical": "(((4))1)((4))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 66,
+      "canonical": "(((4))1)((4))3",
+      "derivedFrom": []
+    },
+    {
+      "number": 67,
+      "canonical": "(((4))1)((4))4",
+      "derivedFrom": []
+    },
+    {
+      "number": 68,
+      "canonical": "(((4))1)((4)1)",
+      "derivedFrom": []
+    },
+    {
+      "number": 69,
+      "canonical": "(((4))1)((4)1)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 70,
+      "canonical": "(((4))1)((4)1)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 71,
+      "canonical": "(((4))1)((4)1)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 72,
+      "canonical": "(((4))1)((4)1)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 73,
+      "canonical": "(((4))1)((4)1)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 74,
+      "canonical": "(((4))1)((4)1)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 75,
+      "canonical": "(((4))1)((4)1)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 76,
+      "canonical": "(((4))1)((4)2)",
+      "derivedFrom": []
+    },
+    {
+      "number": 77,
+      "canonical": "(((4))1)((4)2)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 78,
+      "canonical": "(((4))1)((4)2)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 79,
+      "canonical": "(((4))1)((4)2)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 80,
+      "canonical": "(((4))1)((4)2)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 81,
+      "canonical": "(((4))1)((4)2)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 82,
+      "canonical": "(((4))1)((4)2)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 83,
+      "canonical": "(((4))1)((4)2)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 84,
+      "canonical": "(((4))1)((4)2)((4))",
+      "derivedFrom": []
+    },
+    {
+      "number": 85,
+      "canonical": "(((4))1)((4)2)((4))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 86,
+      "canonical": "(((4))1)((4)2)((4))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 87,
+      "canonical": "(((4))1)((4)2)((4))3",
+      "derivedFrom": []
+    },
+    {
+      "number": 88,
+      "canonical": "(((4))1)((4)2)((4))4",
+      "derivedFrom": []
+    },
+    {
+      "number": 89,
+      "canonical": "(((4))2)",
+      "derivedFrom": []
+    },
+    {
+      "number": 90,
+      "canonical": "(((4))2)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 91,
+      "canonical": "(((4))2)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 92,
+      "canonical": "(((4))2)3",
+      "derivedFrom": []
+    },
+    {
+      "number": 93,
+      "canonical": "(((4))2)4",
+      "derivedFrom": []
+    },
+    {
+      "number": 94,
+      "canonical": "(((4))2)(4)",
+      "derivedFrom": []
+    },
+    {
+      "number": 95,
+      "canonical": "(((4))2)(4)1",
+      "derivedFrom": []
+    },
+    {
+      "number": 96,
+      "canonical": "(((4))2)(4)2",
+      "derivedFrom": []
+    },
+    {
+      "number": 97,
+      "canonical": "(((4))2)((4))",
+      "derivedFrom": []
+    },
+    {
+      "number": 98,
+      "canonical": "(((4))2)((4))1",
+      "derivedFrom": []
+    },
+    {
+      "number": 99,
+      "canonical": "(((4))2)((4))2",
+      "derivedFrom": []
+    },
+    {
+      "number": 100,
+      "canonical": "(((4))2)((4))3",
+      "derivedFrom": []
+    }
+  ]
+}

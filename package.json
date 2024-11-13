@@ -1,14 +1,14 @@
 {
-  "name": "word-quest",
+  "name": "terminus",
   "version": "1.0.0",
-  "description": "A gamification platform for reading",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "file-structure": "tree -I 'node_modules' > file-structure.txt",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
-  "author": "Your Name",
+  "author": "Alan Walton",
   "license": "ISC",
   "dependencies": {
     "puppeteer": "^23.6.0"
