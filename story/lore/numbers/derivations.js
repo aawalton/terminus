@@ -1,93 +1,5 @@
 import { writeFile } from 'fs/promises';
-
-// Convert a number to its canonical representation
-function toCanonical(n) {
-  if (n <= 4) return n.toString();
-
-  // Build up numbers by following the pattern in numerology.md
-  let current = 4;
-  let representation = '(4)';
-  let stack = [representation];
-
-  while (current < n) {
-    let next = representation;
-
-    // Try adding simple numbers (1-4)
-    for (let i = 1; i <= 4; i++) {
-      if (current + i === n) return representation + i;
-    }
-
-    // Try wrapping in parentheses
-    next = `(${representation})`;
-    let nextValue = evaluateRepresentation(next);
-    if (nextValue === n) return next;
-    if (nextValue < n) {
-      representation = next;
-      current = nextValue;
-      stack.push(representation);
-      continue;
-    }
-
-    // Try adding numbers and previous representations
-    for (let base of stack) {
-      next = representation + base;
-      nextValue = evaluateRepresentation(next);
-      if (nextValue === n) return next;
-      if (nextValue < n) {
-        representation = next;
-        current = nextValue;
-        break;
-      }
-    }
-  }
-
-  return representation;
-}
-
-// Evaluate a canonical representation to get its decimal value
-function evaluateRepresentation(repr) {
-  // Base cases
-  if (!repr) return 0;
-  if (/^\d$/.test(repr)) return parseInt(repr);
-
-  let sum = 0;
-  let i = 0;
-
-  while (i < repr.length) {
-    if (repr[i] === '(') {
-      // Find matching parenthesis
-      let depth = 1;
-      let j = i + 1;
-      while (depth > 0 && j < repr.length) {
-        if (repr[j] === '(') depth++;
-        if (repr[j] === ')') depth--;
-        j++;
-      }
-      // Recursively evaluate the contents
-      let inner = evaluateRepresentation(repr.slice(i + 1, j - 1));
-      // Apply the parentheses function (get corresponding Fibonacci number)
-      sum += getFibonacci(inner);
-      i = j;
-    } else if (/\d/.test(repr[i])) {
-      sum += parseInt(repr[i]);
-      i++;
-    } else {
-      i++;
-    }
-  }
-
-  return sum;
-}
-
-// Get nth Fibonacci number (0-based index)
-function getFibonacci(n) {
-  if (n <= 1) return n;
-  let a = 0, b = 1;
-  for (let i = 2; i <= n; i++) {
-    [a, b] = [b, a + b];
-  }
-  return b;
-}
+import { getFibonacci, toDecimal, toCanonical } from './numbers.js';
 
 // Find all numbers that derive from a given representation
 function findDerivations(repr) {
@@ -96,24 +8,57 @@ function findDerivations(repr) {
   // Helper function to process a substring
   function processSubstring(sub) {
     if (!sub) return;
-    // Validate balanced parentheses
-    let depth = 0;
-    for (let char of sub) {
-      if (char === '(') depth++;
-      if (char === ')') depth--;
-      if (depth < 0) return;
-    }
-    if (depth !== 0) return;
+
+    // Only process if it's a valid part of the original representation
+    if (!isValidSubstring(sub)) return;
 
     // Evaluate if it's a valid number representation
     try {
-      const value = evaluateRepresentation(sub);
+      const value = toDecimal(sub);
       if (value > 0) {
+        // Also add the value of any nested expressions
+        if (sub.includes('(')) {
+          let depth = 0;
+          let start = -1;
+
+          for (let i = 0; i < sub.length; i++) {
+            if (sub[i] === '(') {
+              if (depth === 0) start = i;
+              depth++;
+            } else if (sub[i] === ')') {
+              depth--;
+              if (depth === 0 && start !== -1) {
+                const nested = sub.slice(start + 1, i);
+                const nestedValue = toDecimal(nested);
+                if (nestedValue > 0) {
+                  derivations.add(nestedValue);
+                }
+              }
+            }
+          }
+        }
         derivations.add(value);
       }
     } catch (e) {
       // Invalid representation, skip
     }
+  }
+
+  // Helper to check if a substring is valid
+  function isValidSubstring(sub) {
+    // Check if it's a simple number or valid parenthetical expression
+    if (/^\d+$/.test(sub)) {
+      return sub.length === 1; // Only single digits are valid
+    }
+
+    // Validate balanced parentheses and structure
+    let depth = 0;
+    for (let char of sub) {
+      if (char === '(') depth++;
+      if (char === ')') depth--;
+      if (depth < 0) return false;
+    }
+    return depth === 0;
   }
 
   // Check all possible substrings
@@ -131,7 +76,10 @@ function generateDerivations(n) {
   const results = {};
 
   for (let i = 1; i <= n; i++) {
+    // Get the canonical representation from numbers.js
     const canonical = toCanonical(i);
+
+    // Find all numbers that this representation derives from
     const derivedFrom = findDerivations(canonical)
       .filter(x => x < i); // Only include numbers less than current
 
@@ -158,9 +106,6 @@ async function generateNumbersJson(n = 10) {
 
 // Export functions for importing
 export {
-  toCanonical,
-  evaluateRepresentation,
-  getFibonacci,
   findDerivations,
   generateDerivations,
   generateNumbersJson

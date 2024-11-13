@@ -17,49 +17,45 @@ describe('getFibonacci', () => {
 });
 
 describe('toDecimal', () => {
-  test('converts simple digits', () => {
-    expect(toDecimal('0')).toBe(0);
+  test('handles simple numbers', () => {
+    expect(toDecimal('1')).toBe(1);
+    expect(toDecimal('2')).toBe(2);
+    expect(toDecimal('3')).toBe(3);
     expect(toDecimal('4')).toBe(4);
-    expect(toDecimal('42')).toBe(6);
   });
 
-  test('converts Fibonacci representations', () => {
+  test('handles parentheses', () => {
     expect(toDecimal('(1)')).toBe(1);
     expect(toDecimal('(2)')).toBe(2);
+    expect(toDecimal('(3)')).toBe(3);
     expect(toDecimal('(4)')).toBe(5);
   });
-
-  test('converts complex expressions', () => {
-    expect(toDecimal('(4)1')).toBe(6);
-    expect(toDecimal('(5)')).toBe(8);
-    expect(toDecimal('(3)2')).toBe(5);
-  }); ``
 
   test('handles nested expressions', () => {
     expect(toDecimal('((1))')).toBe(1);
     expect(toDecimal('((2))')).toBe(2);
-    expect(toDecimal('((3)1)')).toBe(4);
+    expect(toDecimal('((3)1)')).toBe(5);
   });
 });
 
 describe('toCanonical', () => {
-  test('converts small numbers', () => {
-    expect(toCanonical(0)).toBe('0');
+  test('converts simple numbers', () => {
     expect(toCanonical(1)).toBe('1');
     expect(toCanonical(2)).toBe('2');
     expect(toCanonical(3)).toBe('3');
+    expect(toCanonical(4)).toBe('4');
   });
 
   test('converts Fibonacci numbers', () => {
     expect(toCanonical(5)).toBe('(4)');
-    expect(toCanonical(8)).toBe('(5)');
-    expect(toCanonical(13)).toBe('(6)');
+    expect(toCanonical(8)).toBe('((4))');
+    expect(toCanonical(13)).toBe('((4)1)');
   });
 
   test('converts complex numbers', () => {
     expect(toCanonical(6)).toBe('(4)1');
     expect(toCanonical(7)).toBe('(4)2');
-    expect(toCanonical(9)).toBe('(5)1');
+    expect(toCanonical(9)).toBe('((4))1');
   });
 
   test('property: toDecimal(toCanonical(n)) === n', () => {
