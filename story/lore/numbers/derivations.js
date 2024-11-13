@@ -37,6 +37,8 @@ Canonical Number Derivation Rules
 */
 
 import { toCanonical } from "./numbers";
+import fs from 'fs';
+import path from 'path';
 
 function isDerivedFrom(a, b) {
   // First check decimal value comparison
@@ -50,6 +52,38 @@ function isDerivedFrom(a, b) {
   return reprA.includes(reprB);  // Note: Search direction reversed
 }
 
+function generateNumbersData() {
+  const numbers = [];
+
+  // Generate data for first 100 numbers
+  for (let n = 1; n <= 100; n++) {
+    const canonical = toCanonical(n);
+    const derivedFrom = [];
+
+    // Check all smaller numbers for derivation
+    for (let i = 1; i < n; i++) {
+      if (isDerivedFrom(i, n)) {
+        derivedFrom.push(i);
+      }
+    }
+
+    numbers.push({
+      number: n,
+      canonical,
+      derivedFrom
+    });
+  }
+
+  // Write to file
+  const outputPath = path.join(process.cwd(), 'story/lore/numbers/numbers.json');
+  fs.writeFileSync(
+    outputPath,
+    JSON.stringify({ numbers }, null, 2),
+    'utf8'
+  );
+}
+
 export {
-  isDerivedFrom
+  isDerivedFrom,
+  generateNumbersData
 };
