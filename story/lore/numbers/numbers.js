@@ -183,6 +183,7 @@ function toCanonical(n) {
 
 export {
   getFibonacci,
+  getFibonacciIndex,
   toDecimal,
   toCanonical
 };
