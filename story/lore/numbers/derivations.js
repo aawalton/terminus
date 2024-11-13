@@ -1,39 +1,32 @@
 /*
 Canonical Number Derivation Rules
 
-1. Basic Definition:
-   - Number A is derived from number B if:
-     a) A > B (decimal value comparison)
-     b) The canonical representation of A appears as a strict continuous substring
-        within the canonical representation of B
+1. Parent Rules:
+   - Numbers 1-4 have no parents
+   - Number 5 has exactly one parent: 4
+   - All other numbers have exactly two parents, determined by their canonical form:
+     a) For numbers of form (A)B: parents are A and B
+     b) For numbers of form (A): parents are A and 5 (where 5 represents parentheses)
 
-2. Substring Rules:
-   - Substrings can be overlapping
-   - Substrings must be complete canonical representations
+2. Examples of Parent Relationships:
+   - 12 = ((4))4 has parents [8, 4] because it's (8)4
+   - 13 = ((4)1) has parents [6, 5] because it's (6)
+   - 34 = (((4))) has parents [8, 5] because it's (8)
 
-3. Examples of Valid Derivations:
-   - 6 is derived from 13
-     Because: (4)1 appears in ((4)1)
-   - 5 is derived from 8
-     Because: (4) appears in ((4))
-   - 8 is derived from 34
-     Because: ((4)) appears in (((4)))
+3. Ancestor Rules:
+   - A number's ancestors include its parents and their ancestors
+   - Ancestors are determined by substring relationships in canonical form
+   - A number B is an ancestor of A if B's canonical form appears as a complete
+     substring within A's canonical form
 
-4. Examples of Invalid Derivations:
-   - 3 is not derived from 13
-     Because: While "3" appears in "13", it's not a complete canonical representation
-   - 6 is not derived from 16
-     Because: While both are represented using (4), the "1" in (4)1 is not part of 16's representation
-   - 7 is not derived from 13
-     Because: (4)2 does not appear in ((4)1)
-
-5. Multiple Derivation Paths:
-   - A number can be derived from multiple larger numbers
-   - Example: 5 (represented as (4)) can be derived from:
-     * 8  (represented as ((4)))
-     * 13 (represented as ((4)1))
-     * 21 (represented as ((4)2))
-     * 34 (represented as (((4))))
+4. Examples of Ancestor Relationships:
+   - 34 = (((4))) has ancestors [4, 5, 8]
+     * 8 and 5 are parents
+     * 4 is inherited from 5's ancestry
+   - 13 = ((4)1) has ancestors [1, 4, 5, 6]
+     * 6 and 5 are parents
+     * 4 is inherited from 5's ancestry
+     * 1 is inherited from 6's ancestry
 */
 
 import fs from 'fs';
