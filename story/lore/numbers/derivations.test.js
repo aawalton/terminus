@@ -52,7 +52,7 @@ describe('isDerivedFrom', () => {
   });
 });
 
-describe.skip('findParents', () => {
+describe('findParents', () => {
   // Base cases
   test('numbers 1-4 have no parents', () => {
     expect(findParents(1)).toEqual([]);
