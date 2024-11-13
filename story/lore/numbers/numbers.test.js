@@ -154,23 +154,23 @@ describe('toCanonical', () => {
   test('handles numbers requiring multiple components', () => {
     expect(toCanonical(19)).toBe('((4)1)(4)1'); // 13 + 5 + 1
     expect(toCanonical(30)).toBe('((4)2)((4))1'); // 21 + 8 + 1
-    // expect(toCanonical(47)).toBe('(((4)))((4)1)'); // 34 + 13
+    expect(toCanonical(47)).toBe('(((4)))((4)1)'); // 34 + 13
   });
 
-  // test('maintains canonical form for complex numbers', () => {
-  //   const testCases = [6, 7, 18, 29, 34, 47, 55, 89];
-  //   for (const num of testCases) {
-  //     const canonical = toCanonical(num);
-  //     expect(toDecimal(canonical)).toBe(num);
-  //     expect(toCanonical(toDecimal(canonical))).toBe(canonical);
-  //   }
-  // });
+  test('maintains canonical form for complex numbers', () => {
+    const testCases = [6, 7, 18, 29, 34, 47, 55, 89];
+    for (const num of testCases) {
+      const canonical = toCanonical(num);
+      expect(toDecimal(canonical)).toBe(num);
+      expect(toCanonical(toDecimal(canonical))).toBe(canonical);
+    }
+  });
 
-  // test('handles edge cases correctly', () => {
-  //   expect(toCanonical(0)).toBe('0');
-  //   expect(toCanonical(100)).toBe('(((4)2))((4)1)'); // 89 + 11
-  //   expect(toCanonical(144)).toBe('((((4))))'); // Pure Fibonacci
-  // });
+  test('handles edge cases correctly', () => {
+    expect(toCanonical(0)).toBe('0');
+    expect(toCanonical(100)).toBe('(((4)2))((4)1)'); // 89 + 11
+    expect(toCanonical(144)).toBe('((((4))))'); // Pure Fibonacci
+  });
 
   // test('verifies bidirectional conversion for a range of numbers', () => {
   //   for (let i = 1; i <= 50; i++) {
