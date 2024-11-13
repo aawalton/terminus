@@ -57,19 +57,35 @@ function generateNumbersData() {
   // Generate data for first 100 numbers
   for (let n = 1; n <= 100; n++) {
     const canonical = toCanonical(n);
-    const derivedFrom = [];
+    const directDerivedFrom = [];
+    const allAncestors = new Set();
 
     // Check all smaller numbers for derivation
     for (let i = 1; i < n; i++) {
       if (isDerivedFrom(n, i)) {
-        derivedFrom.push(i);
+        // Check if this is a direct derivation
+        let isDirectDerivation = true;
+
+        // Look through all numbers between i and n
+        for (let j = i + 1; j < n; j++) {
+          if (isDerivedFrom(n, j) && isDerivedFrom(j, i)) {
+            isDirectDerivation = false;
+            break;
+          }
+        }
+
+        if (isDirectDerivation) {
+          directDerivedFrom.push(i);
+        }
+        allAncestors.add(i);
       }
     }
 
     numbers.push({
       number: n,
       canonical,
-      derivedFrom: derivedFrom.reverse()
+      directDerivedFrom: directDerivedFrom.reverse(),
+      allAncestors: Array.from(allAncestors).reverse()
     });
   }
 
