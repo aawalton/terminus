@@ -151,11 +151,11 @@ describe('toCanonical', () => {
     expect(toCanonical(35)).toBe('(((4)))1'); // 34 + 1
   });
 
-  // test('handles numbers requiring multiple components', () => {
-  //   expect(toCanonical(19)).toBe('((4)1)(4)1'); // 13 + 5 + 1
-  //   expect(toCanonical(30)).toBe('((4)2)((4))1'); // 21 + 8 + 1
-  //   expect(toCanonical(47)).toBe('(((4)))((4)1)'); // 34 + 13
-  // });
+  test('handles numbers requiring multiple components', () => {
+    expect(toCanonical(19)).toBe('((4)1)(4)1'); // 13 + 5 + 1
+    expect(toCanonical(30)).toBe('((4)2)((4))1'); // 21 + 8 + 1
+    // expect(toCanonical(47)).toBe('(((4)))((4)1)'); // 34 + 13
+  });
 
   // test('maintains canonical form for complex numbers', () => {
   //   const testCases = [6, 7, 18, 29, 34, 47, 55, 89];

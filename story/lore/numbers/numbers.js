@@ -137,6 +137,7 @@ function getFibonacciIndex(n) {
 function toCanonical(n) {
   // Base cases
   if (n <= 4) return n.toString();
+  if (n === 0) return '0';
 
   // Find the largest Fibonacci number less than or equal to n
   const fibIndex = getFibonacciIndex(n);
@@ -145,42 +146,35 @@ function toCanonical(n) {
   // If it's an exact Fibonacci number
   if (fib === n) {
     if (fibIndex === 4) return '(4)';
-
-    // Get the canonical form of the index
     const indexCanonical = toCanonical(fibIndex);
-    console.log('indexCanonical', fibIndex, indexCanonical);
-
-    // For pure Fibonacci numbers, we need one less set of parentheses
-    // than the index number suggests
     return `(${indexCanonical})`;
   }
 
-  // For non-Fibonacci numbers, use the largest possible prefix
-  const remainder = n - fib;
+  // For non-Fibonacci numbers, try all possible decompositions
+  // starting from the largest possible Fibonacci number
+  let bestRepresentation = '';
+  let bestPrefix = 0;
 
-  // If remainder is small enough, append directly
-  if (remainder <= 4) {
-    return `${toCanonical(fib)}${remainder}`;
-  }
+  // Try each Fibonacci number as a prefix, starting from the largest
+  let currentIndex = fibIndex;
+  while (currentIndex > 0) {
+    const currentFib = getFibonacci(currentIndex);
+    if (currentFib <= n) {
+      const remainder = n - currentFib;
+      const currentRepr = currentFib > 4
+        ? toCanonical(currentFib) + (remainder > 0 ? toCanonical(remainder) : '')
+        : currentFib.toString() + (remainder > 0 ? toCanonical(remainder) : '');
 
-  // Try the next largest Fibonacci number as prefix
-  const nextFibIndex = fibIndex - 1;
-  const nextFib = getFibonacci(nextFibIndex);
-  const nextRemainder = n - nextFib;
-
-  if (nextFib > 4 && nextRemainder > 0) {
-    // Check if this decomposition is better
-    const nextFibRepr = toCanonical(nextFib);
-    const nextRemRepr = toCanonical(nextRemainder);
-    const nextTotal = toDecimal(nextFibRepr + nextRemRepr);
-
-    if (nextTotal === n) {
-      return nextFibRepr + nextRemRepr;
+      // If this is our first valid representation or if this prefix is larger
+      if (!bestRepresentation || currentFib > bestPrefix) {
+        bestRepresentation = currentRepr;
+        bestPrefix = currentFib;
+      }
     }
+    currentIndex--;
   }
 
-  // Default to using the largest prefix
-  return `${toCanonical(fib)}${toCanonical(remainder)}`;
+  return bestRepresentation;
 }
 
 export {
