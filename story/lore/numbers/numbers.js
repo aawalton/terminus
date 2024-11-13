@@ -1,9 +1,10 @@
-// Get nth Fibonacci number (0-based index)
+// Get nth Fibonacci number (1-based index)
 function getFibonacci(n) {
-  if (n <= 1) return n;
+  if (n <= 0) return 0;
+  if (n <= 2) return n;
 
-  let a = 0, b = 1;
-  for (let i = 2; i <= n; i++) {
+  let a = 1, b = 2;
+  for (let i = 3; i <= n; i++) {
     [a, b] = [b, a + b];
   }
   return b;
@@ -28,7 +29,7 @@ function toDecimal(repr) {
         if (repr[j] === ')') depth--;
         j++;
       }
-      // Get the inner expression value and convert to Fibonacci number
+      // For nested expressions, evaluate inner first then use result as index
       const innerValue = toDecimal(repr.slice(i + 1, j - 1));
       sum += getFibonacci(innerValue);
       i = j;
@@ -46,25 +47,16 @@ function toDecimal(repr) {
 // Convert from decimal to canonical representation
 function toCanonical(n) {
   // Handle base cases 0-4
-  if (n <= 4) return n.toString();
+  if (n <= 3) return n.toString();
 
-  // Find largest Fibonacci number less than or equal to n
-  let fibNumbers = [];
-  let fibIndices = [];
-  let i = 0;
-  let fib = getFibonacci(i);
-
-  while (fib <= n) {
-    fibNumbers.push(fib);
-    fibIndices.push(i);
-    i++;
-    fib = getFibonacci(i);
+  // Find the index of the largest Fibonacci number <= n
+  let index = 1;
+  while (getFibonacci(index + 1) <= n) {
+    index++;
   }
 
-  // Get the largest Fibonacci number <= n
-  const largestFib = fibNumbers[fibNumbers.length - 1];
-  const index = fibIndices[fibIndices.length - 1];
-  const remainder = n - largestFib;
+  const fib = getFibonacci(index);
+  const remainder = n - fib;
 
   // If no remainder, return the representation
   if (remainder === 0) {
