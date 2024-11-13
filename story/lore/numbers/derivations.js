@@ -51,6 +51,45 @@ function isDerivedFrom(a, b) {
   return reprA.includes(reprB);  // Note: Search direction reversed
 }
 
+function findParents(n) {
+  const parents = [];
+
+  // Check all smaller numbers for derivation
+  for (let i = 1; i < n; i++) {
+    if (isDerivedFrom(n, i)) {
+      // Check if this is a direct derivation
+      let isParent = true;
+
+      // Look through all numbers between i and n
+      for (let j = i + 1; j < n; j++) {
+        if (isDerivedFrom(n, j) && isDerivedFrom(j, i)) {
+          isParent = false;
+          break;
+        }
+      }
+
+      if (isParent) {
+        parents.push(i);
+      }
+    }
+  }
+
+  return parents.sort((a, b) => a - b);
+}
+
+function findAncestors(n) {
+  const ancestors = [];
+
+  // Check all smaller numbers for derivation
+  for (let i = 1; i < n; i++) {
+    if (isDerivedFrom(n, i)) {
+      ancestors.push(i);
+    }
+  }
+
+  return ancestors.sort((a, b) => a - b);
+}
+
 function generateNumbersData() {
   const numbers = [];
 
@@ -99,6 +138,8 @@ function generateNumbersData() {
 
 export {
   isDerivedFrom,
+  findParents,
+  findAncestors,
   generateNumbersData
 };
 

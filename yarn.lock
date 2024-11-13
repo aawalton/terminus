@@ -3793,6 +3793,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"terminus@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "terminus@workspace:."
+  dependencies:
+    jest: "npm:^29.7.0"
+    puppeteer: "npm:^23.6.0"
+  languageName: unknown
+  linkType: soft
+
 "test-exclude@npm:^6.0.0":
   version: 6.0.0
   resolution: "test-exclude@npm:6.0.0"
@@ -3966,15 +3975,6 @@ __metadata:
   checksum: 10c0/449fa5c44ed120ccecfe18c433296a4978a7583bf2391c50abce13f76878d2476defde04d0f79db8165bdf432853c1f8389d0485ca6e8ebce3bbcded513d5e6a
   languageName: node
   linkType: hard
-
-"word-quest@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "word-quest@workspace:."
-  dependencies:
-    jest: "npm:^29.7.0"
-    puppeteer: "npm:^23.6.0"
-  languageName: unknown
-  linkType: soft
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0, wrap-ansi@npm:^7.0.0":
   version: 7.0.0

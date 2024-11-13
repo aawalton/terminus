@@ -3,1323 +3,760 @@
     {
       "number": 1,
       "canonical": "1",
-      "derivedFrom": []
+      "parents": []
     },
     {
       "number": 2,
       "canonical": "2",
-      "derivedFrom": []
+      "parents": []
     },
     {
       "number": 3,
       "canonical": "3",
-      "derivedFrom": []
+      "parents": []
     },
     {
       "number": 4,
       "canonical": "4",
-      "derivedFrom": []
+      "parents": []
     },
     {
       "number": 5,
       "canonical": "(4)",
-      "derivedFrom": [
+      "parents": [
         4
       ]
     },
     {
       "number": 6,
       "canonical": "(4)1",
-      "derivedFrom": [
+      "parents": [
         5,
-        4,
         1
       ]
     },
     {
       "number": 7,
       "canonical": "(4)2",
-      "derivedFrom": [
+      "parents": [
         5,
-        4,
         2
       ]
     },
     {
       "number": 8,
       "canonical": "((4))",
-      "derivedFrom": [
-        5,
-        4
+      "parents": [
+        5
       ]
     },
     {
       "number": 9,
       "canonical": "((4))1",
-      "derivedFrom": [
+      "parents": [
         8,
-        5,
-        4,
         1
       ]
     },
     {
       "number": 10,
       "canonical": "((4))2",
-      "derivedFrom": [
+      "parents": [
         8,
-        5,
-        4,
         2
       ]
     },
     {
       "number": 11,
       "canonical": "((4))3",
-      "derivedFrom": [
+      "parents": [
         8,
-        5,
-        4,
         3
       ]
     },
     {
       "number": 12,
       "canonical": "((4))4",
-      "derivedFrom": [
-        8,
-        5,
-        4
+      "parents": [
+        8
       ]
     },
     {
       "number": 13,
       "canonical": "((4)1)",
-      "derivedFrom": [
-        6,
-        5,
-        4,
-        1
+      "parents": [
+        6
       ]
     },
     {
       "number": 14,
       "canonical": "((4)1)1",
-      "derivedFrom": [
-        13,
-        6,
-        5,
-        4,
-        1
+      "parents": [
+        13
       ]
     },
     {
       "number": 15,
       "canonical": "((4)1)2",
-      "derivedFrom": [
+      "parents": [
         13,
-        6,
-        5,
-        4,
-        2,
-        1
+        2
       ]
     },
     {
       "number": 16,
       "canonical": "((4)1)3",
-      "derivedFrom": [
+      "parents": [
         13,
-        6,
-        5,
-        4,
-        3,
-        1
+        3
       ]
     },
     {
       "number": 17,
       "canonical": "((4)1)4",
-      "derivedFrom": [
-        13,
-        6,
-        5,
-        4,
-        1
+      "parents": [
+        13
       ]
     },
     {
       "number": 18,
       "canonical": "((4)1)(4)",
-      "derivedFrom": [
-        13,
-        6,
-        5,
-        4,
-        1
+      "parents": [
+        13
       ]
     },
     {
       "number": 19,
       "canonical": "((4)1)(4)1",
-      "derivedFrom": [
-        18,
-        13,
-        6,
-        5,
-        4,
-        1
+      "parents": [
+        18
       ]
     },
     {
       "number": 20,
       "canonical": "((4)1)(4)2",
-      "derivedFrom": [
+      "parents": [
         18,
-        13,
-        7,
-        6,
-        5,
-        4,
-        2,
-        1
+        7
       ]
     },
     {
       "number": 21,
       "canonical": "((4)2)",
-      "derivedFrom": [
-        7,
-        5,
-        4,
-        2
+      "parents": [
+        7
       ]
     },
     {
       "number": 22,
       "canonical": "((4)2)1",
-      "derivedFrom": [
+      "parents": [
         21,
-        7,
-        5,
-        4,
-        2,
         1
       ]
     },
     {
       "number": 23,
       "canonical": "((4)2)2",
-      "derivedFrom": [
-        21,
-        7,
-        5,
-        4,
-        2
+      "parents": [
+        21
       ]
     },
     {
       "number": 24,
       "canonical": "((4)2)3",
-      "derivedFrom": [
+      "parents": [
         21,
-        7,
-        5,
-        4,
-        3,
-        2
+        3
       ]
     },
     {
       "number": 25,
       "canonical": "((4)2)4",
-      "derivedFrom": [
-        21,
-        7,
-        5,
-        4,
-        2
+      "parents": [
+        21
       ]
     },
     {
       "number": 26,
       "canonical": "((4)2)(4)",
-      "derivedFrom": [
-        21,
-        7,
-        5,
-        4,
-        2
+      "parents": [
+        21
       ]
     },
     {
       "number": 27,
       "canonical": "((4)2)(4)1",
-      "derivedFrom": [
+      "parents": [
         26,
-        21,
-        7,
-        6,
-        5,
-        4,
-        2,
-        1
+        6
       ]
     },
     {
       "number": 28,
       "canonical": "((4)2)(4)2",
-      "derivedFrom": [
-        26,
-        21,
-        7,
-        5,
-        4,
-        2
+      "parents": [
+        26
       ]
     },
     {
       "number": 29,
       "canonical": "((4)2)((4))",
-      "derivedFrom": [
+      "parents": [
         21,
-        8,
-        7,
-        5,
-        4,
-        2
+        8
       ]
     },
     {
       "number": 30,
       "canonical": "((4)2)((4))1",
-      "derivedFrom": [
+      "parents": [
         29,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        9
       ]
     },
     {
       "number": 31,
       "canonical": "((4)2)((4))2",
-      "derivedFrom": [
+      "parents": [
         29,
-        21,
-        10,
-        8,
-        7,
-        5,
-        4,
-        2
+        10
       ]
     },
     {
       "number": 32,
       "canonical": "((4)2)((4))3",
-      "derivedFrom": [
+      "parents": [
         29,
-        21,
-        11,
-        8,
-        7,
-        5,
-        4,
-        3,
-        2
+        11
       ]
     },
     {
       "number": 33,
       "canonical": "((4)2)((4))4",
-      "derivedFrom": [
+      "parents": [
         29,
-        21,
-        12,
-        8,
-        7,
-        5,
-        4,
-        2
+        12
       ]
     },
     {
       "number": 34,
       "canonical": "(((4)))",
-      "derivedFrom": [
-        8,
-        5,
-        4
+      "parents": [
+        8
       ]
     },
     {
       "number": 35,
       "canonical": "(((4)))1",
-      "derivedFrom": [
+      "parents": [
         34,
-        8,
-        5,
-        4,
         1
       ]
     },
     {
       "number": 36,
       "canonical": "(((4)))2",
-      "derivedFrom": [
+      "parents": [
         34,
-        8,
-        5,
-        4,
         2
       ]
     },
     {
       "number": 37,
       "canonical": "(((4)))3",
-      "derivedFrom": [
+      "parents": [
         34,
-        8,
-        5,
-        4,
         3
       ]
     },
     {
       "number": 38,
       "canonical": "(((4)))4",
-      "derivedFrom": [
-        34,
-        8,
-        5,
-        4
+      "parents": [
+        34
       ]
     },
     {
       "number": 39,
       "canonical": "(((4)))(4)",
-      "derivedFrom": [
-        34,
-        8,
-        5,
-        4
+      "parents": [
+        34
       ]
     },
     {
       "number": 40,
       "canonical": "(((4)))(4)1",
-      "derivedFrom": [
+      "parents": [
         39,
-        34,
-        8,
-        6,
-        5,
-        4,
-        1
+        6
       ]
     },
     {
       "number": 41,
       "canonical": "(((4)))(4)2",
-      "derivedFrom": [
+      "parents": [
         39,
-        34,
-        8,
-        7,
-        5,
-        4,
-        2
+        7
       ]
     },
     {
       "number": 42,
       "canonical": "(((4)))((4))",
-      "derivedFrom": [
-        34,
-        8,
-        5,
-        4
+      "parents": [
+        34
       ]
     },
     {
       "number": 43,
       "canonical": "(((4)))((4))1",
-      "derivedFrom": [
+      "parents": [
         42,
-        34,
-        9,
-        8,
-        5,
-        4,
-        1
+        9
       ]
     },
     {
       "number": 44,
       "canonical": "(((4)))((4))2",
-      "derivedFrom": [
+      "parents": [
         42,
-        34,
-        10,
-        8,
-        5,
-        4,
-        2
+        10
       ]
     },
     {
       "number": 45,
       "canonical": "(((4)))((4))3",
-      "derivedFrom": [
+      "parents": [
         42,
-        34,
-        11,
-        8,
-        5,
-        4,
-        3
+        11
       ]
     },
     {
       "number": 46,
       "canonical": "(((4)))((4))4",
-      "derivedFrom": [
+      "parents": [
         42,
-        34,
-        12,
-        8,
-        5,
-        4
+        12
       ]
     },
     {
       "number": 47,
       "canonical": "(((4)))((4)1)",
-      "derivedFrom": [
+      "parents": [
         34,
-        13,
-        8,
-        6,
-        5,
-        4,
-        1
+        13
       ]
     },
     {
       "number": 48,
       "canonical": "(((4)))((4)1)1",
-      "derivedFrom": [
+      "parents": [
         47,
-        34,
-        14,
-        13,
-        8,
-        6,
-        5,
-        4,
-        1
+        14
       ]
     },
     {
       "number": 49,
       "canonical": "(((4)))((4)1)2",
-      "derivedFrom": [
+      "parents": [
         47,
-        34,
-        15,
-        13,
-        8,
-        6,
-        5,
-        4,
-        2,
-        1
+        15
       ]
     },
     {
       "number": 50,
       "canonical": "(((4)))((4)1)3",
-      "derivedFrom": [
+      "parents": [
         47,
-        34,
-        16,
-        13,
-        8,
-        6,
-        5,
-        4,
-        3,
-        1
+        16
       ]
     },
     {
       "number": 51,
       "canonical": "(((4)))((4)1)4",
-      "derivedFrom": [
+      "parents": [
         47,
-        34,
-        17,
-        13,
-        8,
-        6,
-        5,
-        4,
-        1
+        17
       ]
     },
     {
       "number": 52,
       "canonical": "(((4)))((4)1)(4)",
-      "derivedFrom": [
+      "parents": [
         47,
-        34,
-        18,
-        13,
-        8,
-        6,
-        5,
-        4,
-        1
+        18
       ]
     },
     {
       "number": 53,
       "canonical": "(((4)))((4)1)(4)1",
-      "derivedFrom": [
+      "parents": [
         52,
-        47,
-        34,
-        19,
-        18,
-        13,
-        8,
-        6,
-        5,
-        4,
-        1
+        19
       ]
     },
     {
       "number": 54,
       "canonical": "(((4)))((4)1)(4)2",
-      "derivedFrom": [
+      "parents": [
         52,
-        47,
-        34,
-        20,
-        18,
-        13,
-        8,
-        7,
-        6,
-        5,
-        4,
-        2,
-        1
+        20
       ]
     },
     {
       "number": 55,
       "canonical": "(((4))1)",
-      "derivedFrom": [
-        9,
-        8,
-        5,
-        4,
-        1
+      "parents": [
+        9
       ]
     },
     {
       "number": 56,
       "canonical": "(((4))1)1",
-      "derivedFrom": [
-        55,
-        9,
-        8,
-        5,
-        4,
-        1
+      "parents": [
+        55
       ]
     },
     {
       "number": 57,
       "canonical": "(((4))1)2",
-      "derivedFrom": [
+      "parents": [
         55,
-        9,
-        8,
-        5,
-        4,
-        2,
-        1
+        2
       ]
     },
     {
       "number": 58,
       "canonical": "(((4))1)3",
-      "derivedFrom": [
+      "parents": [
         55,
-        9,
-        8,
-        5,
-        4,
-        3,
-        1
+        3
       ]
     },
     {
       "number": 59,
       "canonical": "(((4))1)4",
-      "derivedFrom": [
-        55,
-        9,
-        8,
-        5,
-        4,
-        1
+      "parents": [
+        55
       ]
     },
     {
       "number": 60,
       "canonical": "(((4))1)(4)",
-      "derivedFrom": [
-        55,
-        9,
-        8,
-        5,
-        4,
-        1
+      "parents": [
+        55
       ]
     },
     {
       "number": 61,
       "canonical": "(((4))1)(4)1",
-      "derivedFrom": [
+      "parents": [
         60,
-        55,
-        9,
-        8,
-        6,
-        5,
-        4,
-        1
+        6
       ]
     },
     {
       "number": 62,
       "canonical": "(((4))1)(4)2",
-      "derivedFrom": [
+      "parents": [
         60,
-        55,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        7
       ]
     },
     {
       "number": 63,
       "canonical": "(((4))1)((4))",
-      "derivedFrom": [
-        55,
-        9,
-        8,
-        5,
-        4,
-        1
+      "parents": [
+        55
       ]
     },
     {
       "number": 64,
       "canonical": "(((4))1)((4))1",
-      "derivedFrom": [
-        63,
-        55,
-        9,
-        8,
-        5,
-        4,
-        1
+      "parents": [
+        63
       ]
     },
     {
       "number": 65,
       "canonical": "(((4))1)((4))2",
-      "derivedFrom": [
+      "parents": [
         63,
-        55,
-        10,
-        9,
-        8,
-        5,
-        4,
-        2,
-        1
+        10
       ]
     },
     {
       "number": 66,
       "canonical": "(((4))1)((4))3",
-      "derivedFrom": [
+      "parents": [
         63,
-        55,
-        11,
-        9,
-        8,
-        5,
-        4,
-        3,
-        1
+        11
       ]
     },
     {
       "number": 67,
       "canonical": "(((4))1)((4))4",
-      "derivedFrom": [
+      "parents": [
         63,
-        55,
-        12,
-        9,
-        8,
-        5,
-        4,
-        1
+        12
       ]
     },
     {
       "number": 68,
       "canonical": "(((4))1)((4)1)",
-      "derivedFrom": [
+      "parents": [
         55,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        1
+        13
       ]
     },
     {
       "number": 69,
       "canonical": "(((4))1)((4)1)1",
-      "derivedFrom": [
+      "parents": [
         68,
-        55,
-        14,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        1
+        14
       ]
     },
     {
       "number": 70,
       "canonical": "(((4))1)((4)1)2",
-      "derivedFrom": [
+      "parents": [
         68,
-        55,
-        15,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        2,
-        1
+        15
       ]
     },
     {
       "number": 71,
       "canonical": "(((4))1)((4)1)3",
-      "derivedFrom": [
+      "parents": [
         68,
-        55,
-        16,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        3,
-        1
+        16
       ]
     },
     {
       "number": 72,
       "canonical": "(((4))1)((4)1)4",
-      "derivedFrom": [
+      "parents": [
         68,
-        55,
-        17,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        1
+        17
       ]
     },
     {
       "number": 73,
       "canonical": "(((4))1)((4)1)(4)",
-      "derivedFrom": [
+      "parents": [
         68,
-        55,
-        18,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        1
+        18
       ]
     },
     {
       "number": 74,
       "canonical": "(((4))1)((4)1)(4)1",
-      "derivedFrom": [
+      "parents": [
         73,
-        68,
-        55,
-        19,
-        18,
-        13,
-        9,
-        8,
-        6,
-        5,
-        4,
-        1
+        19
       ]
     },
     {
       "number": 75,
       "canonical": "(((4))1)((4)1)(4)2",
-      "derivedFrom": [
+      "parents": [
         73,
-        68,
-        55,
-        20,
-        18,
-        13,
-        9,
-        8,
-        7,
-        6,
-        5,
-        4,
-        2,
-        1
+        20
       ]
     },
     {
       "number": 76,
       "canonical": "(((4))1)((4)2)",
-      "derivedFrom": [
+      "parents": [
         55,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        21
       ]
     },
     {
       "number": 77,
       "canonical": "(((4))1)((4)2)1",
-      "derivedFrom": [
+      "parents": [
         76,
-        55,
-        22,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        22
       ]
     },
     {
       "number": 78,
       "canonical": "(((4))1)((4)2)2",
-      "derivedFrom": [
+      "parents": [
         76,
-        55,
-        23,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        23
       ]
     },
     {
       "number": 79,
       "canonical": "(((4))1)((4)2)3",
-      "derivedFrom": [
+      "parents": [
         76,
-        55,
-        24,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        3,
-        2,
-        1
+        24
       ]
     },
     {
       "number": 80,
       "canonical": "(((4))1)((4)2)4",
-      "derivedFrom": [
+      "parents": [
         76,
-        55,
-        25,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        25
       ]
     },
     {
       "number": 81,
       "canonical": "(((4))1)((4)2)(4)",
-      "derivedFrom": [
+      "parents": [
         76,
-        55,
-        26,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        26
       ]
     },
     {
       "number": 82,
       "canonical": "(((4))1)((4)2)(4)1",
-      "derivedFrom": [
+      "parents": [
         81,
-        76,
-        55,
-        27,
-        26,
-        21,
-        9,
-        8,
-        7,
-        6,
-        5,
-        4,
-        2,
-        1
+        27
       ]
     },
     {
       "number": 83,
       "canonical": "(((4))1)((4)2)(4)2",
-      "derivedFrom": [
+      "parents": [
         81,
-        76,
-        55,
-        28,
-        26,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        28
       ]
     },
     {
       "number": 84,
       "canonical": "(((4))1)((4)2)((4))",
-      "derivedFrom": [
+      "parents": [
         76,
-        55,
-        29,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        29
       ]
     },
     {
       "number": 85,
       "canonical": "(((4))1)((4)2)((4))1",
-      "derivedFrom": [
+      "parents": [
         84,
-        76,
-        55,
-        30,
-        29,
-        21,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        30
       ]
     },
     {
       "number": 86,
       "canonical": "(((4))1)((4)2)((4))2",
-      "derivedFrom": [
+      "parents": [
         84,
-        76,
-        55,
-        31,
-        29,
-        21,
-        10,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        31
       ]
     },
     {
       "number": 87,
       "canonical": "(((4))1)((4)2)((4))3",
-      "derivedFrom": [
+      "parents": [
         84,
-        76,
-        55,
-        32,
-        29,
-        21,
-        11,
-        9,
-        8,
-        7,
-        5,
-        4,
-        3,
-        2,
-        1
+        32
       ]
     },
     {
       "number": 88,
       "canonical": "(((4))1)((4)2)((4))4",
-      "derivedFrom": [
+      "parents": [
         84,
-        76,
-        55,
-        33,
-        29,
-        21,
-        12,
-        9,
-        8,
-        7,
-        5,
-        4,
-        2,
-        1
+        33
       ]
     },
     {
       "number": 89,
       "canonical": "(((4))2)",
-      "derivedFrom": [
-        10,
-        8,
-        5,
-        4,
-        2
+      "parents": [
+        10
       ]
     },
     {
       "number": 90,
       "canonical": "(((4))2)1",
-      "derivedFrom": [
+      "parents": [
         89,
-        10,
-        8,
-        5,
-        4,
-        2,
         1
       ]
     },
     {
       "number": 91,
       "canonical": "(((4))2)2",
-      "derivedFrom": [
-        89,
-        10,
-        8,
-        5,
-        4,
-        2
+      "parents": [
+        89
       ]
     },
     {
       "number": 92,
       "canonical": "(((4))2)3",
-      "derivedFrom": [
+      "parents": [
         89,
-        10,
-        8,
-        5,
-        4,
-        3,
-        2
+        3
       ]
     },
     {
       "number": 93,
       "canonical": "(((4))2)4",
-      "derivedFrom": [
-        89,
-        10,
-        8,
-        5,
-        4,
-        2
+      "parents": [
+        89
       ]
     },
     {
       "number": 94,
       "canonical": "(((4))2)(4)",
-      "derivedFrom": [
-        89,
-        10,
-        8,
-        5,
-        4,
-        2
+      "parents": [
+        89
       ]
     },
     {
       "number": 95,
       "canonical": "(((4))2)(4)1",
-      "derivedFrom": [
+      "parents": [
         94,
-        89,
-        10,
-        8,
-        6,
-        5,
-        4,
-        2,
-        1
+        6
       ]
     },
     {
       "number": 96,
       "canonical": "(((4))2)(4)2",
-      "derivedFrom": [
+      "parents": [
         94,
-        89,
-        10,
-        8,
-        7,
-        5,
-        4,
-        2
+        7
       ]
     },
     {
       "number": 97,
       "canonical": "(((4))2)((4))",
-      "derivedFrom": [
-        89,
-        10,
-        8,
-        5,
-        4,
-        2
+      "parents": [
+        89
       ]
     },
     {
       "number": 98,
       "canonical": "(((4))2)((4))1",
-      "derivedFrom": [
+      "parents": [
         97,
-        89,
-        10,
-        9,
-        8,
-        5,
-        4,
-        2,
-        1
+        9
       ]
     },
     {
       "number": 99,
       "canonical": "(((4))2)((4))2",
-      "derivedFrom": [
-        97,
-        89,
-        10,
-        8,
-        5,
-        4,
-        2
+      "parents": [
+        97
       ]
     },
     {
       "number": 100,
       "canonical": "(((4))2)((4))3",
-      "derivedFrom": [
+      "parents": [
         97,
-        89,
-        11,
-        10,
-        8,
-        5,
-        4,
-        3,
-        2
+        11
       ]
     }
   ]
