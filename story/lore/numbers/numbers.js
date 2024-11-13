@@ -56,35 +56,43 @@ function toCanonical(n) {
   // Handle base cases 1-4
   if (n <= 4) return n.toString();
 
-  // Try nested expressions first (for numbers like 8 = ((4)))
-  for (let i = n - 1; i > 0; i--) {  // Start from largest possible inner value
-    const inner = toCanonical(i);
-    if (inner) {
-      const withParens = `(${inner})`;
-      if (toDecimal(withParens) === n) {
-        return withParens;
+  // Find the largest Fibonacci number <= n
+  let maxFibIndex = 1;
+  while (getFibonacci(maxFibIndex + 1) <= n) {
+    maxFibIndex++;
+  }
+
+  const fibValue = getFibonacci(maxFibIndex);
+  const diff = n - fibValue;
+
+  // If this is exactly a Fibonacci number with index > 4
+  if (diff === 0 && maxFibIndex > 4) {
+    // Find the representation of the previous Fibonacci number
+    const prevFibIndex = maxFibIndex - 1;
+    return `(${toCanonical(prevFibIndex)})`;
+  }
+
+  // For numbers like 13 = ((4)1), we need to check if it can be represented
+  // as a nested expression plus a small number
+  for (let i = 4; i >= 1; i--) {
+    const base = `((${i}))`;  // Try double nesting
+    const baseValue = toDecimal(base);
+
+    // If adding a small number (1-4) to the base gives us our target
+    if (baseValue < n && n <= baseValue + 4) {
+      const remainder = n - baseValue;
+      if (remainder > 0) {
+        return `((${i})${remainder})`;
       }
-      // Try adding simple numbers to nested expressions
-      for (let j = 1; j <= 4; j++) {
-        if (toDecimal(withParens + j) === n) {
-          return withParens + j;
-        }
-      }
+      return base;
     }
   }
 
-  // Try simple Fibonacci numbers with largest possible inner value
-  for (let i = n; i > 0; i--) {  // Start from n and work down
-    const value = getFibonacci(i);
-    if (value === n) {
-      return `(${i})`;
-    }
-    if (value < n) {
-      const diff = n - value;
-      if (diff >= 1 && diff <= 4) {
-        return `(${i})${diff}`;
-      }
-    }
+  // For numbers that are sum of a Fibonacci number and a small number (1-4)
+  if (diff >= 1 && diff <= 4) {
+    // Find representation of the Fibonacci part
+    const fibRepr = toCanonical(fibValue);
+    return `${fibRepr}${diff}`;
   }
 
   return null;
@@ -95,3 +103,4 @@ export {
   toDecimal,
   toCanonical
 };
+
