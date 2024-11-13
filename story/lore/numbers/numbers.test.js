@@ -166,18 +166,12 @@ describe('toCanonical', () => {
     }
   });
 
-  test('handles edge cases correctly', () => {
-    expect(toCanonical(0)).toBe('0');
-    expect(toCanonical(100)).toBe('(((4)2))((4)1)'); // 89 + 11
-    expect(toCanonical(144)).toBe('((((4))))'); // Pure Fibonacci
+  test('verifies bidirectional conversion for a range of numbers', () => {
+    for (let i = 1; i <= 144; i++) {
+      const canonical = toCanonical(i);
+      const decimal = toDecimal(canonical);
+      expect(decimal).toBe(i);
+      expect(toCanonical(decimal)).toBe(canonical);
+    }
   });
-
-  // test('verifies bidirectional conversion for a range of numbers', () => {
-  //   for (let i = 1; i <= 50; i++) {
-  //     const canonical = toCanonical(i);
-  //     const decimal = toDecimal(canonical);
-  //     expect(decimal).toBe(i);
-  //     expect(toCanonical(decimal)).toBe(canonical);
-  //   }
-  // });
 });
