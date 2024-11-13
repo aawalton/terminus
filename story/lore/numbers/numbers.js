@@ -29,9 +29,17 @@ function toDecimal(repr) {
         if (repr[j] === ')') depth--;
         j++;
       }
-      // For nested expressions, evaluate inner first then use result as index
-      const innerValue = toDecimal(repr.slice(i + 1, j - 1));
-      sum += getFibonacci(innerValue);
+
+      // Get the substring between parentheses
+      const inner = repr.slice(i + 1, j - 1);
+
+      // If inner contains parentheses, evaluate it first
+      if (inner.includes('(')) {
+        sum += toDecimal(inner);
+      } else {
+        // Otherwise use it as an index for Fibonacci
+        sum += getFibonacci(toDecimal(inner));
+      }
       i = j;
     } else if (/\d/.test(repr[i])) {
       sum += Number(repr[i]);
