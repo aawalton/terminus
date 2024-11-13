@@ -87,3 +87,7 @@ export {
   isDerivedFrom,
   generateNumbersData
 };
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  generateNumbersData();
+}
