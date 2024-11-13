@@ -1,0 +1,910 @@
+.
+├── README.md
+├── data
+│   ├── html
+│   │   ├── authors
+│   │   └── series
+│   │       ├── the-wandering-inn
+│   │       │   ├── books
+│   │       │   ├── chapters
+│   │       │   │   ├── 0001_1_00.html
+│   │       │   │   ├── 0002_1_01.html
+│   │       │   │   ├── 0003_1_02.html
+│   │       │   │   ├── 0004_1_03.html
+│   │       │   │   ├── 0005_1_04.html
+│   │       │   │   ├── 0006_1_05.html
+│   │       │   │   ├── 0007_1_06.html
+│   │       │   │   ├── 0008_1_07.html
+│   │       │   │   ├── 0009_1_08.html
+│   │       │   │   ├── 0010_1_09.html
+│   │       │   │   ├── 0011_1_10.html
+│   │       │   │   ├── 0012_interlude___the_great_ritual.html
+│   │       │   │   ├── 0013_1_11.html
+│   │       │   │   ├── 0014_1_12.html
+│   │       │   │   ├── 0015_1_13.html
+│   │       │   │   ├── 0016_1_14.html
+│   │       │   │   ├── 0017_1_15.html
+│   │       │   │   ├── 0018_1_16.html
+│   │       │   │   ├── 0019_1_17.html
+│   │       │   │   ├── 0020_1_18.html
+│   │       │   │   ├── 0021_1_19_r.html
+│   │       │   │   ├── 0022_1_20_r.html
+│   │       │   │   ├── 0023_1_21.html
+│   │       │   │   ├── 0024_1_22.html
+│   │       │   │   ├── 0025_1_23_a.html
+│   │       │   │   ├── 0026_1_24.html
+│   │       │   │   ├── 0027_interlude___king_edition.html
+│   │       │   │   ├── 0028_1_25.html
+│   │       │   │   ├── 0029_1_26_r.html
+│   │       │   │   ├── 0030_1_27_r.html
+│   │       │   │   ├── 0031_1_28_a.html
+│   │       │   │   ├── 0032_1_29.html
+│   │       │   │   ├── 0033_1_30.html
+│   │       │   │   ├── 0034_1_31.html
+│   │       │   │   ├── 0035_1_32_r.html
+│   │       │   │   ├── 0036_1_33_r.html
+│   │       │   │   ├── 0037_1_34.html
+│   │       │   │   ├── 0038_1_35_r.html
+│   │       │   │   ├── 0039_1_36.html
+│   │       │   │   ├── 0040_1_37.html
+│   │       │   │   ├── 0041_1_38.html
+│   │       │   │   ├── 0042_1_39_r.html
+│   │       │   │   ├── 0043_1_40_r.html
+│   │       │   │   ├── 0044_1_41.html
+│   │       │   │   ├── 0045_1_42.html
+│   │       │   │   ├── 0046_1_43_r.html
+│   │       │   │   ├── 0047_1_44_r.html
+│   │       │   │   ├── 0048_1_45.html
+│   │       │   │   ├── 0049_1_46.html
+│   │       │   │   ├── 0050_1_47_r.html
+│   │       │   │   ├── 0051_1_48_r.html
+│   │       │   │   ├── 0052_1_49.html
+│   │       │   │   ├── 0053_1_50.html
+│   │       │   │   ├── 0054_1_51.html
+│   │       │   │   ├── 0055_1_52_r.html
+│   │       │   │   ├── 0056_1_53.html
+│   │       │   │   ├── 0057_1_54.html
+│   │       │   │   ├── 0058_1_55_r.html
+│   │       │   │   ├── 0059_1_56.html
+│   │       │   │   ├── 0060_1_57_h.html
+│   │       │   │   ├── 0061_1_58_h.html
+│   │       │   │   ├── 0062_1_59_h.html
+│   │       │   │   ├── 0063_1_60.html
+│   │       │   │   ├── 0064_1_61.html
+│   │       │   │   ├── 0065_1_62.html
+│   │       │   │   ├── 0066_1_63.html
+│   │       │   │   ├── 0067_interlude___the_call.html
+│   │       │   │   ├── 0068_2_00.html
+│   │       │   │   ├── 0069_2_01.html
+│   │       │   │   ├── 0070_2_02.html
+│   │       │   │   ├── 0071_2_03.html
+│   │       │   │   ├── 0072_2_04.html
+│   │       │   │   ├── 0073_2_05.html
+│   │       │   │   ├── 0074_2_06.html
+│   │       │   │   ├── 0075_2_06__apr_1_version_.html
+│   │       │   │   ├── 0076_2_07.html
+│   │       │   │   ├── 0077_2_08.html
+│   │       │   │   ├── 0078_2_09.html
+│   │       │   │   ├── 0079_2_10_t.html
+│   │       │   │   ├── 0080_2_11.html
+│   │       │   │   ├── 0081_2_12.html
+│   │       │   │   ├── 0082_2_13.html
+│   │       │   │   ├── 0083_2_14_g.html
+│   │       │   │   ├── 0084_interlude___mating_rituals__pt__1_.html
+│   │       │   │   ├── 0085_2_15.html
+│   │       │   │   ├── 0086_2_16.html
+│   │       │   │   ├── 0087_2_17.html
+│   │       │   │   ├── 0088_2_18.html
+│   │       │   │   ├── 0089_2_19_g.html
+│   │       │   │   ├── 0090_2_20.html
+│   │       │   │   ├── 0091_2_21.html
+│   │       │   │   ├── 0092_2_22_k.html
+│   │       │   │   ├── 0093_2_23.html
+│   │       │   │   ├── 0094_2_24_t.html
+│   │       │   │   ├── 0095_2_25.html
+│   │       │   │   ├── 0096_2_26.html
+│   │       │   │   ├── 0097_1_00_c.html
+│   │       │   │   ├── 0098_1_01_c.html
+│   │       │   │   ├── 0099_2_27_g.html
+│   │       │   │   ├── 0100_2_28.html
+│   │       │   │   ├── 0101_2_29.html
+│   │       │   │   ├── 0102_2_30.html
+│   │       │   │   ├── 0103_2_31.html
+│   │       │   │   ├── 0104_2_32_h.html
+│   │       │   │   ├── 0105_2_33.html
+│   │       │   │   ├── 0106_2_34.html
+│   │       │   │   ├── 0107_2_35.html
+│   │       │   │   ├── 0108_2_36_g.html
+│   │       │   │   ├── 0109_2_37.html
+│   │       │   │   ├── 0110_2_38.html
+│   │       │   │   ├── 0111_interlude___quiet_discussions.html
+│   │       │   │   ├── 0112_interlude___the_antinium_wars__pt_1_.html
+│   │       │   │   ├── 0113_interlude___the_antinium_wars__pt_2_.html
+│   │       │   │   ├── 0114_2_39.html
+│   │       │   │   ├── 0115_2_40.html
+│   │       │   │   ├── 0116_2_41.html
+│   │       │   │   ├── 0117_2_42.html
+│   │       │   │   ├── 0118_2_43.html
+│   │       │   │   ├── 0119_2_44.html
+│   │       │   │   ├── 0120_2_45.html
+│   │       │   │   ├── 0121_2_46.html
+│   │       │   │   ├── 0122_2_47.html
+│   │       │   │   ├── 0123_2_48.html
+│   │       │   │   ├── 0124_3_00_e.html
+│   │       │   │   ├── 0125_3_01_e.html
+│   │       │   │   ├── 0126_3_02_h.html
+│   │       │   │   ├── 0127_3_03.html
+│   │       │   │   ├── 0128_3_04.html
+│   │       │   │   ├── 0129_3_05_l.html
+│   │       │   │   ├── 0130_1_00_d.html
+│   │       │   │   ├── 0131_1_01_d.html
+│   │       │   │   ├── 0132_3_06_l.html
+│   │       │   │   ├── 0133_3_07_h.html
+│   │       │   │   ├── 0134_3_08_h.html
+│   │       │   │   ├── 0135_3_09.html
+│   │       │   │   ├── 0136_3_10.html
+│   │       │   │   ├── 0137_3_11_e.html
+│   │       │   │   ├── 0138_3_12_e.html
+│   │       │   │   ├── 0139_3_13.html
+│   │       │   │   ├── 0140_3_14.html
+│   │       │   │   ├── 0141_3_15.html
+│   │       │   │   ├── 0142_3_16.html
+│   │       │   │   ├── 0143_3_17_t.html
+│   │       │   │   ├── 0144_3_18_t.html
+│   │       │   │   ├── 0145_3_19_t.html
+│   │       │   │   ├── 0146_3_20_t.html
+│   │       │   │   ├── 0147_3_21_l.html
+│   │       │   │   ├── 0148_3_22_l.html
+│   │       │   │   ├── 0149_3_23_l.html
+│   │       │   │   ├── 0150_3_24.html
+│   │       │   │   ├── 0151_3_25.html
+│   │       │   │   ├── 0152_3_26_g.html
+│   │       │   │   ├── 0153_3_27_m.html
+│   │       │   │   ├── 0154_3_28_g.html
+│   │       │   │   ├── 0155_3_29_g.html
+│   │       │   │   ├── 0156_3_30.html
+│   │       │   │   ├── 0157_3_31_g.html
+│   │       │   │   ├── 0158_interlude___wistram_days__pt__1_.html
+│   │       │   │   ├── 0159_interlude___wistram_days__pt__2_.html
+│   │       │   │   ├── 0160_interlude___wistram_days__pt__3_.html
+│   │       │   │   ├── 0161_interlude___wistram_days__pt__4_.html
+│   │       │   │   ├── 0162_interlude___wistram_days__pt__5_.html
+│   │       │   │   ├── 0163_interlude___wistram_days__pt__6_.html
+│   │       │   │   ├── 0164_interlude___wistram_days__pt__7_.html
+│   │       │   │   ├── 0165_3_32.html
+│   │       │   │   ├── 0166_3_33.html
+│   │       │   │   ├── 0167_3_34.html
+│   │       │   │   ├── 0168_3_35.html
+│   │       │   │   ├── 0169_3_36.html
+│   │       │   │   ├── 0170_3_37.html
+│   │       │   │   ├── 0171_3_38.html
+│   │       │   │   ├── 0172_3_39.html
+│   │       │   │   ├── 0173_3_40.html
+│   │       │   │   ├── 0174_3_41.html
+│   │       │   │   ├── 0175_3_42.html
+│   │       │   │   ├── 0176_interlude___winter_solstice.html
+│   │       │   │   ├── 0177_4_00_k.html
+│   │       │   │   ├── 0178_4_01_k.html
+│   │       │   │   ├── 0179_4_02_k.html
+│   │       │   │   ├── 0180_4_03_k.html
+│   │       │   │   ├── 0181_4_04_k.html
+│   │       │   │   ├── 0182_4_05_k.html
+│   │       │   │   ├── 0183_4_06_km.html
+│   │       │   │   ├── 0184_4_07.html
+│   │       │   │   ├── 0185_4_08_t.html
+│   │       │   │   ├── 0186_4_09.html
+│   │       │   │   ├── 0187_4_10.html
+│   │       │   │   ├── 0188_4_11.html
+│   │       │   │   ├── 0189_4_12.html
+│   │       │   │   ├── 0190_4_13_l.html
+│   │       │   │   ├── 0191_4_14_l.html
+│   │       │   │   ├── 0192_4_15_l.html
+│   │       │   │   ├── 0193_4_16.html
+│   │       │   │   ├── 0194_4_17.html
+│   │       │   │   ├── 0195_1_02_d.html
+│   │       │   │   ├── 0196_1_03_d.html
+│   │       │   │   ├── 0197_1_04_d.html
+│   │       │   │   ├── 0198_1_05_d.html
+│   │       │   │   ├── 0199_1_06_d.html
+│   │       │   │   ├── 0200_4_18.html
+│   │       │   │   ├── 0201_4_19.html
+│   │       │   │   ├── 0202_4_20_e.html
+│   │       │   │   ├── 0203_4_21_e.html
+│   │       │   │   ├── 0204_4_22_e.html
+│   │       │   │   ├── 0205_4_23_e.html
+│   │       │   │   ├── 0206_4_24.html
+│   │       │   │   ├── 0207_4_25_n.html
+│   │       │   │   ├── 0208_4_26_m.html
+│   │       │   │   ├── 0209_4_27_h.html
+│   │       │   │   ├── 0210_4_28.html
+│   │       │   │   ├── 0211_4_29.html
+│   │       │   │   ├── 0212_4_30.html
+│   │       │   │   ├── 0213_4_31.html
+│   │       │   │   ├── 0214_4_32_g.html
+│   │       │   │   ├── 0215_1_02_c.html
+│   │       │   │   ├── 0216_1_03_c.html
+│   │       │   │   ├── 0217_1_04_c.html
+│   │       │   │   ├── 0218_1_05_c.html
+│   │       │   │   ├── 0219_4_33.html
+│   │       │   │   ├── 0220_4_34.html
+│   │       │   │   ├── 0221_4_35_e.html
+│   │       │   │   ├── 0222_4_36_o.html
+│   │       │   │   ├── 0223_4_37_o.html
+│   │       │   │   ├── 0224_4_38_b.html
+│   │       │   │   ├── 0225_4_39_g.html
+│   │       │   │   ├── 0226_4_40_l.html
+│   │       │   │   ├── 0227_4_41_l.html
+│   │       │   │   ├── 0228_4_42_l.html
+│   │       │   │   ├── 0229_4_43.html
+│   │       │   │   ├── 0230_4_44_m.html
+│   │       │   │   ├── 0231_4_45.html
+│   │       │   │   ├── 0232_4_46.html
+│   │       │   │   ├── 0233_4_47.html
+│   │       │   │   ├── 0234_interlude___the_antinium_wars__pt_3_.html
+│   │       │   │   ├── 0235_interlude___the_antinium_wars__pt_4_.html
+│   │       │   │   ├── 0236_interlude___the_antinium_wars__pt_5_.html
+│   │       │   │   ├── 0237_4_48.html
+│   │       │   │   ├── 0238_4_49.html
+│   │       │   │   ├── 0239_the_depthless_doctor.html
+│   │       │   │   ├── 0240_5_00.html
+│   │       │   │   ├── 0241_5_01.html
+│   │       │   │   ├── 0242_5_02.html
+│   │       │   │   ├── 0243_5_03.html
+│   │       │   │   ├── 0244_5_04.html
+│   │       │   │   ├── 0245_5_05.html
+│   │       │   │   ├── 0246_5_06_m.html
+│   │       │   │   ├── 0247_5_07.html
+│   │       │   │   ├── 0248_5_08.html
+│   │       │   │   ├── 0249_interlude___flos.html
+│   │       │   │   ├── 0250_5_09_e.html
+│   │       │   │   ├── 0251_5_10_e.html
+│   │       │   │   ├── 0252_5_11_e.html
+│   │       │   │   ├── 0253_5_12.html
+│   │       │   │   ├── 0254_5_13.html
+│   │       │   │   ├── 0255_5_14.html
+│   │       │   │   ├── 0256_5_15.html
+│   │       │   │   ├── 0257_5_16_s.html
+│   │       │   │   ├── 0258_5_17_s.html
+│   │       │   │   ├── 0259_5_18_s.html
+│   │       │   │   ├── 0260_5_19_g.html
+│   │       │   │   ├── 0261_5_20_g.html
+│   │       │   │   ├── 0262_5_21_e.html
+│   │       │   │   ├── 0263_5_22_g.html
+│   │       │   │   ├── 0264_5_23_g.html
+│   │       │   │   ├── 0265_5_24_l.html
+│   │       │   │   ├── 0266_5_25_l.html
+│   │       │   │   ├── 0267_5_26_l.html
+│   │       │   │   ├── 0268_5_27.html
+│   │       │   │   ├── 0269_5_28.html
+│   │       │   │   ├── 0270_5_29.html
+│   │       │   │   ├── 0271_5_30_g.html
+│   │       │   │   ├── 0272_5_31_g.html
+│   │       │   │   ├── 0273_5_32_g.html
+│   │       │   │   ├── 0274_5_33_b.html
+│   │       │   │   ├── 0275_interlude___blackmage.html
+│   │       │   │   ├── 0276_5_34.html
+│   │       │   │   ├── 0277_5_35_h.html
+│   │       │   │   ├── 0278_5_36.html
+│   │       │   │   ├── 0279_5_37_g.html
+│   │       │   │   ├── 0280_5_38.html
+│   │       │   │   ├── 0281_5_39.html
+│   │       │   │   ├── 0282_5_40.html
+│   │       │   │   ├── 0283_5_41.html
+│   │       │   │   ├── 0284_5_42.html
+│   │       │   │   ├── 0285_5_43.html
+│   │       │   │   ├── 0286_interlude___niers.html
+│   │       │   │   ├── 0287_5_44.html
+│   │       │   │   ├── 0288_5_45.html
+│   │       │   │   ├── 0289_5_46.html
+│   │       │   │   ├── 0290_5_47_g.html
+│   │       │   │   ├── 0291_5_48_g.html
+│   │       │   │   ├── 0292_5_49.html
+│   │       │   │   ├── 0293_5_50_g.html
+│   │       │   │   ├── 0294_interlude___bird.html
+│   │       │   │   ├── 0295_5_51_g.html
+│   │       │   │   ├── 0296_5_52.html
+│   │       │   │   ├── 0297_5_53.html
+│   │       │   │   ├── 0298_5_54__non_canon_.html
+│   │       │   │   ├── 0299_5_54.html
+│   │       │   │   ├── 0300_interlude___krshia.html
+│   │       │   │   ├── 0301_5_55_g.html
+│   │       │   │   ├── 0302_5_56_g.html
+│   │       │   │   ├── 0303_5_57.html
+│   │       │   │   ├── 0304_5_58.html
+│   │       │   │   ├── 0305_5_59.html
+│   │       │   │   ├── 0306_interlude___pebblesnatch_and_garry.html
+│   │       │   │   ├── 0307_5_60.html
+│   │       │   │   ├── 0308_5_61.html
+│   │       │   │   ├── 0309_5_62.html
+│   │       │   │   ├── 0310_interlude___thereafter.html
+│   │       │   │   ├── 0311_6_00.html
+│   │       │   │   ├── 0312_6_01.html
+│   │       │   │   ├── 0313_6_02.html
+│   │       │   │   ├── 0314_6_03.html
+│   │       │   │   ├── 0315_6_04_d.html
+│   │       │   │   ├── 0316_6_05_d.html
+│   │       │   │   ├── 0317_6_06_d.html
+│   │       │   │   ├── 0318_6_07_d.html
+│   │       │   │   ├── 0319_6_08.html
+│   │       │   │   ├── 0320_6_09.html
+│   │       │   │   ├── 0321_6_10.html
+│   │       │   │   ├── 0322_6_11.html
+│   │       │   │   ├── 0323_6_12_k.html
+│   │       │   │   ├── 0324_6_13_k.html
+│   │       │   │   ├── 0325_6_14_k.html
+│   │       │   │   ├── 0326_6_15_k.html
+│   │       │   │   ├── 0327_6_16.html
+│   │       │   │   ├── 0328_6_17_s.html
+│   │       │   │   ├── 0329_6_18_h.html
+│   │       │   │   ├── 0330_6_19_h.html
+│   │       │   │   ├── 0331_6_20_d.html
+│   │       │   │   ├── 0332_6_21_d.html
+│   │       │   │   ├── 0333_6_22_d.html
+│   │       │   │   ├── 0334_6_23_d.html
+│   │       │   │   ├── 0335_6_24_d.html
+│   │       │   │   ├── 0336_6_25.html
+│   │       │   │   ├── 0337_6_26.html
+│   │       │   │   ├── 0338_6_27_m.html
+│   │       │   │   ├── 0339_6_28.html
+│   │       │   │   ├── 0340_6_29.html
+│   │       │   │   ├── 0341_interlude___embria.html
+│   │       │   │   ├── 0342_6_30.html
+│   │       │   │   ├── 0343_6_31.html
+│   │       │   │   ├── 0344_6_32.html
+│   │       │   │   ├── 0345_6_33_e.html
+│   │       │   │   ├── 0346_6_34_e.html
+│   │       │   │   ├── 0347_interlude___numbtongue__pt_1_.html
+│   │       │   │   ├── 0348_interlude___numbtongue__pt_2_.html
+│   │       │   │   ├── 0349_6_35.html
+│   │       │   │   ├── 0350_6_36_e.html
+│   │       │   │   ├── 0351_6_37_e.html
+│   │       │   │   ├── 0352_6_38.html
+│   │       │   │   ├── 0353_6_39.html
+│   │       │   │   ├── 0354_6_40_e.html
+│   │       │   │   ├── 0355_6_41_e.html
+│   │       │   │   ├── 0356_interlude___two_rats.html
+│   │       │   │   ├── 0357_interlude___rufelt.html
+│   │       │   │   ├── 0358_6_42_e.html
+│   │       │   │   ├── 0359_6_43_e.html
+│   │       │   │   ├── 0360_6_44_e.html
+│   │       │   │   ├── 0361_6_45_e.html
+│   │       │   │   ├── 0362_6_46_e.html
+│   │       │   │   ├── 0363_6_47_e.html
+│   │       │   │   ├── 0364_6_48_t.html
+│   │       │   │   ├── 0365_6_49.html
+│   │       │   │   ├── 0366_6_50_i.html
+│   │       │   │   ├── 0367_6_51_a.html
+│   │       │   │   ├── 0368_6_52_k.html
+│   │       │   │   ├── 0369_6_53_k.html
+│   │       │   │   ├── 0370_6_54_k.html
+│   │       │   │   ├── 0371_6_55_k.html
+│   │       │   │   ├── 0372_interlude___the_titan_s_question.html
+│   │       │   │   ├── 0373_6_56.html
+│   │       │   │   ├── 0374_6_57.html
+│   │       │   │   ├── 0375_6_58.html
+│   │       │   │   ├── 0376_6_59.html
+│   │       │   │   ├── 0377_6_60.html
+│   │       │   │   ├── 0378_interlude___talia.html
+│   │       │   │   ├── 0379_6_61_l.html
+│   │       │   │   ├── 0380_6_62_l.html
+│   │       │   │   ├── 0381_interlude___foliana.html
+│   │       │   │   ├── 0382_6_63_p.html
+│   │       │   │   ├── 0383_6_64.html
+│   │       │   │   ├── 0384_6_65.html
+│   │       │   │   ├── 0385_6_66_h.html
+│   │       │   │   ├── 0386_6_67.html
+│   │       │   │   ├── 0387_6_68.html
+│   │       │   │   ├── 0388_7_00.html
+│   │       │   │   ├── 0389_7_01.html
+│   │       │   │   ├── 0390_7_02.html
+│   │       │   │   ├── 0391_7_03.html
+│   │       │   │   ├── 0392_mini_stories___crabs_and_drinks.html
+│   │       │   │   ├── 0393_7_04.html
+│   │       │   │   ├── 0394_interlude___queens_and_dragons.html
+│   │       │   │   ├── 0395_7_05_p.html
+│   │       │   │   ├── 0396_7_06.html
+│   │       │   │   ├── 0397_7_07.html
+│   │       │   │   ├── 0398_7_08_k.html
+│   │       │   │   ├── 0399_7_09_k.html
+│   │       │   │   ├── 0400_7_10_k.html
+│   │       │   │   ├── 0401_7_11.html
+│   │       │   │   ├── 0402_interlude___dancing_and_brawling.html
+│   │       │   │   ├── 0403_interlude___chocolate_gold.html
+│   │       │   │   ├── 0404_interlude___chess_and_ships.html
+│   │       │   │   ├── 0405_interlude___chocolate_alchemy.html
+│   │       │   │   ├── 0406_interlude___lifting_ants.html
+│   │       │   │   ├── 0407_interlude___burning_alcohol.html
+│   │       │   │   ├── 0408_interlude___the_hangover_after.html
+│   │       │   │   ├── 0409_7_12_g.html
+│   │       │   │   ├── 0410_7_13_k.html
+│   │       │   │   ├── 0411_mating_rituals_pt_2.html
+│   │       │   │   ├── 0412_7_14_t.html
+│   │       │   │   ├── 0413_7_15_r.html
+│   │       │   │   ├── 0414_7_16_l.html
+│   │       │   │   ├── 0415_7_17_s.html
+│   │       │   │   ├── 0416_7_18_m.html
+│   │       │   │   ├── 0417_interlude___strategists_at_sea__pt__1_.html
+│   │       │   │   ├── 0418_interlude___strategists_at_sea__pt__2_.html
+│   │       │   │   ├── 0419_7_19.html
+│   │       │   │   ├── 0420_7_20.html
+│   │       │   │   ├── 0421_interlude___a_night_in_the_inn.html
+│   │       │   │   ├── 0422_7_21_kq.html
+│   │       │   │   ├── 0423_7_22_d.html
+│   │       │   │   ├── 0424_7_23_lm.html
+│   │       │   │   ├── 0425_7_24.html
+│   │       │   │   ├── 0426_7_25.html
+│   │       │   │   ├── 0427_7_26.html
+│   │       │   │   ├── 0428_7_27.html
+│   │       │   │   ├── 0429_interlude___the_gecko_of_illusions.html
+│   │       │   │   ├── 0430_7_28.html
+│   │       │   │   ├── 0431_7_29_b.html
+│   │       │   │   ├── 0432_7_30.html
+│   │       │   │   ├── 0433_7_31.html
+│   │       │   │   ├── 0434_interlude___a_meeting_of__druids_.html
+│   │       │   │   ├── 0435_7_32_d.html
+│   │       │   │   ├── 0436_7_33_i.html
+│   │       │   │   ├── 0437_7_34_c.html
+│   │       │   │   ├── 0438_7_35_c.html
+│   │       │   │   ├── 0439_7_36_c.html
+│   │       │   │   ├── 0440_7_37.html
+│   │       │   │   ├── 0441_7_38.html
+│   │       │   │   ├── 0442_7_39_a.html
+│   │       │   │   ├── 0443_interlude___carriages_and_conversations.html
+│   │       │   │   ├── 0444_interlude___meetings_and_friendships.html
+│   │       │   │   ├── 0445_interlude___sand_and_notes.html
+│   │       │   │   ├── 0446_7_40_er.html
+│   │       │   │   ├── 0447_interlude___food_and_growth.html
+│   │       │   │   ├── 0448_7_41.html
+│   │       │   │   ├── 0449_7_42_m.html
+│   │       │   │   ├── 0450_7_43_g.html
+│   │       │   │   ├── 0451_7_44.html
+│   │       │   │   ├── 0452_7_45.html
+│   │       │   │   ├── 0453_7_46_k.html
+│   │       │   │   ├── 0454_7_47_k.html
+│   │       │   │   ├── 0455_7_48_k.html
+│   │       │   │   ├── 0456_7_49.html
+│   │       │   │   ├── 0457_interlude___experiments_in_golems.html
+│   │       │   │   ├── 0458_7_50.html
+│   │       │   │   ├── 0459_7_51.html
+│   │       │   │   ├── 0460_7_52.html
+│   │       │   │   ├── 0461_7_53.html
+│   │       │   │   ├── 0462_7_54.html
+│   │       │   │   ├── 0463_7_55_e.html
+│   │       │   │   ├── 0464_interlude___saliss_the_adventurer.html
+│   │       │   │   ├── 0465_7_56.html
+│   │       │   │   ├── 0466_7_57.html
+│   │       │   │   ├── 0467_7_58.html
+│   │       │   │   ├── 0468_7_59.html
+│   │       │   │   ├── 0469_7_60.html
+│   │       │   │   ├── 0470_interlude___the_tribes_of_izril.html
+│   │       │   │   ├── 0471_interlude___the_innkeeper_s__knight_.html
+│   │       │   │   ├── 0472_7_61.html
+│   │       │   │   ├── 0473_7_62.html
+│   │       │   │   ├── 0474_solstice__pt__1_.html
+│   │       │   │   ├── 0475_solstice__pt__2_.html
+│   │       │   │   ├── 0476_solstice__pt__3_.html
+│   │       │   │   ├── 0477_solstice__pt__4_.html
+│   │       │   │   ├── 0478_solstice__pt__5_.html
+│   │       │   │   ├── 0479_solstice__pt__6_.html
+│   │       │   │   ├── 0480_solstice__pt__7_.html
+│   │       │   │   ├── 0481_solstice__pt__8_.html
+│   │       │   │   ├── 0482_solstice__pt__9_.html
+│   │       │   │   ├── 0483_8_00.html
+│   │       │   │   ├── 0484_8_01.html
+│   │       │   │   ├── 0485_8_02.html
+│   │       │   │   ├── 0486_8_03.html
+│   │       │   │   ├── 0487_interlude___the_revenant_and_the_naga.html
+│   │       │   │   ├── 0488_8_04_t.html
+│   │       │   │   ├── 0489_8_05_i.html
+│   │       │   │   ├── 0490_8_06_rt.html
+│   │       │   │   ├── 0491_8_07_l.html
+│   │       │   │   ├── 0492_8_08_j.html
+│   │       │   │   ├── 0493_8_09.html
+│   │       │   │   ├── 0494_8_10.html
+│   │       │   │   ├── 0495_8_11_e__revised_.html
+│   │       │   │   ├── 0496_8_12_t.html
+│   │       │   │   ├── 0497_interlude___the__rower__and_the__bartender_.html
+│   │       │   │   ├── 0498_8_13_f.html
+│   │       │   │   ├── 0499_8_14_n.html
+│   │       │   │   ├── 0500_8_15.html
+│   │       │   │   ├── 0501_interlude___paradigm_shift__pt__1_.html
+│   │       │   │   ├── 0502_interlude___paradigm_shift__pt__2_.html
+│   │       │   │   ├── 0503_8_16.html
+│   │       │   │   ├── 0504_8_17_h.html
+│   │       │   │   ├── 0505_8_18_h.html
+│   │       │   │   ├── 0506_8_19_h.html
+│   │       │   │   ├── 0507_8_20.html
+│   │       │   │   ├── 0508_8_21_l.html
+│   │       │   │   ├── 0509_8_22_he.html
+│   │       │   │   ├── 0510_interlude___senior_guardsman_relc.html
+│   │       │   │   ├── 0511_8_23.html
+│   │       │   │   ├── 0512_8_24.html
+│   │       │   │   ├── 0513_8_25_kh.html
+│   │       │   │   ├── 0514_8_26_fk.html
+│   │       │   │   ├── 0515_interlude___luan_the_giant.html
+│   │       │   │   ├── 0516_8_27.html
+│   │       │   │   ├── 0517_8_28.html
+│   │       │   │   ├── 0518_8_29.html
+│   │       │   │   ├── 0519_interlude___the_pets_of_innworld.html
+│   │       │   │   ├── 0520_8_30.html
+│   │       │   │   ├── 0521_8_31.html
+│   │       │   │   ├── 0522_interlude___pisces__revised_.html
+│   │       │   │   ├── 0523_8_32.html
+│   │       │   │   ├── 0524_8_33_r.html
+│   │       │   │   ├── 0525_8_34_r.html
+│   │       │   │   ├── 0526_8_35.html
+│   │       │   │   ├── 0527_8_36_h.html
+│   │       │   │   ├── 0528_8_37_h.html
+│   │       │   │   ├── 0529_8_38_h.html
+│   │       │   │   ├── 0530_8_39.html
+│   │       │   │   ├── 0531_8_40_ctv.html
+│   │       │   │   ├── 0532_interlude___of_vampires_and_fraerlings.html
+│   │       │   │   ├── 0533_8_41.html
+│   │       │   │   ├── 0534_interlude___songs_and_stories.html
+│   │       │   │   ├── 0535_8_42.html
+│   │       │   │   ├── 0536_8_43.html
+│   │       │   │   ├── 0537_8_44_o.html
+│   │       │   │   ├── 0538_8_45_o.html
+│   │       │   │   ├── 0539_8_46_g.html
+│   │       │   │   ├── 0540_interlude___perspective_and_past.html
+│   │       │   │   ├── 0541_8_47_h.html
+│   │       │   │   ├── 0542_8_48_h.html
+│   │       │   │   ├── 0543_8_49_m___revised.html
+│   │       │   │   ├── 0544_8_50.html
+│   │       │   │   ├── 0545_interlude___conversations.html
+│   │       │   │   ├── 0546_8_51_d.html
+│   │       │   │   ├── 0547_8_52_mn.html
+│   │       │   │   ├── 0548_8_53_fh.html
+│   │       │   │   ├── 0549_8_54_h.html
+│   │       │   │   ├── 0550_8_55_l.html
+│   │       │   │   ├── 0551_8_56.html
+│   │       │   │   ├── 0552_8_57_h.html
+│   │       │   │   ├── 0553_8_58_pfh.html
+│   │       │   │   ├── 0554_8_59_h.html
+│   │       │   │   ├── 0555_8_60.html
+│   │       │   │   ├── 0556_8_61.html
+│   │       │   │   ├── 0557_8_62_k.html
+│   │       │   │   ├── 0558_8_63_k.html
+│   │       │   │   ├── 0559_8_64_k.html
+│   │       │   │   ├── 0560_8_65.html
+│   │       │   │   ├── 0561_interlude___hectval__pt__1_.html
+│   │       │   │   ├── 0562_interlude___hectval__pt__2_.html
+│   │       │   │   ├── 0563_interlude___hectval__pt__3_.html
+│   │       │   │   ├── 0564_interlude___satar.html
+│   │       │   │   ├── 0565_8_66.html
+│   │       │   │   ├── 0566_8_67.html
+│   │       │   │   ├── 0567_8_68.html
+│   │       │   │   ├── 0568_8_69_t.html
+│   │       │   │   ├── 0569_8_70_e.html
+│   │       │   │   ├── 0570_8_71.html
+│   │       │   │   ├── 0571_8_72.html
+│   │       │   │   ├── 0572_8_73_r.html
+│   │       │   │   ├── 0573_8_74_dr.html
+│   │       │   │   ├── 0574_8_75.html
+│   │       │   │   ├── 0575_8_76_b.html
+│   │       │   │   ├── 0576_8_77_b.html
+│   │       │   │   ├── 0577_8_78_f.html
+│   │       │   │   ├── 0578_8_79.html
+│   │       │   │   ├── 0579_8_80.html
+│   │       │   │   ├── 0580_8_81.html
+│   │       │   │   ├── 0581_8_82__pt__1_.html
+│   │       │   │   ├── 0582_8_82__pt__2_.html
+│   │       │   │   ├── 0583_8_82__pt__3_.html
+│   │       │   │   ├── 0584_8_83.html
+│   │       │   │   ├── 0585_8_84.html
+│   │       │   │   ├── 0586_8_85.html
+│   │       │   │   ├── 0587_epilogue.html
+│   │       │   │   ├── 0588_9_00.html
+│   │       │   │   ├── 0589_9_01.html
+│   │       │   │   ├── 0590_9_02.html
+│   │       │   │   ├── 0591_interlude___singing_ships.html
+│   │       │   │   ├── 0592_9_03.html
+│   │       │   │   ├── 0593_9_04.html
+│   │       │   │   ├── 0594_interlude___the_isles_of_goblin_and_minos.html
+│   │       │   │   ├── 0595_9_05_npr.html
+│   │       │   │   ├── 0596_9_06.html
+│   │       │   │   ├── 0597_9_07.html
+│   │       │   │   ├── 0598_9_08.html
+│   │       │   │   ├── 0599_interlude___mundanity_and_memorials.html
+│   │       │   │   ├── 0600_interlude___the_competition.html
+│   │       │   │   ├── 0601_9_09_p.html
+│   │       │   │   ├── 0602_9_10_w.html
+│   │       │   │   ├── 0603_9_11_w.html
+│   │       │   │   ├── 0604_9_12.html
+│   │       │   │   ├── 0605_9_13.html
+│   │       │   │   ├── 0606_9_14_vm.html
+│   │       │   │   ├── 0607_9_15_vm.html
+│   │       │   │   ├── 0608_9_16_r.html
+│   │       │   │   ├── 0609_9_17_r.html
+│   │       │   │   ├── 0610_interlude___the_great_race.html
+│   │       │   │   ├── 0611_9_18_e.html
+│   │       │   │   ├── 0612_interlude___relationships.html
+│   │       │   │   ├── 0613_9_19.html
+│   │       │   │   ├── 0614_9_20.html
+│   │       │   │   ├── 0615_interlude___death_and_stitches.html
+│   │       │   │   ├── 0616_9_21.html
+│   │       │   │   ├── 0617_9_22_gn.html
+│   │       │   │   ├── 0618_9_23_ggggggggg.html
+│   │       │   │   ├── 0619_9_24.html
+│   │       │   │   ├── 0620_interlude___adventurers__pt__1_.html
+│   │       │   │   ├── 0621_interlude___adventurers__pt__2_.html
+│   │       │   │   ├── 0622_interlude___adventurers__pt__3_.html
+│   │       │   │   ├── 0623_9_25.html
+│   │       │   │   ├── 0624_9_26_f.html
+│   │       │   │   ├── 0625_9_27_rc.html
+│   │       │   │   ├── 0626_interlude___age_and_tales.html
+│   │       │   │   ├── 0627_interlude___the_first_and_last_of_us.html
+│   │       │   │   ├── 0628_9_28.html
+│   │       │   │   ├── 0629_9_29.html
+│   │       │   │   ├── 0630_9_30.html
+│   │       │   │   ├── 0631_9_31.html
+│   │       │   │   ├── 0632_9_32.html
+│   │       │   │   ├── 0633_9_33.html
+│   │       │   │   ├── 0634_interlude___foody_discussions.html
+│   │       │   │   ├── 0635_9_34.html
+│   │       │   │   ├── 0636_9_35_o.html
+│   │       │   │   ├── 0637_9_36_ho.html
+│   │       │   │   ├── 0638_9_37_ho.html
+│   │       │   │   ├── 0639_9_38_tv__pt__1_.html
+│   │       │   │   ├── 0640_9_38_tv__pt__2_.html
+│   │       │   │   ├── 0641_interlude___beginnings.html
+│   │       │   │   ├── 0642_9_39.html
+│   │       │   │   ├── 0643_9_40_gg.html
+│   │       │   │   ├── 0644_interlude___innovation_and_invention.html
+│   │       │   │   ├── 0645_interlude___brewing_sariants.html
+│   │       │   │   ├── 0646_interlude___the_spitoon.html
+│   │       │   │   ├── 0647_interlude___stories.html
+│   │       │   │   ├── 0648_9_41__pt__1_.html
+│   │       │   │   ├── 0649_9_41__pt__2_.html
+│   │       │   │   ├── 0650_interlude___levels.html
+│   │       │   │   ├── 0651_9_41__pt__3_.html
+│   │       │   │   ├── 0652_interlude___trade_and_travel.html
+│   │       │   │   ├── 0653_9_42_e.html
+│   │       │   │   ├── 0654_9_43_l.html
+│   │       │   │   ├── 0655_9_44_p.html
+│   │       │   │   ├── 0656_9_45_gt.html
+│   │       │   │   ├── 0657_9_46_s.html
+│   │       │   │   ├── 0658_9_47_u.html
+│   │       │   │   ├── 0659_9_48_btiprljmwvrv.html
+│   │       │   │   ├── 0660_9_49.html
+│   │       │   │   ├── 0661_9_50.html
+│   │       │   │   ├── 0662_9_51_z.html
+│   │       │   │   ├── 0663_9_52.html
+│   │       │   │   ├── 0664_9_53.html
+│   │       │   │   ├── 0665_9_54_c.html
+│   │       │   │   ├── 0666_9_55__pt__1_.html
+│   │       │   │   ├── 0667_9_55__pt__2_.html
+│   │       │   │   ├── 0668_9_56.html
+│   │       │   │   ├── 0669_9_57_b.html
+│   │       │   │   ├── 0670_9_58_o.html
+│   │       │   │   ├── 0671_9_59_o.html
+│   │       │   │   ├── 0672_interlude___the_library.html
+│   │       │   │   ├── 0673_9_60.html
+│   │       │   │   ├── 0674_9_61_g.html
+│   │       │   │   ├── 0675_9_62.html
+│   │       │   │   ├── 0676_9_63.html
+│   │       │   │   ├── 0677_9_64_bh.html
+│   │       │   │   ├── 0678_9_65.html
+│   │       │   │   ├── 0679_9_66.html
+│   │       │   │   ├── 0680_9_67__pt__1_.html
+│   │       │   │   ├── 0681_9_67__pt__2_.html
+│   │       │   │   ├── 0682_9_68.html
+│   │       │   │   ├── 0683_9_69_h__pt__1_.html
+│   │       │   │   ├── 0684_9_69_h__pt__2_.html
+│   │       │   │   ├── 0685_9_70__pt__1_.html
+│   │       │   │   ├── 0686_9_70__pt__2_.html
+│   │       │   │   ├── 0687_9_70__pt__3_.html
+│   │       │   │   ├── 0688_volume_9___epilogue.html
+│   │       │   │   ├── 0689_10_00_l.html
+│   │       │   │   ├── 0690_10_01_l.html
+│   │       │   │   ├── 0691_10_02_y.html
+│   │       │   │   ├── 0692_10_03_y.html
+│   │       │   │   ├── 0693_10_04_v.html
+│   │       │   │   ├── 0694_10_05.html
+│   │       │   │   ├── 0695_10_06.html
+│   │       │   │   ├── 0696_10_07.html
+│   │       │   │   ├── 0697_interlude___saliss_the_architect.html
+│   │       │   │   ├── 0698_10_08__pt__1_.html
+│   │       │   │   ├── 0699_10_08__pt__2_.html
+│   │       │   │   ├── 0700_10_09_e.html
+│   │       │   │   ├── 0701_10_10_e__pt__1_.html
+│   │       │   │   ├── 0702_10_10_e__pt__2_.html
+│   │       │   │   ├── 0703_10_11_h.html
+│   │       │   │   ├── 0704_10_12_h__pt__1_.html
+│   │       │   │   ├── 0705_10_12_h__pt__2_.html
+│   │       │   │   ├── 0706_10_13.html
+│   │       │   │   ├── 0707_10_14.html
+│   │       │   │   ├── 0708_10_15.html
+│   │       │   │   ├── 0709_10_16_n.html
+│   │       │   │   ├── 0710_interlude___another_time.html
+│   │       │   │   ├── 0711_10_17.html
+│   │       │   │   ├── 0712_10_18_e.html
+│   │       │   │   ├── 0713_10_19_e.html
+│   │       │   │   ├── 0714_10_20_e.html
+│   │       │   │   ├── 0715_10_21_e.html
+│   │       │   │   ├── 0716_goblin_days__pt_1____the_wedding.html
+│   │       │   │   ├── 0717_goblin_days__pt__2____the_pilot_and_the_knight.html
+│   │       │   │   ├── 0718_goblin_days__pt__3____vengeance_and_talking.html
+│   │       │   │   ├── 0719_goblin_days__pt__4____order__oddity.html
+│   │       │   │   ├── 0720_goblin_days__pt__5____redblade_and_lilbrasi.html
+│   │       │   │   ├── 0721_goblin_days__pt__6____of_dragons.html
+│   │       │   │   ├── 0722_goblin_days__pt__7____no_answers_and_answers.html
+│   │       │   │   ├── 0723_goblin_days__pt__8____downwards.html
+│   │       │   │   ├── 0724_the_roots__pt__1_.html
+│   │       │   │   ├── 0725_the_roots__pt__2_.html
+│   │       │   │   ├── 0726_the_roots__pt__2b_.html
+│   │       │   │   ├── 0727_the_roots__pt__2c_.html
+│   │       │   │   ├── 0728_the_roots__pt__3_.html
+│   │       │   │   ├── 0729_the_roots__pt__4_.html
+│   │       │   │   ├── 0730_the_roots__pt__5_.html
+│   │       │   │   ├── 0731_10_22_r.html
+│   │       │   │   ├── 0732_10_23_lmgy.html
+│   │       │   │   ├── 0733_heroes_of_hraace__pt__1_.html
+│   │       │   │   ├── 0734_heroes_of_hraace__pt__2_.html
+│   │       │   │   ├── 0735_heroes_of_hraace__pt__3_.html
+│   │       │   │   └── 0736_10_24_e.html
+│   │       │   └── the-wandering-inn.html
+│   │       └── the-wandering-inn.html
+│   └── json
+│       └── series
+│           └── the-wandering-inn
+│               ├── chapters
+│               │   ├── 0001_1_00.json
+│               │   ├── 0002_1_01.json
+│               │   ├── 0003_1_02.json
+│               │   ├── 0004_1_03.json
+│               │   ├── 0005_1_04.json
+│               │   ├── 0006_1_05.json
+│               │   ├── 0007_1_06.json
+│               │   ├── 0008_1_07.json
+│               │   ├── 0009_1_08.json
+│               │   ├── 0010_1_09.json
+│               │   ├── 0011_1_10.json
+│               │   ├── 0012_interlude___the_great_ritual.json
+│               │   ├── 0013_1_11.json
+│               │   ├── 0014_1_12.json
+│               │   ├── 0015_1_13.json
+│               │   ├── 0016_1_14.json
+│               │   ├── 0017_1_15.json
+│               │   ├── 0018_1_16.json
+│               │   ├── 0019_1_17.json
+│               │   ├── 0020_1_18.json
+│               │   ├── 0021_1_19_r.json
+│               │   ├── 0022_1_20_r.json
+│               │   ├── 0023_1_21.json
+│               │   ├── 0024_1_22.json
+│               │   ├── 0025_1_23_a.json
+│               │   ├── 0026_1_24.json
+│               │   ├── 0027_interlude___king_edition.json
+│               │   ├── 0028_1_25.json
+│               │   ├── 0029_1_26_r.json
+│               │   ├── 0030_1_27_r.json
+│               │   ├── 0031_1_28_a.json
+│               │   ├── 0032_1_29.json
+│               │   ├── 0033_1_30.json
+│               │   ├── 0034_1_31.json
+│               │   ├── 0035_1_32_r.json
+│               │   ├── 0036_1_33_r.json
+│               │   ├── 0037_1_34.json
+│               │   ├── 0038_1_35_r.json
+│               │   ├── 0039_1_36.json
+│               │   ├── 0040_1_37.json
+│               │   ├── 0041_1_38.json
+│               │   ├── 0042_1_39_r.json
+│               │   ├── 0043_1_40_r.json
+│               │   ├── 0044_1_41.json
+│               │   ├── 0045_1_42.json
+│               │   ├── 0046_1_43_r.json
+│               │   ├── 0047_1_44_r.json
+│               │   ├── 0048_1_45.json
+│               │   ├── 0049_1_46.json
+│               │   ├── 0050_1_47_r.json
+│               │   ├── 0051_1_48_r.json
+│               │   ├── 0052_1_49.json
+│               │   ├── 0053_1_50.json
+│               │   ├── 0054_1_51.json
+│               │   ├── 0055_1_52_r.json
+│               │   ├── 0056_1_53.json
+│               │   ├── 0057_1_54.json
+│               │   ├── 0058_1_55_r.json
+│               │   ├── 0059_1_56.json
+│               │   ├── 0060_1_57_h.json
+│               │   ├── 0061_1_58_h.json
+│               │   ├── 0062_1_59_h.json
+│               │   ├── 0063_1_60.json
+│               │   ├── 0064_1_61.json
+│               │   ├── 0065_1_62.json
+│               │   ├── 0066_1_63.json
+│               │   ├── 0067_interlude___the_call.json
+│               │   ├── 0068_2_00.json
+│               │   ├── 0069_2_01.json
+│               │   ├── 0070_2_02.json
+│               │   ├── 0071_2_03.json
+│               │   ├── 0072_2_04.json
+│               │   ├── 0073_2_05.json
+│               │   ├── 0074_2_06.json
+│               │   ├── 0075_2_06__apr_1_version_.json
+│               │   ├── 0076_2_07.json
+│               │   ├── 0077_2_08.json
+│               │   ├── 0078_2_09.json
+│               │   ├── 0079_2_10_t.json
+│               │   ├── 0080_2_11.json
+│               │   ├── 0081_2_12.json
+│               │   ├── 0082_2_13.json
+│               │   ├── 0083_2_14_g.json
+│               │   ├── 0084_interlude___mating_rituals__pt__1_.json
+│               │   ├── 0085_2_15.json
+│               │   ├── 0086_2_16.json
+│               │   ├── 0087_2_17.json
+│               │   ├── 0088_2_18.json
+│               │   ├── 0089_2_19_g.json
+│               │   ├── 0090_2_20.json
+│               │   ├── 0091_2_21.json
+│               │   ├── 0092_2_22_k.json
+│               │   ├── 0093_2_23.json
+│               │   ├── 0094_2_24_t.json
+│               │   ├── 0095_2_25.json
+│               │   ├── 0096_2_26.json
+│               │   ├── 0097_1_00_c.json
+│               │   ├── 0098_1_01_c.json
+│               │   ├── 0099_2_27_g.json
+│               │   ├── 0100_2_28.json
+│               │   ├── 0101_2_29.json
+│               │   ├── 0102_2_30.json
+│               │   ├── 0103_2_31.json
+│               │   ├── 0104_2_32_h.json
+│               │   ├── 0105_2_33.json
+│               │   ├── 0106_2_34.json
+│               │   ├── 0107_2_35.json
+│               │   ├── 0108_2_36_g.json
+│               │   ├── 0109_2_37.json
+│               │   ├── 0110_2_38.json
+│               │   ├── 0111_interlude___quiet_discussions.json
+│               │   ├── 0112_interlude___the_antinium_wars__pt_1_.json
+│               │   ├── 0113_interlude___the_antinium_wars__pt_2_.json
+│               │   ├── 0114_2_39.json
+│               │   ├── 0115_2_40.json
+│               │   ├── 0116_2_41.json
+│               │   ├── 0117_2_42.json
+│               │   ├── 0118_2_43.json
+│               │   ├── 0119_2_44.json
+│               │   ├── 0120_2_45.json
+│               │   ├── 0121_2_46.json
+│               │   ├── 0122_2_47.json
+│               │   ├── 0123_2_48.json
+│               │   ├── 0124_3_00_e.json
+│               │   ├── 0125_3_01_e.json
+│               │   ├── 0126_3_02_h.json
+│               │   ├── 0127_3_03.json
+│               │   ├── 0128_3_04.json
+│               │   ├── 0129_3_05_l.json
+│               │   ├── 0130_1_00_d.json
+│               │   ├── 0131_1_01_d.json
+│               │   ├── 0132_3_06_l.json
+│               │   ├── 0133_3_07_h.json
+│               │   └── 0134_3_08_h.json
+│               └── the-wandering-inn.json
+├── file-structure.txt
+├── package.json
+├── schema
+│   ├── authors.schema.json
+│   ├── books.schema.json
+│   ├── chapters.schema.json
+│   └── series.schema.json
+├── src
+│   ├── data-sources
+│   │   ├── sync-data-sources.js
+│   │   └── the-wandering-inn
+│   │       ├── get-chapters-html.js
+│   │       ├── get-chapters-json.js
+│   │       ├── get-series-html.js
+│   │       ├── get-series-json.js
+│   │       └── sync-the-wandering-inn.js
+│   ├── game-mechanics
+│   │   ├── get-level-info.js
+│   │   ├── get-total-word-count.js
+│   │   └── sync-game-mechanics.js
+│   └── sync.js
+└── yarn.lock
+
+17 directories, 891 files

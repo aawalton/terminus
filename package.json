@@ -1,0 +1,24 @@
+{
+  "name": "word-quest",
+  "version": "1.0.0",
+  "description": "A gamification platform for reading",
+  "main": "index.js",
+  "scripts": {
+    "file-structure": "tree -I 'node_modules' > file-structure.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^23.6.0"
+  },
+  "engines": {
+    "node": "18.x",
+    "yarn": "3.x"
+  },
+  "packageManager": "yarn@4.5.1",
+  "cacheDirectories": [
+    ".yarn/cache"
+  ],
+  "type": "module"
+}

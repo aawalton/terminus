@@ -1,3 +1,10 @@
+# Notation Structure
+
+Throughout this document, the following notation is used:
+- n = [x] indicates that x is the canonical representation of the decimal number n
+- For example: 5 = [(4)] means that (4) is the canonical representation of the decimal number 5
+- When discussing derivation, a = [x] derives from b = [y] means that the representation x contains y within it
+
 # Mythology
 
 The Makers of Terminus use a number system and language based on the Fibonacci system.
@@ -320,3 +327,177 @@ Format: a + b = c [representation]
 9 + 10 = 19 [((4))1 ((4))2 = ((4)1)(4)1]
 
 10 + 10 = 20 [((4))2 ((4))2 = ((4)1)(4)2]
+
+# Derivation
+
+In this section, the following notation is used:
+- n = [x] indicates that x is the canonical representation of the decimal number n
+- For example: 5 = [(4)] means that (4) is the canonical representation of the decimal number 5
+- When discussing derivation, a = [x] derives from b = [y] means that the representation x contains y within it
+
+1 = [1]
+None
+
+2 = [2]
+None
+
+3 = [3]
+None
+
+4 = [4]
+None
+
+5 = [(4)]
+- 4 = [4]
+
+6 = [(4)1]
+- 5 = [(4)]
+- 4 = [4]
+- 1 = [1]
+
+7 = [(4)2]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+
+9 = [((4))1]
+- 8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+- 1 = [1]
+
+10 = [((4))2]
+- 8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+11 = [((4))3]
+- 8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+- 3 = [3]
+
+12 = [((4))4]
+- 8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+
+13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+- 1 = [1]
+
+14 = [((4)1)1]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+- 1 = [1]
+
+15 = [((4)1)2]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+16 = [((4)1)3]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+- 3 = [3]
+
+17 = [((4)1)4]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+
+18 = [((4)1)(4)]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+
+19 = [((4)1)(4)1]
+- 18 = [((4)1)(4)]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+- 1 = [1]
+
+20 = [((4)1)(4)2]
+- 18 = [((4)1)(4)]
+- 13 = [((4)1)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+22 = [((4)2)1]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+- 1 = [1]
+
+23 = [((4)2)2]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+24 = [((4)2)3]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 3 = [3]
+- 2 = [2]
+
+25 = [((4)2)4]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+26 = [((4)2)(4)]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+27 = [((4)2)(4)1]
+- 26 = [((4)2)(4)]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+- 1 = [1]
+
+28 = [((4)2)(4)2]
+- 26 = [((4)2)(4)]
+- 21 = [((4)2)]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+29 = [((4)2)((4))]
+- 21 = [((4)2)]
+- 8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+
+30 = [((4)2)((4))1]
+- 29 = [((4)2)((4))]
+- 21 = [((4)2)]
+- 8 = [((4))]
+- 5 = [(4)]
+- 4 = [4]
+- 2 = [2]
+- 1 = [1]

@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "series-id",
+    "series-name",
+    "author-ids",
+    "books",
+    "chapters"
+  ],
+  "properties": {
+    "series-id": {
+      "type": "string",
+      "description": "Human-readable identifier for the series"
+    },
+    "series-name": {
+      "type": "string",
+      "description": "Name of the series"
+    },
+    "author-ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of author IDs associated with this series"
+    },
+    "books": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "url",
+          "order",
+          "title"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Books in this series with their order and titles"
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "url",
+          "order",
+          "title"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Chapters in this series with their order and titles"
+    }
+  }
+}

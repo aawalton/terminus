@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "book-id",
+    "book-name",
+    "series-id",
+    "kindle-pages",
+    "kindle-locations",
+    "word-count",
+    "completed"
+  ],
+  "properties": {
+    "book-id": {
+      "type": "string",
+      "description": "Human-readable identifier for the book"
+    },
+    "book-name": {
+      "type": "string",
+      "description": "Name of the book"
+    },
+    "series-id": {
+      "type": "string",
+      "description": "ID of the series this book belongs to"
+    },
+    "kindle-pages": {
+      "type": "integer",
+      "description": "Number of Kindle pages"
+    },
+    "kindle-locations": {
+      "type": "integer",
+      "description": "Number of Kindle locations"
+    },
+    "word-count": {
+      "type": "integer",
+      "description": "Total word count of the book"
+    },
+    "completed": {
+      "type": "boolean",
+      "description": "Whether the book is completed"
+    }
+  }
+}

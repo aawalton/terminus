@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "chapter-id",
+    "chapter-name",
+    "series-id",
+    "chapter-text",
+    "word-count",
+    "completed"
+  ],
+  "properties": {
+    "chapter-id": {
+      "type": "string",
+      "description": "Human-readable identifier for the chapter"
+    },
+    "chapter-name": {
+      "type": "string",
+      "description": "Name of the chapter"
+    },
+    "series-id": {
+      "type": "string",
+      "description": "ID of the series this chapter belongs to"
+    },
+    "chapter-text": {
+      "type": "string",
+      "description": "Full text content of the chapter"
+    },
+    "word-count": {
+      "type": "integer",
+      "description": "Word count of the chapter"
+    },
+    "completed": {
+      "type": "boolean",
+      "description": "Whether the chapter is completed"
+    }
+  }
+}

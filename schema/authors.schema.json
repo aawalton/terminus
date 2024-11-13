@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "author-id",
+    "author-name",
+    "series-urls",
+    "book-urls",
+    "chapter-urls"
+  ],
+  "properties": {
+    "author-id": {
+      "type": "string",
+      "description": "Human-readable identifier for the author"
+    },
+    "author-name": {
+      "type": "string",
+      "description": "Full name of the author"
+    },
+    "series-urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "URLs to series associated with this author"
+    },
+    "book-urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "URLs to books written by this author"
+    },
+    "chapter-urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "URLs to chapters written by this author"
+    }
+  }
+}
