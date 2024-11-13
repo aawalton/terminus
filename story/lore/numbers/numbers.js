@@ -113,17 +113,20 @@ function toDecimal(repr) {
 
 // Helper function to find Fibonacci index (1-based)
 function getFibonacciIndex(n) {
+  // Special cases
   if (n <= 0) return 0;
   if (n === 1) return 1;
   if (n === 2) return 2;
 
-  // Use a table to build up to n
-  let prev = 1, curr = 2;
+  // Build sequence until we find n
+  let a = 1, b = 2;
   let index = 2;
 
-  while (curr <= n) {
-    if (curr === n) return index;
-    [prev, curr] = [curr, prev + curr];
+  while (b <= n) {
+    if (b === n) {
+      return index;
+    }
+    [a, b] = [b, a + b];
     index++;
   }
 
@@ -142,11 +145,15 @@ function toCanonical(n) {
   // If it's an exact Fibonacci number
   if (fib === n) {
     if (fibIndex === 4) return '(4)';
-    // For larger Fibonacci numbers, wrap the canonical form of their index
-    return `(${toCanonical(fibIndex)})`;
+
+    // Get the canonical form of the index
+    const indexCanonical = toCanonical(fibIndex);
+
+    // Important: Don't modify the index representation
+    return `(${indexCanonical})`;
   }
 
-  // For non-Fibonacci numbers, always try to use the largest possible prefix
+  // For non-Fibonacci numbers, use the largest possible prefix
   const remainder = n - fib;
 
   // If remainder is small enough, append directly
@@ -154,28 +161,19 @@ function toCanonical(n) {
     return `${toCanonical(fib)}${remainder}`;
   }
 
-  // Find the largest Fibonacci number less than or equal to the remainder
-  const remFibIndex = getFibonacciIndex(remainder);
-  const remFib = getFibonacci(remFibIndex);
-
-  // If the remainder is itself a Fibonacci number or close to one,
-  // use the current decomposition
-  if (remainder === remFib || remainder - remFib <= 4) {
-    return `${toCanonical(fib)}${toCanonical(remainder)}`;
-  }
-
-  // Otherwise, try the next largest Fibonacci number as prefix
+  // Try the next largest Fibonacci number as prefix
   const nextFibIndex = fibIndex - 1;
   const nextFib = getFibonacci(nextFibIndex);
   const nextRemainder = n - nextFib;
 
-  // Only use this alternative if it gives a better representation
-  if (nextFib > 4) {
-    const nextRemFibIndex = getFibonacciIndex(nextRemainder);
-    const nextRemFib = getFibonacci(nextRemFibIndex);
+  if (nextFib > 4 && nextRemainder > 0) {
+    // Check if this decomposition is better
+    const nextFibRepr = toCanonical(nextFib);
+    const nextRemRepr = toCanonical(nextRemainder);
+    const nextTotal = toDecimal(nextFibRepr + nextRemRepr);
 
-    if (nextRemainder === nextRemFib || nextRemainder - nextRemFib <= 4) {
-      return `${toCanonical(nextFib)}${toCanonical(nextRemainder)}`;
+    if (nextTotal === n) {
+      return nextFibRepr + nextRemRepr;
     }
   }
 
