@@ -53,8 +53,8 @@ describe('toDecimal', () => {
   });
 
   test('handles multiple adjacent numbers', () => {
-    expect(toDecimal('(4)12')).toBe(8);  // 5 + 1 + 2
-    expect(toDecimal('((4))12')).toBe(11); // 8 + 1 + 2
+    expect(toDecimal('(4)12')).toBe(17);  // 5 + 12
+    expect(toDecimal('((4))12')).toBe(20); // 8 + 12
   });
 
   test('handles nested expressions with multiple components', () => {

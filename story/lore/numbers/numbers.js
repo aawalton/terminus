@@ -111,87 +111,63 @@ function toDecimal(repr) {
   return sum;
 }
 
-// Lookup table for common Fibonacci values and their canonical representations
-const fibonacciLookup = {
-  5: '(4)',
-  8: '((4))',
-  13: '((4)1)',
-  21: '((4)2)',
-  34: '(((4)))'
-};
+// Helper function to find Fibonacci index (1-based)
+function getFibonacciIndex(n) {
+  if (n <= 0) return 0;
+  if (n === 1) return 1;
+  if (n === 2) return 2;
+
+  // Use a table to build up to n
+  let prev = 1, curr = 2;
+  let index = 2;
+
+  while (curr <= n) {
+    if (curr === n) return index;
+    [prev, curr] = [curr, prev + curr];
+    index++;
+  }
+
+  return index - 1;
+}
 
 // Convert from decimal to canonical representation
 function toCanonical(n) {
   // Base cases
   if (n <= 4) return n.toString();
 
-  // Check lookup table first
-  if (fibonacciLookup[n]) {
-    return fibonacciLookup[n];
-  }
-
   // Find the largest Fibonacci number less than or equal to n
-  let fibIndex = 4; // Start from index 4 (value 5)
-  let prevFib = 3;
-  let currentFib = 5;
+  const fibIndex = getFibonacciIndex(n);
+  const fib = getFibonacci(fibIndex);
 
-  while (currentFib <= n) {
-    [prevFib, currentFib] = [currentFib, prevFib + currentFib];
-    fibIndex++;
-  }
-
-  // Go back one step since we went over
-  currentFib = prevFib;
-  fibIndex--;
-
-  if (currentFib === n) {
-    // It's a Fibonacci number we haven't seen before
+  // If it's an exact Fibonacci number
+  if (fib === n) {
+    if (fibIndex === 4) return '(4)';
     return `(${toCanonical(fibIndex)})`;
   }
 
-  // Try to represent as sum of current Fibonacci number and remainder
-  const remainder = n - currentFib;
+  // For non-Fibonacci numbers, use the largest possible prefix
+  const remainder = n - fib;
 
+  // If remainder is small enough, append directly
   if (remainder <= 4) {
-    // Direct representation possible
-    return `${toCanonical(currentFib)}${remainder}`;
+    return `${toCanonical(fib)}${remainder}`;
   }
 
-  // For composite numbers, try combinations with smaller Fibonacci numbers
-  for (let i = fibIndex; i >= 4; i--) {
-    const fib = getFibonacci(i);
-    if (fib > n) continue;
+  // For larger remainders, try the next largest Fibonacci number
+  const nextFibIndex = fibIndex - 1;
+  const nextFib = getFibonacci(nextFibIndex);
+  const nextRemainder = n - nextFib;
 
-    const rem = n - fib;
-    if (rem <= 4) {
-      return `${toCanonical(fib)}${rem}`;
-    }
-
-    // Check if remainder is a Fibonacci number
-    if (fibonacciLookup[rem]) {
-      return `${toCanonical(fib)}${fibonacciLookup[rem]}`;
+  // If using the next largest Fibonacci number gives a better representation
+  if (nextFib > 4 && nextRemainder > 4) {
+    const nextRepr = toCanonical(nextRemainder);
+    if (nextRepr) {
+      return `${toCanonical(nextFib)}${nextRepr}`;
     }
   }
 
-  // If we get here, we need to try a different approach
-  // Try splitting into largest possible components
-  const parts = [];
-  let remaining = n;
-
-  while (remaining > 0) {
-    // Find largest Fibonacci number <= remaining
-    let idx = 4;
-    let fib = 5;
-    while (getFibonacci(idx + 1) <= remaining) {
-      idx++;
-      fib = getFibonacci(idx);
-    }
-
-    parts.push(toCanonical(fib));
-    remaining -= fib;
-  }
-
-  return parts.join('');
+  // Otherwise use the largest Fibonacci number
+  return `${toCanonical(fib)}${toCanonical(remainder)}`;
 }
 
 export {
