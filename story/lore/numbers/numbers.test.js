@@ -1,4 +1,4 @@
-import { getFibonacci, toDecimal, toCanonical } from '../numbers.js';
+import { getFibonacci, toDecimal, toCanonical } from './numbers.js';
 
 describe('getFibonacci', () => {
   test('returns correct Fibonacci numbers for small indices', () => {
@@ -33,7 +33,7 @@ describe('toDecimal', () => {
     expect(toDecimal('(4)1')).toBe(6);
     expect(toDecimal('(5)')).toBe(8);
     expect(toDecimal('(3)2')).toBe(5);
-  });
+  }); ``
 
   test('handles nested expressions', () => {
     expect(toDecimal('((1))')).toBe(1);
