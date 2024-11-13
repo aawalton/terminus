@@ -1,117 +1,54 @@
-import { writeFile } from 'fs/promises';
-import { getFibonacci, toDecimal, toCanonical } from './numbers.js';
+/*
+Canonical Number Derivation Rules
 
-// Find all numbers that derive from a given representation
-function findDerivations(repr) {
-  const derivations = new Set();
+1. Basic Definition:
+   - Number A is derived from number B if:
+     a) A < B (decimal value comparison)
+     b) The canonical representation of A appears as a strict continuous substring
+        within the canonical representation of B
 
-  // Helper function to process a substring
-  function processSubstring(sub) {
-    if (!sub) return;
+2. Substring Rules:
+   - Substrings can be overlapping
+   - Substrings must be complete canonical representations
 
-    // Only process if it's a valid part of the original representation
-    if (!isValidSubstring(sub)) return;
+3. Examples of Valid Derivations:
+   - 6 is derived from 13
+     Because: (4)1 appears in ((4)1)
+   - 5 is derived from 8
+     Because: (4) appears in ((4))
+   - 8 is derived from 34
+     Because: ((4)) appears in (((4)))
 
-    // Evaluate if it's a valid number representation
-    try {
-      const value = toDecimal(sub);
-      if (value > 0) {
-        // Also add the value of any nested expressions
-        if (sub.includes('(')) {
-          let depth = 0;
-          let start = -1;
+4. Examples of Invalid Derivations:
+   - 3 is not derived from 13
+     Because: While "3" appears in "13", it's not a complete canonical representation
+   - 6 is not derived from 16
+     Because: While both are represented using (4), the "1" in (4)1 is not part of 16's representation
+   - 7 is not derived from 13
+     Because: (4)2 does not appear in ((4)1)
 
-          for (let i = 0; i < sub.length; i++) {
-            if (sub[i] === '(') {
-              if (depth === 0) start = i;
-              depth++;
-            } else if (sub[i] === ')') {
-              depth--;
-              if (depth === 0 && start !== -1) {
-                const nested = sub.slice(start + 1, i);
-                const nestedValue = toDecimal(nested);
-                if (nestedValue > 0) {
-                  derivations.add(nestedValue);
-                }
-              }
-            }
-          }
-        }
-        derivations.add(value);
-      }
-    } catch (e) {
-      // Invalid representation, skip
-    }
-  }
+5. Multiple Derivation Paths:
+   - A number can be derived from multiple larger numbers
+   - Example: 5 (represented as (4)) can be derived from:
+     * 8  (represented as ((4)))
+     * 13 (represented as ((4)1))
+     * 21 (represented as ((4)2))
+     * 34 (represented as (((4))))
+*/
 
-  // Helper to check if a substring is valid
-  function isValidSubstring(sub) {
-    // Check if it's a simple number or valid parenthetical expression
-    if (/^\d+$/.test(sub)) {
-      return sub.length === 1; // Only single digits are valid
-    }
+import { toCanonical } from "./numbers";
 
-    // Validate balanced parentheses and structure
-    let depth = 0;
-    for (let char of sub) {
-      if (char === '(') depth++;
-      if (char === ')') depth--;
-      if (depth < 0) return false;
-    }
-    return depth === 0;
-  }
+function isDerivedFrom(a, b) {
+  // First check decimal value comparison
+  if (a >= b) return false;
 
-  // Check all possible substrings
-  for (let i = 0; i < repr.length; i++) {
-    for (let j = i + 1; j <= repr.length; j++) {
-      processSubstring(repr.slice(i, j));
-    }
-  }
+  // Get canonical representations
+  const reprA = toCanonical(a);
+  const reprB = toCanonical(b);
 
-  return Array.from(derivations).sort((a, b) => a - b);
+  return reprB.includes(reprA);
 }
 
-// Generate derivations for numbers 1 to n
-function generateDerivations(n) {
-  const results = {};
-
-  for (let i = 1; i <= n; i++) {
-    // Get the canonical representation from numbers.js
-    const canonical = toCanonical(i);
-
-    // Find all numbers that this representation derives from
-    const derivedFrom = findDerivations(canonical)
-      .filter(x => x < i); // Only include numbers less than current
-
-    results[i] = {
-      representation: canonical,
-      derivedFrom: derivedFrom
-    };
-  }
-
-  return results;
-}
-
-async function generateNumbersJson(n = 10) {
-  try {
-    console.log('Generating numbers.json...');
-    const results = generateDerivations(n);
-    await writeFile('story/lore/numbers/numbers.json', JSON.stringify(results, null, 2));
-    console.log('Successfully generated numbers.json!');
-  } catch (error) {
-    console.error('An error occurred while generating numbers.json:', error);
-    throw error;
-  }
-}
-
-// Export functions for importing
 export {
-  findDerivations,
-  generateDerivations,
-  generateNumbersJson
+  isDerivedFrom
 };
-
-// Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  generateNumbersJson().catch(console.error);
-}

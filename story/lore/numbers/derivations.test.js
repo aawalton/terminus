@@ -1,76 +1,53 @@
-import { findDerivations, generateDerivations } from './derivations.js';
+import { isDerivedFrom } from './derivations';
 
-describe.skip('findDerivations', () => {
-  test('finds all valid substrings that represent numbers', () => {
-    expect(findDerivations('1')).toEqual([1]);
-    expect(findDerivations('12')).toEqual([1, 2]);
-    expect(findDerivations('(4)')).toEqual([4, 5]);
-    expect(findDerivations('(4)1')).toEqual([1, 4, 5, 6]);
-    expect(findDerivations('((4))')).toEqual([4, 5, 8]);
+describe('isDerivedFrom', () => {
+  // Valid derivations from documentation
+  test('6 is derived from 13', () => {
+    expect(isDerivedFrom(6, 13)).toBe(true); g
   });
 
-  test('handles empty or invalid input', () => {
-    expect(findDerivations('')).toEqual([]);
-    expect(findDerivations('(')).toEqual([]);
-    expect(findDerivations(')')).toEqual([]);
-    expect(findDerivations('()')).toEqual([]);
+  test('5 is derived from 8', () => {
+    expect(isDerivedFrom(5, 8)).toBe(true);
   });
 
-  test('handles complex nested expressions', () => {
-    expect(findDerivations('((4)1)(4)')).toEqual([
-      1, 4, 5, 6, 13, 18
-    ]);
+  test('8 is derived from 34', () => {
+    expect(isDerivedFrom(8, 34)).toBe(true);
   });
 
-  test('only includes each number once', () => {
-    // '44' should only include 4 once
-    expect(findDerivations('44')).toEqual([4]);
-  });
-});
-
-describe.skip('generateDerivations', () => {
-  test('generates derivations for first few numbers', () => {
-    const results = generateDerivations(5);
-
-    expect(results).toEqual({
-      1: {
-        representation: '1',
-        derivedFrom: []
-      },
-      2: {
-        representation: '2',
-        derivedFrom: []
-      },
-      3: {
-        representation: '3',
-        derivedFrom: []
-      },
-      4: {
-        representation: '4',
-        derivedFrom: []
-      },
-      5: {
-        representation: '(4)',
-        derivedFrom: [4]
-      }
-    });
+  // Invalid derivations from documentation
+  test('3 is not derived from 13', () => {
+    expect(isDerivedFrom(3, 13)).toBe(false);
   });
 
-  test('handles a more complex number', () => {
-    const results = generateDerivations(8);
-
-    // Let's specifically check number 8
-    expect(results[8]).toEqual({
-      representation: '((4))',
-      derivedFrom: [4, 5]
-    });
+  test('6 is not derived from 16', () => {
+    expect(isDerivedFrom(6, 16)).toBe(false);
   });
 
-  test('handles invalid input', () => {
-    expect(generateDerivations(0)).toEqual({});
-    expect(generateDerivations(-1)).toEqual({});
+  test('7 is not derived from 13', () => {
+    expect(isDerivedFrom(7, 13)).toBe(false);
+  });
+
+  // Multiple derivation paths
+  test('5 is derived from multiple numbers', () => {
+    expect(isDerivedFrom(5, 8)).toBe(true);   // from ((4))
+    expect(isDerivedFrom(5, 13)).toBe(true);  // from ((4)1)
+    expect(isDerivedFrom(5, 21)).toBe(true);  // from ((4)2)
+    expect(isDerivedFrom(5, 34)).toBe(true);  // from (((4)))
+  });
+
+  // Edge cases
+  test('number is not derived from itself', () => {
+    expect(isDerivedFrom(5, 5)).toBe(false);
+  });
+
+  test('number is not derived from smaller numbers', () => {
+    expect(isDerivedFrom(8, 5)).toBe(false);
+  });
+
+  test('handles single digit numbers', () => {
+    expect(isDerivedFrom(1, 13)).toBe(false);
+    expect(isDerivedFrom(2, 21)).toBe(false);
+    expect(isDerivedFrom(3, 34)).toBe(false);
+    expect(isDerivedFrom(4, 42)).toBe(false);
   });
 });
-
-// Note: We don't test generateNumbersJson directly since it involves file I/O
-// Instead, we test the functions it uses (generateDerivations) 
