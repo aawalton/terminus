@@ -149,7 +149,7 @@ function toCanonical(n) {
     // Get the canonical form of the index
     const indexCanonical = toCanonical(fibIndex);
 
-    // Important: Don't modify the index representation
+    // Wrap the index representation in parentheses
     return `(${indexCanonical})`;
   }
 
