@@ -142,10 +142,11 @@ function toCanonical(n) {
   // If it's an exact Fibonacci number
   if (fib === n) {
     if (fibIndex === 4) return '(4)';
+    // For larger Fibonacci numbers, wrap the canonical form of their index
     return `(${toCanonical(fibIndex)})`;
   }
 
-  // For non-Fibonacci numbers, use the largest possible prefix
+  // For non-Fibonacci numbers, always try to use the largest possible prefix
   const remainder = n - fib;
 
   // If remainder is small enough, append directly
@@ -153,20 +154,32 @@ function toCanonical(n) {
     return `${toCanonical(fib)}${remainder}`;
   }
 
-  // For larger remainders, try the next largest Fibonacci number
+  // Find the largest Fibonacci number less than or equal to the remainder
+  const remFibIndex = getFibonacciIndex(remainder);
+  const remFib = getFibonacci(remFibIndex);
+
+  // If the remainder is itself a Fibonacci number or close to one,
+  // use the current decomposition
+  if (remainder === remFib || remainder - remFib <= 4) {
+    return `${toCanonical(fib)}${toCanonical(remainder)}`;
+  }
+
+  // Otherwise, try the next largest Fibonacci number as prefix
   const nextFibIndex = fibIndex - 1;
   const nextFib = getFibonacci(nextFibIndex);
   const nextRemainder = n - nextFib;
 
-  // If using the next largest Fibonacci number gives a better representation
-  if (nextFib > 4 && nextRemainder > 4) {
-    const nextRepr = toCanonical(nextRemainder);
-    if (nextRepr) {
-      return `${toCanonical(nextFib)}${nextRepr}`;
+  // Only use this alternative if it gives a better representation
+  if (nextFib > 4) {
+    const nextRemFibIndex = getFibonacciIndex(nextRemainder);
+    const nextRemFib = getFibonacci(nextRemFibIndex);
+
+    if (nextRemainder === nextRemFib || nextRemainder - nextRemFib <= 4) {
+      return `${toCanonical(nextFib)}${toCanonical(nextRemainder)}`;
     }
   }
 
-  // Otherwise use the largest Fibonacci number
+  // Default to using the largest prefix
   return `${toCanonical(fib)}${toCanonical(remainder)}`;
 }
 
