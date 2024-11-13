@@ -1,5 +1,8 @@
 # Number Meanings
 
+## Fundamentals
+The numerical language is built on five primitive concepts (1-5). All other numbers are derived from these primitives according to strict derivation rules, where each non-primitive number has exactly two parent numbers. The meaning of each derived number combines and builds upon the meanings of its parent numbers.
+
 ## Core Concepts (1-7)
 | Number | Meaning |
 |--------|---------|
