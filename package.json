@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "file-structure": "tree -I 'node_modules' > file-structure.txt",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
   "author": "Your Name",
   "license": "ISC",
@@ -20,5 +21,8 @@
   "cacheDirectories": [
     ".yarn/cache"
   ],
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
