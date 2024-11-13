@@ -140,16 +140,16 @@ describe('toCanonical', () => {
     expect(toCanonical(13)).toBe('((4)1)');
     expect(toCanonical(21)).toBe('((4)2)');
     expect(toCanonical(34)).toBe('(((4)))');
-    expect(toCanonical(55)).toBe('(((4)1))');
+    expect(toCanonical(55)).toBe('(((4))1)');
   });
 
-  // test('prefers largest possible prefix in composite representations', () => {
-  //   expect(toCanonical(6)).toBe('(4)1');    // 5 + 1
-  //   expect(toCanonical(7)).toBe('(4)2');    // 5 + 2
-  //   expect(toCanonical(18)).toBe('((4)1)(4)'); // 13 + 5
-  //   expect(toCanonical(29)).toBe('((4)2)((4))'); // 21 + 8
-  //   expect(toCanonical(35)).toBe('(((4)))1'); // 34 + 1
-  // });
+  test('prefers largest possible prefix in composite representations', () => {
+    expect(toCanonical(6)).toBe('(4)1');    // 5 + 1
+    expect(toCanonical(7)).toBe('(4)2');    // 5 + 2
+    expect(toCanonical(18)).toBe('((4)1)(4)'); // 13 + 5
+    expect(toCanonical(29)).toBe('((4)2)((4))'); // 21 + 8
+    expect(toCanonical(35)).toBe('(((4)))1'); // 34 + 1
+  });
 
   // test('handles numbers requiring multiple components', () => {
   //   expect(toCanonical(19)).toBe('((4)1)(4)1'); // 13 + 5 + 1

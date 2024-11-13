@@ -148,8 +148,10 @@ function toCanonical(n) {
 
     // Get the canonical form of the index
     const indexCanonical = toCanonical(fibIndex);
+    console.log('indexCanonical', fibIndex, indexCanonical);
 
-    // Wrap the index representation in parentheses
+    // For pure Fibonacci numbers, we need one less set of parentheses
+    // than the index number suggests
     return `(${indexCanonical})`;
   }
 
