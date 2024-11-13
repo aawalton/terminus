@@ -57,7 +57,7 @@ function toCanonical(n) {
   if (n <= 4) return n.toString();
 
   // Try nested expressions first (for numbers like 8 = ((4)))
-  for (let i = 1; i < n; i++) {
+  for (let i = n - 1; i > 0; i--) {  // Start from largest possible inner value
     const inner = toCanonical(i);
     if (inner) {
       const withParens = `(${inner})`;
@@ -73,13 +73,12 @@ function toCanonical(n) {
     }
   }
 
-  // Try simple Fibonacci numbers
-  for (let i = 1; i <= n; i++) {
+  // Try simple Fibonacci numbers with largest possible inner value
+  for (let i = n; i > 0; i--) {  // Start from n and work down
     const value = getFibonacci(i);
     if (value === n) {
       return `(${i})`;
     }
-    // Try adding simple numbers to Fibonacci numbers
     if (value < n) {
       const diff = n - value;
       if (diff >= 1 && diff <= 4) {
