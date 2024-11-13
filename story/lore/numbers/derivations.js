@@ -39,8 +39,8 @@ Canonical Number Derivation Rules
 import { toCanonical } from "./numbers";
 
 function isDerivedFrom(a, b) {
-  // First check decimal value comparison (reversed)
-  if (b >= a) return false;
+  // First check decimal value comparison
+  if (a <= b) return false;
 
   // Get canonical representations
   const reprA = toCanonical(a);
