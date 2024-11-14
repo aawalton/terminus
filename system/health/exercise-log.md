@@ -3,12 +3,16 @@
 - The client is a 38-year-old male who is 175 lbs and 5'10" tall.
 - The client has joint issues and is looking for a low-impact workout.
 - The exercise log is sorted by date, with the most recent exercises at the top.
-- Propose a single exercise for today
+- Propose two exercises for today
 - Ensure the exercises have appropriate variety
 - Only propose exercises that can be done at home
-- Describe how to do the exercise with good form
+- Describe how to do the exercise with good form outside of the proposed log changes
 
 # Exercise Log
+
+## November 14, 2024
+- Dead Bug: 2 sets of 10 repetitions (each side)  
+- Cat-Cow Stretches: 2 sets of 8 repetitions
 
 ## November 13, 2024
 - Standing Calf Raises: 1 set of 45 repetitions
