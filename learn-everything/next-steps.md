@@ -1,3 +1,0 @@
-- [ ] Convert [this pdf](https://www.luminafoundation.org/wp-content/uploads/2017/08/lessons-from-national-credentialing-summit.pdf) into readable text 
-- [ ] Create a condensed summary of the above document
-- [ ] Assess my understanding of the next category using the summary

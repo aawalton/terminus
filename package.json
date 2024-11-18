@@ -7,9 +7,7 @@
     "file-structure": "tree -I 'node_modules' > file-structure.txt",
     "test": "node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
-    "export-skills": "node -r dotenv/config src/scripts/exportSkillTree.js",
-    "migrate:outline": "node -r dotenv/config src/migrations/migrateOutlineOfKnowledge.js",
-    "migrate:skills": "node -r dotenv/config src/migrations/migrateSkillTree.js"
+    "export-skills": "node -r dotenv/config src/scripts/exportSkillTree.js"
   },
   "author": "Alan Walton",
   "license": "ISC",
