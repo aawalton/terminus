@@ -1,0 +1,3 @@
+Always use Yarn as the package manager.
+Always use Jest when writing tests.
+Don't use Babel to transpile the code.
