@@ -1,29 +1,19 @@
 import { fileURLToPath } from 'node:url'
 import supabase from '../database.js'
 
-// Update the helper function to better handle all numbering patterns
-function cleanSkillName(name) {
-  // Remove section numbers and trim whitespace
-  // Matches patterns like:
-  // "10.2.1 ", "10.2 ", "10. ", "1. ", "2. ", "1. Matter and Energy"
-  return name
-    .replace(/^\d+\.?\s*/, '')           // Remove leading numbers with optional dot
-    .replace(/^\d+\.\d+\.?\s*/, '')      // Remove X.Y format
-    .replace(/^\d+\.\d+\.\d+\.?\s*/, '') // Remove X.Y.Z format
-    .trim()
-}
+export { migrateOutlineOfKnowledge as default }
 
-async function insertSkill(name, parentId = null) {
-  const cleanName = cleanSkillName(name)
-  console.log(`Attempting to insert skill: ${name} -> ${cleanName} with parent: ${parentId}`)
+async function insertSkill(name, parentId = null, sortOrder = null) {
+  console.log(`Inserting skill: ${name} (sort_order: ${sortOrder})`)
 
   const { data, error } = await supabase
     .schema('status')
     .from('skills')
     .insert({
-      name: cleanName,
+      name,
       parent_skill_id: parentId,
-      description: null
+      description: null,
+      sort_order: sortOrder
     })
     .select('id')
     .single()
@@ -33,7 +23,6 @@ async function insertSkill(name, parentId = null) {
     throw error
   }
 
-  console.log(`Successfully inserted skill: ${cleanName} with id: ${data.id}`)
   return data.id
 }
 
@@ -97,7 +86,7 @@ async function updateSkillParent(skillId, newParentId) {
 
 // Map existing skills to their new parents in the outline
 const skillMappings = {
-  'Logic': 'Logic', // Now maps to the clean name
+  'Logic': 'Logic',
   'Philosophy of Mathematics': 'History and Foundations of Mathematics',
   'Pure Mathematics': 'Branches of Mathematics',
   'Applied Mathematics': 'Applications of Mathematics',
@@ -110,17 +99,45 @@ const skillMappings = {
 async function mergeExistingSkills(sectionIds) {
   console.log('Merging existing skills with outline...')
 
-  // Create a mapping of clean names to section IDs
-  const cleanNameToId = Object.entries(sectionIds).reduce((acc, [key, value]) => {
-    acc[cleanSkillName(key)] = value
-    return acc
-  }, {})
-
   for (const [existingSkill, newParent] of Object.entries(skillMappings)) {
     const skillId = await findSkillByName(existingSkill)
-    if (skillId && cleanNameToId[newParent]) {
-      console.log(`Moving ${existingSkill} under ${newParent}`)
-      await updateSkillParent(skillId, cleanNameToId[newParent])
+    const newParentId = sectionIds[newParent]
+
+    if (skillId && newParentId) {
+      if (existingSkill === newParent) {
+        const { data: children, error: childrenError } = await supabase
+          .schema('status')
+          .from('skills')
+          .select('id, sort_order')
+          .eq('parent_skill_id', skillId)
+          .order('sort_order')
+
+        if (childrenError) {
+          console.error('Error finding children:', childrenError)
+          throw childrenError
+        }
+
+        for (const child of children) {
+          console.log(`Moving ${existingSkill} child to ${newParent}`)
+          await updateSkillParent(child.id, newParentId)
+        }
+
+        const { error: deleteError } = await supabase
+          .schema('status')
+          .from('skills')
+          .delete()
+          .eq('id', skillId)
+
+        if (deleteError) {
+          console.error('Error deleting old parent:', deleteError)
+          throw deleteError
+        }
+
+        console.log(`Merged ${existingSkill} with ${newParent}`)
+      } else {
+        console.log(`Moving ${existingSkill} under ${newParent}`)
+        await updateSkillParent(skillId, newParentId)
+      }
     }
   }
 }
@@ -147,332 +164,473 @@ async function migrateOutlineOfKnowledge() {
     }
 
     const rootId = rootData.id
-    console.log('Created root Knowledge node with id:', rootId)
+    console.log('Created root Knowledge node')
 
     // Store IDs for sections we need to reference later
     const sectionIds = {}
 
-    // Create root categories with complete nested structure - no numbers
-    const outline = {
-      'Matter and Energy': {
-        'Atoms': [
-          'Structure and Properties of Atoms',
-          'Atomic Nuclei and Elementary Particles'
-        ],
-        'Energy, Radiation, and States of Matter': [
-          'Chemical Elements: Periodic Variation in Their Properties',
-          'Chemical Compounds: Molecular Structure and Chemical Bonding',
-          'Chemical Reactions',
-          'Heat, Thermodynamics, Liquids, Gases, Plasmas',
-          'The Solid State of Matter',
-          'Mechanics of Particles, Rigid and Deformable Bodies',
-          'Electricity and Magnetism',
-          'Waves and Wave Motion'
-        ],
-        'The Universe': [
-          'The Cosmos',
-          'Galaxies and Stars',
-          'The Solar System'
+    // Create root categories with complete nested structure
+    const outline = [
+      {
+        name: 'Matter and Energy',
+        children: [
+          {
+            name: 'Atoms',
+            children: [
+              { name: 'Structure and Properties of Atoms' },
+              { name: 'Atomic Nuclei and Elementary Particles' }
+            ]
+          },
+          {
+            name: 'Energy, Radiation, and States of Matter',
+            children: [
+              { name: 'Chemical Elements: Periodic Variation in Their Properties' },
+              { name: 'Chemical Compounds: Molecular Structure and Chemical Bonding' },
+              { name: 'Chemical Reactions' },
+              { name: 'Heat, Thermodynamics, Liquids, Gases, Plasmas' },
+              { name: 'The Solid State of Matter' },
+              { name: 'Mechanics of Particles, Rigid and Deformable Bodies' },
+              { name: 'Electricity and Magnetism' },
+              { name: 'Waves and Wave Motion' }
+            ]
+          },
+          {
+            name: 'The Universe',
+            children: [
+              { name: 'The Cosmos' },
+              { name: 'Galaxies and Stars' },
+              { name: 'The Solar System' }
+            ]
+          }
         ]
       },
-      'The Earth': {
-        'Earth\'s Properties, Structure, Composition': [
-          'The Planet Earth',
-          'Earth\'s Physical Properties',
-          'Structure and Composition of the Earth\'s Interior',
-          'Minerals and Rocks'
-        ],
-        'Earth\'s Envelope': [
-          'The Atmosphere',
-          'The Hydrosphere: the Oceans, Freshwater and Ice Masses',
-          'Weather and Climate'
-        ],
-        'Surface Features': [
-          'Physical Features of the Earth\'s Surface',
-          'Features Produced by Geomorphic Processes'
-        ],
-        'Earth\'s History': [
-          'Origin and Development of the Earth and Its Envelopes',
-          'The Interpretation of the Geologic Record',
-          'Eras and Periods of Geologic Time'
+      {
+        name: 'The Earth',
+        children: [
+          {
+            name: 'Earth\'s Properties, Structure, Composition',
+            children: [
+              { name: 'The Planet Earth' },
+              { name: 'Earth\'s Physical Properties' },
+              { name: 'Structure and Composition of the Earth\'s Interior' },
+              { name: 'Minerals and Rocks' }
+            ]
+          },
+          {
+            name: 'Earth\'s Envelope',
+            children: [
+              { name: 'The Atmosphere' },
+              { name: 'The Hydrosphere: the Oceans, Freshwater and Ice Masses' },
+              { name: 'Weather and Climate' }
+            ]
+          },
+          {
+            name: 'Surface Features',
+            children: [
+              { name: 'Physical Features of the Earth\'s Surface' },
+              { name: 'Features Produced by Geomorphic Processes' }
+            ]
+          },
+          {
+            name: 'Earth\'s History',
+            children: [
+              { name: 'Origin and Development of the Earth and Its Envelopes' },
+              { name: 'The Interpretation of the Geologic Record' },
+              { name: 'Eras and Periods of Geologic Time' }
+            ]
+          }
         ]
       },
-      'Life': {
-        'The Nature and Diversity of Life': [
-          'Characteristics of Life',
-          'The Origin and Evolution of Life',
-          'Classification of Living Things'
-        ],
-        'The Molecular Basis of Life': [
-          'Chemicals and the Vital Processes',
-          'Metabolism: Bioenergetics and Biosynthesis',
-          'Vital Processes at the Molecular Level'
-        ],
-        'The Structures and Functions of Organisms': [
-          'Cellular Basis of Form and Function',
-          'Relation of Form and Function in Organisms',
-          'Coordination of Vital Processes: Regulation and Integration',
-          'Covering and Support: Integumentary, Skeletal, and Musculatory Systems',
-          'Nutrition: the Procurement and Processing of Nutrients',
-          'Gas Exchange, Internal Transport, and Elimination',
-          'Reproduction and Sex',
-          'Development: Growth, Differentiation, and Morphogenesis',
-          'Heredity: the Transmission of Traits'
-        ],
-        'The Behavior of Organisms': [
-          'Nature and Patterns of Behavior',
-          'Development and Range of Behavioral Capacities: Individual and Group Behavior'
-        ],
-        'The Biosphere': [
-          'Basic Features of the Biosphere',
-          'Populations and Communities',
-          'Disease and Death',
-          'Biogeographic Distribution of Organisms: Ecosystems',
-          'The Place of Humans in the Biosphere'
+      {
+        name: 'Life',
+        children: [
+          {
+            name: 'The Nature and Diversity of Life',
+            children: [
+              { name: 'Characteristics of Life' },
+              { name: 'The Origin and Evolution of Life' },
+              { name: 'Classification of Living Things' }
+            ]
+          },
+          {
+            name: 'The Molecular Basis of Life',
+            children: [
+              { name: 'Chemicals and the Vital Processes' },
+              { name: 'Metabolism: Bioenergetics and Biosynthesis' },
+              { name: 'Vital Processes at the Molecular Level' }
+            ]
+          },
+          {
+            name: 'The Structures and Functions of Organisms',
+            children: [
+              { name: 'Cellular Basis of Form and Function' },
+              { name: 'Relation of Form and Function in Organisms' },
+              { name: 'Coordination of Vital Processes: Regulation and Integration' },
+              { name: 'Covering and Support: Integumentary, Skeletal, and Musculatory Systems' },
+              { name: 'Nutrition: the Procurement and Processing of Nutrients' },
+              { name: 'Gas Exchange, Internal Transport, and Elimination' },
+              { name: 'Reproduction and Sex' },
+              { name: 'Development: Growth, Differentiation, and Morphogenesis' },
+              { name: 'Heredity: the Transmission of Traits' }
+            ]
+          },
+          {
+            name: 'The Behavior of Organisms',
+            children: [
+              { name: 'Nature and Patterns of Behavior' },
+              { name: 'Development and Range of Behavioral Capacities: Individual and Group Behavior' }
+            ]
+          },
+          {
+            name: 'The Biosphere',
+            children: [
+              { name: 'Basic Features of the Biosphere' },
+              { name: 'Populations and Communities' },
+              { name: 'Disease and Death' },
+              { name: 'Biogeographic Distribution of Organisms: Ecosystems' },
+              { name: 'The Place of Humans in the Biosphere' }
+            ]
+          }
         ]
       },
-      'Human Life': {
-        'The Development of Human Life': [
-          'Human Evolution',
-          'Human Heredity: the Races'
-        ],
-        'The Human Body: Health and Disease': [
-          'The Structures and Functions of the Human Body',
-          'Human Health',
-          'Human Diseases',
-          'The Practice of Medicine and Care of Health'
-        ],
-        'Human Behavior and Experience': [
-          'General theories of human nature and behavior',
-          'Antecedent conditions and developmental processes affecting a person\'s behavior and conscious experience',
-          'Influence of the current environment on a person\'s behavior and conscious experience',
-          'Current Internal states affecting a person\'s behavior and conscious experience',
-          'Development of Learning and Thinking',
-          'Personality and the Self: Integration and Disintegration'
+      {
+        name: 'Human Life',
+        children: [
+          {
+            name: 'The Development of Human Life',
+            children: [
+              { name: 'Human Evolution' },
+              { name: 'Human Heredity: the Races' }
+            ]
+          },
+          {
+            name: 'The Human Body: Health and Disease',
+            children: [
+              { name: 'The Structures and Functions of the Human Body' },
+              { name: 'Human Health' },
+              { name: 'Human Diseases' },
+              { name: 'The Practice of Medicine and Care of Health' }
+            ]
+          },
+          {
+            name: 'Human Behavior and Experience',
+            children: [
+              { name: 'General theories of human nature and behavior' },
+              { name: 'Antecedent conditions and developmental processes affecting a person\'s behavior and conscious experience' },
+              { name: 'Influence of the current environment on a person\'s behavior and conscious experience' },
+              { name: 'Current Internal states affecting a person\'s behavior and conscious experience' },
+              { name: 'Development of Learning and Thinking' },
+              { name: 'Personality and the Self: Integration and Disintegration' }
+            ]
+          }
         ]
       },
-      'Society': {
-        'Social Groups: Ethnic groups and Cultures': [
-          'Peoples and Cultures of the World',
-          'The Development of Human Culture',
-          'Major Cultural Components and Institutions of Societies',
-          'Language and Communication'
-        ],
-        'Social Organization and Social Change': [
-          'Social Structure and Change',
-          'The Group Structure of Society',
-          'Social Status',
-          'Human Populations: Urban and Rural Communities'
-        ],
-        'The Production, Distribution, and Utilization of Wealth': [
-          'Economic Concepts, Issues, and Systems',
-          'Consumer and Market: Pricing and Mechanisms for Distributing Goods',
-          'The Organization of Production and Distribution',
-          'The Distribution of Income and Wealth',
-          'Macroeconomics',
-          'Economic Growth and Planning'
-        ],
-        'Politics and Government': [
-          'Political Theory',
-          'Political Institutions',
-          'Functioning of Government',
-          'International Relations: Peace and War'
-        ],
-        'Law': [
-          'Philosophies and Systems of Law; the Practice of Law',
-          'Branches of Public Law, Substantive and Procedural',
-          'Branches of Private Law, Substantive and Procedural'
-        ],
-        'Education': [
-          'Aims and Organization of Education',
-          'Education Around the World'
+      {
+        name: 'Society',
+        children: [
+          {
+            name: 'Social Groups: Ethnic groups and Cultures',
+            children: [
+              { name: 'Peoples and Cultures of the World' },
+              { name: 'The Development of Human Culture' },
+              { name: 'Major Cultural Components and Institutions of Societies' },
+              { name: 'Language and Communication' }
+            ]
+          },
+          {
+            name: 'Social Organization and Social Change',
+            children: [
+              { name: 'Social Structure and Change' },
+              { name: 'The Group Structure of Society' },
+              { name: 'Social Status' },
+              { name: 'Human Populations: Urban and Rural Communities' }
+            ]
+          },
+          {
+            name: 'The Production, Distribution, and Utilization of Wealth',
+            children: [
+              { name: 'Economic Concepts, Issues, and Systems' },
+              { name: 'Consumer and Market: Pricing and Mechanisms for Distributing Goods' },
+              { name: 'The Organization of Production and Distribution' },
+              { name: 'The Distribution of Income and Wealth' },
+              { name: 'Macroeconomics' },
+              { name: 'Economic Growth and Planning' }
+            ]
+          },
+          {
+            name: 'Politics and Government',
+            children: [
+              { name: 'Political Theory' },
+              { name: 'Political Institutions' },
+              { name: 'Functioning of Government' },
+              { name: 'International Relations: Peace and War' }
+            ]
+          },
+          {
+            name: 'Law',
+            children: [
+              { name: 'Philosophies and Systems of Law; the Practice of Law' },
+              { name: 'Branches of Public Law, Substantive and Procedural' },
+              { name: 'Branches of Private Law, Substantive and Procedural' }
+            ]
+          },
+          {
+            name: 'Education',
+            children: [
+              { name: 'Aims and Organization of Education' },
+              { name: 'Education Around the World' }
+            ]
+          }
         ]
       },
-      'Art': {
-        'Art in General': [
-          'Theory and Classification of the Arts',
-          'Experience and Criticism of Art; the Nonaesthetic Context of Art',
-          'Characteristics of the Arts in Particular Cultures'
-        ],
-        'Particular Arts': [
-          'Literature',
-          'Theater',
-          'Motion Pictures',
-          'Music',
-          'Dance',
-          'Architecture, Garden and Landscape Design, and Urban Design',
-          'Sculpture',
-          'Drawing, Painting, Printmaking, Photography',
-          'Decoration and Design'
+      {
+        name: 'Art',
+        children: [
+          {
+            name: 'Art in General',
+            children: [
+              { name: 'Theory and Classification of the Arts' },
+              { name: 'Experience and Criticism of Art; the Nonaesthetic Context of Art' },
+              { name: 'Characteristics of the Arts in Particular Cultures' }
+            ]
+          },
+          {
+            name: 'Particular Arts',
+            children: [
+              { name: 'Literature' },
+              { name: 'Theater' },
+              { name: 'Motion Pictures' },
+              { name: 'Music' },
+              { name: 'Dance' },
+              { name: 'Architecture, Garden and Landscape Design, and Urban Design' },
+              { name: 'Sculpture' },
+              { name: 'Drawing, Painting, Printmaking, Photography' },
+              { name: 'Decoration and Design' }
+            ]
+          }
         ]
       },
-      'Technology': {
-        'Nature & Development of Technology': [
-          'Technology: Its Scope and History',
-          'The Organization of Human Work'
-        ],
-        'Elements of Technology': [
-          'Technology of Energy Conversion and Utilization',
-          'Technology of Tools and Machines',
-          'Technology of Measurement, Observation, and Control',
-          'Extraction and Conversion of Industrial Raw Materials',
-          'Technology of Industrial Production Processes'
-        ],
-        'Fields of Technology': [
-          'Agriculture and Food Production',
-          'Technology of the Major Industries',
-          'Construction Technology',
-          'Transportation Technology',
-          'Technology of Information Processing and of Communications Systems',
-          'Military Technology',
-          'Technology of the Urban Community',
-          'Technology of Earth and Space Exploration'
+      {
+        name: 'Technology',
+        children: [
+          {
+            name: 'Nature & Development of Technology',
+            children: [
+              { name: 'Technology: Its Scope and History' },
+              { name: 'The Organization of Human Work' }
+            ]
+          },
+          {
+            name: 'Elements of Technology',
+            children: [
+              { name: 'Technology of Energy Conversion and Utilization' },
+              { name: 'Technology of Tools and Machines' },
+              { name: 'Technology of Measurement, Observation, and Control' },
+              { name: 'Extraction and Conversion of Industrial Raw Materials' },
+              { name: 'Technology of Industrial Production Processes' }
+            ]
+          },
+          {
+            name: 'Fields of Technology',
+            children: [
+              { name: 'Agriculture and Food Production' },
+              { name: 'Technology of the Major Industries' },
+              { name: 'Construction Technology' },
+              { name: 'Transportation Technology' },
+              { name: 'Technology of Information Processing and of Communications Systems' },
+              { name: 'Military Technology' },
+              { name: 'Technology of the Urban Community' },
+              { name: 'Technology of Earth and Space Exploration' }
+            ]
+          }
         ]
       },
-      'Religion': {
-        'Religion in General': [
-          'Knowledge and Understanding of Religion',
-          'Religious Life: Institutions and Practices'
-        ],
-        'Particular Religions': [
-          'Prehistoric Religion and Primitive Religion',
-          'Religions of Ancient Peoples',
-          'Hinduism and Other Religions of India',
-          'Buddhism',
-          'Indigenous Religions of East Asia',
-          'Judaism',
-          'Christianity',
-          'Islam',
-          'Other Religions and Religious Movements in the Modern World'
+      {
+        name: 'Religion',
+        children: [
+          {
+            name: 'Religion in General',
+            children: [
+              { name: 'Knowledge and Understanding of Religion' },
+              { name: 'Religious Life: Institutions and Practices' }
+            ]
+          },
+          {
+            name: 'Particular Religions',
+            children: [
+              { name: 'Prehistoric Religion and Primitive Religion' },
+              { name: 'Religions of Ancient Peoples' },
+              { name: 'Hinduism and Other Religions of India' },
+              { name: 'Buddhism' },
+              { name: 'Indigenous Religions of East Asia' },
+              { name: 'Judaism' },
+              { name: 'Christianity' },
+              { name: 'Islam' },
+              { name: 'Other Religions and Religious Movements in the Modern World' }
+            ]
+          }
         ]
       },
-      'History': {
-        'Ancient Southwest Asia, North Africa, and Europe': [
-          'Ancient Southwest Asia and Egypt, the Aegean, and North Africa',
-          'Ancient Europe and Classical Civilizations of the Mediterranean to AD 395'
-        ],
-        'Medieval Southwest Asia, North Africa, and Europe': [
-          'The Byzantine Empire and Europe from AD 395–1050',
-          'The Formative Period in Islamic History, AD 622–1055',
-          'Western Christendom in the High and Later Middle Ages 1050–1500',
-          'The Crusades, the Islamic States, and Eastern Christendom 1050–1480'
-        ],
-        'East, Central, South, and Southeast Asia': [
-          'China to the Beginning of the Late T\'ang AD 755',
-          'China from the Late T\'ang to the Late Ch\'ing AD 755–1839',
-          'Central and Northeast Asia to 1750',
-          'Japan to the Meiji Restoration 1868, Korea to 1910',
-          'The Indian Subcontinent and Ceylon to AD 1200',
-          'The Indian Subcontinent 1200–1761, Ceylon 1200–1505',
-          'Southeast Asia to 1600'
-        ],
-        'Sub-Saharan Africa to 1885': [
-          'West Africa to 1885',
-          'The Nilotic Sudan and Ethiopia AD 550–1885',
-          'East Africa and Madagascar to 1885',
-          'Central Africa to 1885',
-          'Southern Africa to 1885'
-        ],
-        'Pre-Columbian America': [
-          'Andean Civilization to AD 1540',
-          'Meso-American Civilization to AD 1540'
-        ],
-        'The Modern World to 1920': [
-          'Western Europe 1500–1789',
-          'Eastern Europe, Southwest Asia, and North Africa 1480–1800',
-          'Europe 1789–1920',
-          'European Colonies in the Americas 1492–1790',
-          'United States and Canada 1763–1920',
-          'Latin-America and Caribbean to 1920',
-          'Australia and Oceania to 1920',
-          'South Asia Under European Imperialism 1500–1920',
-          'Southeast Asia Under European Imperialism 1600–1920',
-          'China until Revolution 1839–1911, Japan from Meiji Restoration to 1910',
-          'Southwest Asia, North Africa 1800–1920, Sub-Saharan Africa 1885–1920'
-        ],
-        'The World Since 1920': [
-          'International Movements, Diplomacy and War Since 1920',
-          'Europe Since 1920',
-          'The United States and Canada Since 1920',
-          'Latin American and Caribbean Nations Since 1920',
-          'China in Revolution, Japanese Hegemony',
-          'South and Southeast Asia: the Late Colonial Period and Nations Since 1920',
-          'Australia and Oceania Since 1920',
-          'Southwest Asia and Africa: the Late Colonial Period and Nations since 1920'
+      {
+        name: 'History',
+        children: [
+          {
+            name: 'Ancient Southwest Asia, North Africa, and Europe',
+            children: [
+              { name: 'Ancient Southwest Asia and Egypt, the Aegean, and North Africa' },
+              { name: 'Ancient Europe and Classical Civilizations of the Mediterranean to AD 395' }
+            ]
+          },
+          {
+            name: 'Medieval Southwest Asia, North Africa, and Europe',
+            children: [
+              { name: 'The Byzantine Empire and Europe from AD 395–1050' },
+              { name: 'The Formative Period in Islamic History, AD 622–1055' },
+              { name: 'Western Christendom in the High and Later Middle Ages 1050–1500' },
+              { name: 'The Crusades, the Islamic States, and Eastern Christendom 1050–1480' }
+            ]
+          },
+          {
+            name: 'East, Central, South, and Southeast Asia',
+            children: [
+              { name: 'China to the Beginning of the Late T\'ang AD 755' },
+              { name: 'China from the Late T\'ang to the Late Ch\'ing AD 755–1839' },
+              { name: 'Central and Northeast Asia to 1750' },
+              { name: 'Japan to the Meiji Restoration 1868, Korea to 1910' },
+              { name: 'The Indian Subcontinent and Ceylon to AD 1200' },
+              { name: 'The Indian Subcontinent 1200–1761, Ceylon 1200–1505' },
+              { name: 'Southeast Asia to 1600' }
+            ]
+          },
+          {
+            name: 'Sub-Saharan Africa to 1885',
+            children: [
+              { name: 'West Africa to 1885' },
+              { name: 'The Nilotic Sudan and Ethiopia AD 550–1885' },
+              { name: 'East Africa and Madagascar to 1885' },
+              { name: 'Central Africa to 1885' },
+              { name: 'Southern Africa to 1885' }
+            ]
+          },
+          {
+            name: 'Pre-Columbian America',
+            children: [
+              { name: 'Andean Civilization to AD 1540' },
+              { name: 'Meso-American Civilization to AD 1540' }
+            ]
+          },
+          {
+            name: 'The Modern World to 1920',
+            children: [
+              { name: 'Western Europe 1500–1789' },
+              { name: 'Eastern Europe, Southwest Asia, and North Africa 1480–1800' },
+              { name: 'Europe 1789–1920' },
+              { name: 'European Colonies in the Americas 1492–1790' },
+              { name: 'United States and Canada 1763–1920' },
+              { name: 'Latin-America and Caribbean to 1920' },
+              { name: 'Australia and Oceania to 1920' },
+              { name: 'South Asia Under European Imperialism 1500–1920' },
+              { name: 'Southeast Asia Under European Imperialism 1600–1920' },
+              { name: 'China until Revolution 1839–1911, Japan from Meiji Restoration to 1910' },
+              { name: 'Southwest Asia, North Africa 1800–1920, Sub-Saharan Africa 1885–1920' }
+            ]
+          },
+          {
+            name: 'The World Since 1920',
+            children: [
+              { name: 'International Movements, Diplomacy and War Since 1920' },
+              { name: 'Europe Since 1920' },
+              { name: 'The United States and Canada Since 1920' },
+              { name: 'Latin American and Caribbean Nations Since 1920' },
+              { name: 'China in Revolution, Japanese Hegemony' },
+              { name: 'South and Southeast Asia: the Late Colonial Period and Nations Since 1920' },
+              { name: 'Australia and Oceania Since 1920' },
+              { name: 'Southwest Asia and Africa: the Late Colonial Period and Nations since 1920' }
+            ]
+          }
         ]
       },
-      'Branches of Knowledge': {
-        'Logic': [
-          'History and Philosophy of Logic',
-          'Formal Logic, Metalogic, & Applied Logic'
-        ],
-        'Mathematics': [
-          'History and Foundations of Mathematics',
-          'Branches of Mathematics',
-          'Applications of Mathematics'
-        ],
-        'Science': [
-          'History and Philosophy of Science',
-          'The Physical Sciences',
-          'The Earth Sciences',
-          'The Biological Sciences',
-          'Medicine',
-          'The Social Sciences, Psychology, Linguistics',
-          'The Technological Sciences'
-        ],
-        'History and The Humanities': [
-          'Historiography',
-          'The Humanities and Humanistic Scholarship'
-        ],
-        'Philosophy': [
-          'History of Philosophy',
-          'Divisions of Philosophy',
-          'Philosophical Schools and Doctrines'
-        ],
-        'Preservation of Knowledge': [
-          'Institutions and Techniques for the Collection, Storage, Dissemination and Preservation of Knowledge'
+      {
+        name: 'Branches of Knowledge',
+        children: [
+          {
+            name: 'Logic',
+            children: [
+              { name: 'History and Philosophy of Logic' },
+              { name: 'Formal Logic, Metalogic, & Applied Logic' }
+            ]
+          },
+          {
+            name: 'Mathematics',
+            children: [
+              { name: 'History and Foundations of Mathematics' },
+              { name: 'Branches of Mathematics' },
+              { name: 'Applications of Mathematics' }
+            ]
+          },
+          {
+            name: 'Science',
+            children: [
+              { name: 'History and Philosophy of Science' },
+              { name: 'The Physical Sciences' },
+              { name: 'The Earth Sciences' },
+              { name: 'The Biological Sciences' },
+              { name: 'Medicine' },
+              { name: 'The Social Sciences, Psychology, Linguistics' },
+              { name: 'The Technological Sciences' }
+            ]
+          },
+          {
+            name: 'History and The Humanities',
+            children: [
+              { name: 'Historiography' },
+              { name: 'The Humanities and Humanistic Scholarship' }
+            ]
+          },
+          {
+            name: 'Philosophy',
+            children: [
+              { name: 'History of Philosophy' },
+              { name: 'Divisions of Philosophy' },
+              { name: 'Philosophical Schools and Doctrines' }
+            ]
+          },
+          {
+            name: 'Preservation of Knowledge',
+            children: [
+              { name: 'Institutions and Techniques for the Collection, Storage, Dissemination and Preservation of Knowledge' }
+            ]
+          }
         ]
       }
-    }
+    ]
 
     // Create all three levels of the hierarchy
-    for (const [topLevel, secondLevel] of Object.entries(outline)) {
-      const topLevelId = await insertSkill(topLevel, rootId)  // Set parent to rootId
-      sectionIds[topLevel] = topLevelId
+    for (const [topLevelIndex, topLevel] of outline.entries()) {
+      const topLevelId = await insertSkill(topLevel.name, rootId, topLevelIndex)
+      sectionIds[topLevel.name] = topLevelId
 
-      for (const [secondLevelName, thirdLevel] of Object.entries(secondLevel)) {
-        const secondLevelId = await insertSkill(secondLevelName, topLevelId)
-        sectionIds[secondLevelName] = secondLevelId
+      for (const [secondLevelIndex, secondLevel] of topLevel.children.entries()) {
+        const secondLevelId = await insertSkill(secondLevel.name, topLevelId, secondLevelIndex)
+        sectionIds[secondLevel.name] = secondLevelId
 
-        for (const thirdLevelName of thirdLevel) {
-          const thirdLevelId = await insertSkill(thirdLevelName, secondLevelId)
-          sectionIds[thirdLevelName] = thirdLevelId
+        if (secondLevel.children) {
+          for (const [thirdLevelIndex, thirdLevel] of secondLevel.children.entries()) {
+            const thirdLevelId = await insertSkill(thirdLevel.name, secondLevelId, thirdLevelIndex)
+            sectionIds[thirdLevel.name] = thirdLevelId
+          }
         }
       }
     }
 
-    // Update the skill mappings to use clean names
-    const skillMappings = {
-      'Logic': 'Logic',
-      'Philosophy of Mathematics': 'History and Foundations of Mathematics',
-      'Pure Mathematics': 'Branches of Mathematics',
-      'Applied Mathematics': 'Applications of Mathematics',
-      'Mathematical Physics': 'Applications of Mathematics',
-      'Mathematical Biology': 'Applications of Mathematics',
-      'Statistical Inference': 'Applications of Mathematics',
-      'Theoretical Computer Science': 'Applications of Mathematics'
-    }
-
-    // Find existing Mathematics skill
+    // Find existing Mathematics skill and update its parent
     const mathId = await findMathematicsId()
-
-    // Update Mathematics parent to point to "Mathematics" section (using clean name)
     const mathSectionId = sectionIds['Mathematics']
     if (mathSectionId) {
       await updateMathematicsParent(mathId, mathSectionId)
     }
 
-    // After creating the outline structure, merge existing skills
+    // Merge existing skills
     await mergeExistingSkills(sectionIds)
 
     console.log('Outline of knowledge migration completed successfully')
@@ -481,8 +639,6 @@ async function migrateOutlineOfKnowledge() {
     throw error
   }
 }
-
-export default migrateOutlineOfKnowledge
 
 // Run migration if this file is executed directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
