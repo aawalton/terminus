@@ -3,7 +3,19 @@ import supabase from '../database.js'
 
 export { migrateOutlineOfKnowledge as default }
 
-async function insertSkill(name, parentId = null, sortOrder = null) {
+// List of nodes we don't want to create because we'll merge with existing ones
+const SKIP_NODES = ['Mathematics', 'Logic']
+
+async function insertOrGetSkill(name, parentId = null, sortOrder = null) {
+  // For nodes we want to merge, find and return their existing ID
+  if (SKIP_NODES.includes(name)) {
+    console.log(`Finding existing ${name} node`)
+    const id = await findSkillIdByName(name)
+    // Update the parent to connect it into the outline structure
+    await updateSkillParent(id, parentId)
+    return id
+  }
+
   console.log(`Inserting skill: ${name} (sort_order: ${sortOrder})`)
 
   const { data, error } = await supabase
@@ -55,7 +67,7 @@ async function updateMathematicsParent(mathId, newParentId) {
   }
 }
 
-async function findSkillByName(name) {
+async function findSkillIdByName(name) {
   const { data, error } = await supabase
     .schema('status')
     .from('skills')
@@ -63,12 +75,12 @@ async function findSkillByName(name) {
     .eq('name', name)
     .single()
 
-  if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
-    console.error('Error finding skill:', error)
+  if (error) {
+    console.error(`Error finding skill ${name}:`, error)
     throw error
   }
 
-  return data?.id
+  return data.id
 }
 
 async function updateSkillParent(skillId, newParentId) {
@@ -86,7 +98,6 @@ async function updateSkillParent(skillId, newParentId) {
 
 // Map existing skills to their new parents in the outline
 const skillMappings = {
-  'Logic': 'Logic',
   'Philosophy of Mathematics': 'History and Foundations of Mathematics',
   'Pure Mathematics': 'Branches of Mathematics',
   'Applied Mathematics': 'Applications of Mathematics',
@@ -100,7 +111,7 @@ async function mergeExistingSkills(sectionIds) {
   console.log('Merging existing skills with outline...')
 
   for (const [existingSkill, newParent] of Object.entries(skillMappings)) {
-    const skillId = await findSkillByName(existingSkill)
+    const skillId = await findSkillIdByName(existingSkill)
     const newParentId = sectionIds[newParent]
 
     if (skillId && newParentId) {
@@ -607,16 +618,16 @@ async function migrateOutlineOfKnowledge() {
 
     // Create all three levels of the hierarchy
     for (const [topLevelIndex, topLevel] of outline.entries()) {
-      const topLevelId = await insertSkill(topLevel.name, rootId, topLevelIndex)
+      const topLevelId = await insertOrGetSkill(topLevel.name, rootId, topLevelIndex)
       sectionIds[topLevel.name] = topLevelId
 
       for (const [secondLevelIndex, secondLevel] of topLevel.children.entries()) {
-        const secondLevelId = await insertSkill(secondLevel.name, topLevelId, secondLevelIndex)
+        const secondLevelId = await insertOrGetSkill(secondLevel.name, topLevelId, secondLevelIndex)
         sectionIds[secondLevel.name] = secondLevelId
 
         if (secondLevel.children) {
           for (const [thirdLevelIndex, thirdLevel] of secondLevel.children.entries()) {
-            const thirdLevelId = await insertSkill(thirdLevel.name, secondLevelId, thirdLevelIndex)
+            const thirdLevelId = await insertOrGetSkill(thirdLevel.name, secondLevelId, thirdLevelIndex)
             sectionIds[thirdLevel.name] = thirdLevelId
           }
         }

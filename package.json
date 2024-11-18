@@ -8,7 +8,8 @@
     "test": "node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "export-skills": "node -r dotenv/config src/scripts/exportSkillTree.js",
-    "migrate:outline": "node -r dotenv/config src/migrations/migrateOutlineOfKnowledge.js"
+    "migrate:outline": "node -r dotenv/config src/migrations/migrateOutlineOfKnowledge.js",
+    "migrate:skills": "node -r dotenv/config src/migrations/migrateSkillTree.js"
   },
   "author": "Alan Walton",
   "license": "ISC",
