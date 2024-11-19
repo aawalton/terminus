@@ -1,4 +1,4 @@
-import { exportSkillTreeToMarkdown } from '../skillTreeExporter.js'
+import { exportSkillTreeToMarkdown } from '../skills/skill-tree-exporter.js'
 
 async function main() {
   try {

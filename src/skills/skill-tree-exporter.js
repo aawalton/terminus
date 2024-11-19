@@ -1,4 +1,4 @@
-import supabase from './database.js'
+import supabase from '../database.js'
 
 async function fetchSkillTree() {
   const { data: skills, error } = await supabase

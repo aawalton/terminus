@@ -2,3 +2,4 @@ Always use Yarn as the package manager.
 Always use Jest when writing tests. Only write tests when requested.
 Ensure scripts have access to the environment variables.
 Don't use Babel to transpile the code.
+File names should use kebab-case.
