@@ -12,7 +12,7 @@ const parseSkillTree = (markdown) => {
   const lines = markdown.split('\n')
   const skills = []
   const stack = [{ level: -1, id: null }]
-  let currentOrder = 0
+  const siblingCounts = new Map() // Track count of siblings for each parent
 
   for (const line of lines) {
     // Skip empty lines
@@ -34,12 +34,17 @@ const parseSkillTree = (markdown) => {
 
     const parentId = stack[stack.length - 1].id
 
+    // Get and increment the sibling count for this parent
+    const parentKey = parentId || 'root'
+    const currentCount = siblingCounts.get(parentKey) || 0
+    siblingCounts.set(parentKey, currentCount + 1)
+
     skills.push({
       name,
       oldName,
       parentId,
       level,
-      sortOrder: currentOrder++
+      sortOrder: currentCount // Sort order is now relative to siblings
     })
 
     stack.push({ level, id: name }) // Using name as temporary ID
