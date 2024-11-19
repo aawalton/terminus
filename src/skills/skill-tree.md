@@ -5,8 +5,8 @@ Skill Tree
 - Knowledge
   - Matter and Energy
     - Atoms
-      - Testing2
       - Structure and Properties of Atoms
+      - Testing2
       - Atomic Nuclei and Elementary Particles
     - Energy, Radiation, and States of Matter
       - Chemical Elements: Periodic Variation in Their Properties
