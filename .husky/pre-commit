@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 # Run skill tree sync if skill-tree.md is staged
 if git diff --cached --name-only | grep -q "src/skills/skill-tree.md"; then
   yarn sync-skill-tree
