@@ -5,7 +5,6 @@ Skill Tree
 - Knowledge
   - Matter and Energy
     - Atoms
-      - Testing3
       - Structure and Properties of Atoms
       - Atomic Nuclei and Elementary Particles
     - Energy, Radiation, and States of Matter
@@ -23,7 +22,6 @@ Skill Tree
       - The Solar System
   - The Earth
     - Earth's Properties, Structure, Composition
-      - Testing4
       - The Planet Earth
       - Earth's Physical Properties
       - Structure and Composition of the Earth's Interior
