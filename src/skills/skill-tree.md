@@ -266,7 +266,6 @@ Skill Tree
           - Geometry
           - Analysis
           - Topology
-          - Combinatorics
         - Discrete Mathematics
           - Graph Theory
           - Coding Theory
