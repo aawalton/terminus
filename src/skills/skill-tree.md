@@ -118,6 +118,10 @@ Skill Tree
       - Characteristics of the Arts in Particular Cultures
     - Particular Arts
       - Literature
+        - Literary Genres
+          - Science Fiction and Fantasy
+            - LitRPG and GameLit
+              - The Wandering Inn
       - Theater
       - Motion Pictures
       - Music
