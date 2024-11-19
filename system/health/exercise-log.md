@@ -3,12 +3,15 @@
 - The client is a 38-year-old male who is 175 lbs and 5'10" tall.
 - The client has joint issues and is looking for a low-impact workout.
 - The exercise log is sorted by date, with the most recent exercises at the top.
-- Propose two exercises for today
+- Propose one exercise for today
 - Ensure the exercises have appropriate variety
 - Only propose exercises that can be done at home
 - Describe how to do the exercise with good form outside of the proposed log changes
 
 # Exercise Log
+
+## November 19, 2024
+- Standing Hip Circles: 2 sets of 12 repetitions (each direction)
 
 ## November 14, 2024
 - Dead Bug: 2 sets of 10 repetitions (each side)  
