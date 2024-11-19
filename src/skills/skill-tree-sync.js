@@ -132,4 +132,4 @@ export const syncSkillTree = async (changes) => {
     console.error('Database error:', error)
     throw error
   }
-} 
+}

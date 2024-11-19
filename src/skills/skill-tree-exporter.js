@@ -28,19 +28,17 @@ async function fetchSkillTree() {
     }
   }
 
-  // Sort all children arrays by sort_order, then by name
+  // Sort all children arrays by sort_order
   const sortNodes = (nodes) => {
+    // Sort siblings by their sort_order
     nodes.sort((a, b) => {
-      // If both have sort_order, use that first
       if (a.sort_order !== null && b.sort_order !== null) {
-        if (a.sort_order !== b.sort_order) {
-          return a.sort_order - b.sort_order
-        }
+        return a.sort_order - b.sort_order
       }
       // If only one has sort_order, put it first
       if (a.sort_order !== null) return -1
       if (b.sort_order !== null) return 1
-      // If neither has sort_order or they're equal, sort by name
+      // If neither has sort_order, sort by name
       return a.name.localeCompare(b.name)
     })
     // Recursively sort children
