@@ -9,7 +9,7 @@
     "test:watch": "node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "export-skills": "node -r dotenv/config src/scripts/export-skill-tree.js",
     "prepare": "husky install",
-    "sync-skill-tree": "node src/scripts/sync-skill-tree.js"
+    "sync-skill-tree": "node -r dotenv/config src/scripts/sync-skill-tree.js"
   },
   "author": "Alan Walton",
   "license": "ISC",

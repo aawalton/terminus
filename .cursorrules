@@ -1,5 +1,5 @@
 Always use Yarn as the package manager.
 Always use Jest when writing tests. Only write tests when requested. Tests should be in the same folder as the code they are testing.
-Ensure scripts have access to the environment variables.
+Ensure scripts have access to the environment variables by using `node -r dotenv/config`.
 Don't use Babel to transpile the code.
 File names should use kebab-case.
