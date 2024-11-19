@@ -23,6 +23,7 @@ Skill Tree
       - The Solar System
   - The Earth
     - Earth's Properties, Structure, Composition
+      - Testing4
       - The Planet Earth
       - Earth's Physical Properties
       - Structure and Composition of the Earth's Interior
