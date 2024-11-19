@@ -1,3 +1,13 @@
+const extractSkillTreeMarkdown = (fileContent) => {
+  const lines = fileContent.split('\n')
+  // Find the start of the skill tree (after "Instructions" section)
+  const startIndex = lines.findIndex(line => line === 'Skill Tree')
+  if (startIndex === -1) throw new Error('Could not find skill tree start')
+
+  // Join all lines after "Skill Tree"
+  return lines.slice(startIndex + 1).join('\n')
+}
+
 const parseSkillTree = (markdown) => {
   const lines = markdown.split('\n')
   const skills = []
@@ -5,9 +15,8 @@ const parseSkillTree = (markdown) => {
   let currentOrder = 0
 
   for (const line of lines) {
-    // Skip empty lines and the "Instructions" section
-    if (!line.trim() || line.includes('Instructions')) continue
-    if (line === 'Skill Tree') continue
+    // Skip empty lines
+    if (!line.trim()) continue
 
     // Count leading spaces/dashes to determine level
     const level = (line.match(/^\s*/)[0].length) / 2
@@ -39,4 +48,4 @@ const parseSkillTree = (markdown) => {
   return skills
 }
 
-export { parseSkillTree } 
+export { parseSkillTree, extractSkillTreeMarkdown } 

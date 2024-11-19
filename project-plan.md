@@ -28,14 +28,14 @@ This is the trickiest one. To make it clear that I intend to do a rename, I’ll
 
 # Execution
 
-- [ ]  Create functions for each type of skill change
-    - [ ]  Skill removed
-    - [ ]  Skill added
-    - [ ]  Skill reordered
-    - [ ]  Skill renamed
-- [ ]  Create pre-commit hook script using husky
-- [ ]  Update script to validate format for declarative skill tree
-- [ ]  Update script to identify skill changes
-- [ ]  Update script to call skill change functions
-- [ ]  Update script to resolve renames
+- [x]  Create functions for each type of skill change
+    - [x]  Skill removed
+    - [x]  Skill added
+    - [x]  Skill reordered
+    - [x]  Skill renamed
+- [x]  Create pre-commit hook script using husky
+- [x]  Update script to validate format for declarative skill tree
+- [x]  Update script to identify skill changes
+- [x]  Update script to call skill change functions
+- [x]  Update script to resolve renames
 - [ ]  Write test to check declarative tree against database
