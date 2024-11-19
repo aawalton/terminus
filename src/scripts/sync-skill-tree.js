@@ -8,19 +8,39 @@ const SKILL_TREE_PATH = 'src/skills/skill-tree.md'
 
 async function main() {
   try {
-    // Get the staged content of the skill tree file
+    // Get both versions of the content
     const stagedContent = getStagedContent(SKILL_TREE_PATH)
     if (!stagedContent) {
-      console.log('No changes to skill tree')
+      console.log('No staged changes found')
       process.exit(0)
     }
 
-    // Get the current content from the working directory
-    const currentContent = await fs.readFile(SKILL_TREE_PATH, 'utf-8')
+    const committedContent = getCommittedContent(SKILL_TREE_PATH)
+    if (!committedContent) {
+      console.log('No committed version found')
+      process.exit(1)
+    }
+
+    console.log('Content lengths - Committed:', committedContent.length, 'Staged:', stagedContent.length)
+
+    // Extract skill tree markdown
+    const committedSkillTree = extractSkillTreeMarkdown(committedContent)
+    const stagedSkillTree = extractSkillTreeMarkdown(stagedContent)
+
+    console.log('\nFirst few lines of committed skill tree:')
+    console.log(committedSkillTree.split('\n').slice(0, 5).join('\n'))
+    console.log('\nFirst few lines of staged skill tree:')
+    console.log(stagedSkillTree.split('\n').slice(0, 5).join('\n'))
 
     // Parse both versions
-    const oldSkills = parseSkillTree(extractSkillTreeMarkdown(currentContent))
-    const newSkills = parseSkillTree(extractSkillTreeMarkdown(stagedContent))
+    const oldSkills = parseSkillTree(committedSkillTree)
+    const newSkills = parseSkillTree(stagedSkillTree)
+
+    console.log('\nSample of parsed skills:')
+    console.log('Old first 3:', oldSkills.slice(0, 3))
+    console.log('New first 3:', newSkills.slice(0, 3))
+
+    console.log('Parsed skill counts - Old:', oldSkills.length, 'New:', newSkills.length)
 
     // Find differences
     const changes = diffSkillTrees(oldSkills, newSkills)
@@ -42,19 +62,36 @@ async function main() {
   }
 }
 
+function getCommittedContent(filepath) {
+  try {
+    // Get the content from the last commit
+    return execSync(`git show HEAD:${filepath}`, { encoding: 'utf-8' })
+  } catch (error) {
+    console.error('Error getting committed content:', error)
+    return null
+  }
+}
+
 function getStagedContent(filepath) {
   try {
-    // Get the staged version using git cat-file
-    const hash = execSync('git write-tree', { encoding: 'utf-8' }).trim()
-    return execSync(`git cat-file -p ${hash}:${filepath}`, { encoding: 'utf-8' })
-  } catch (error) {
-    // If the command fails, try getting it from the index
-    try {
-      return execSync(`git show :${filepath}`, { encoding: 'utf-8' })
-    } catch (indexError) {
-      console.error('Error getting staged content:', indexError)
+    // First, check if the file is staged
+    const stagedFiles = execSync('git diff --cached --name-only', { encoding: 'utf-8' })
+    if (!stagedFiles.includes(filepath)) {
+      console.log('File is not staged')
       return null
     }
+
+    // Get the staged content
+    const content = execSync('git show :./' + filepath, { encoding: 'utf-8' })
+    if (!content) {
+      console.log('No content found in staged version')
+      return null
+    }
+
+    return content
+  } catch (error) {
+    console.error('Error getting staged content:', error)
+    return null
   }
 }
 

@@ -6,6 +6,11 @@ const diffSkillTrees = (oldSkills, newSkills) => {
     reordered: []
   }
 
+  console.log('Comparing trees:', {
+    oldSkillCount: oldSkills.length,
+    newSkillCount: newSkills.length
+  })
+
   // Create maps for easier lookup
   const oldSkillMap = new Map(oldSkills.map(skill => [getSkillPath(skill, oldSkills), skill]))
   const newSkillMap = new Map(newSkills.map(skill => [getSkillPath(skill, newSkills), skill]))
@@ -41,6 +46,13 @@ const diffSkillTrees = (oldSkills, newSkills) => {
       })
     }
   }
+
+  console.log('Changes detected:', {
+    added: changes.added.map(s => s.name),
+    removed: changes.removed.map(s => s.name),
+    renamed: changes.renamed.map(r => `${r.from.name} -> ${r.to.name}`),
+    reordered: changes.reordered.map(r => `${r.skill.name}: ${r.oldOrder} -> ${r.newOrder}`)
+  })
 
   return changes
 }
