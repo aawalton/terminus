@@ -3,10 +3,6 @@ import supabase from '../database.js'
 export const syncSkillTree = async (changes) => {
   const { added, removed, renamed, reordered } = changes
 
-  // Start a transaction
-  const { error: txError } = await supabase.rpc('begin_transaction')
-  if (txError) throw txError
-
   try {
     // Handle removals (soft delete)
     if (removed.length > 0) {
@@ -53,13 +49,8 @@ export const syncSkillTree = async (changes) => {
       if (error) throw error
     }
 
-    // Commit transaction
-    const { error: commitError } = await supabase.rpc('commit_transaction')
-    if (commitError) throw commitError
-
   } catch (error) {
-    // Rollback on any error
-    await supabase.rpc('rollback_transaction')
+    console.error('Database error:', error)
     throw error
   }
 } 
