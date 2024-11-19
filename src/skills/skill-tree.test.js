@@ -1,6 +1,6 @@
 import fs from 'fs/promises'
-import { parseSkillTree, extractSkillTreeMarkdown } from '../skill-tree-parser.js'
-import { exportSkillTreeToMarkdown } from '../skill-tree-exporter.js'
+import { parseSkillTree, extractSkillTreeMarkdown } from './skill-tree-parser.js'
+import { exportSkillTreeToMarkdown } from './skill-tree-exporter.js'
 
 describe('Skill Tree Consistency', () => {
   it('database should match file representation', async () => {
