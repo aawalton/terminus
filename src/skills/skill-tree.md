@@ -268,6 +268,7 @@ Skill Tree
         - Discrete Mathematics
           - Graph Theory
           - Coding Theory
+          - Combinatorics
         - Probability and Statistics
           - Probability Theory
           - Statistical Inference
