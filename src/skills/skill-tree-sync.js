@@ -4,7 +4,7 @@ export const syncSkillTree = async (changes) => {
   const { added, removed, renamed, reordered } = changes
 
   try {
-    console.log('Changes to sync:', {
+    console.log('\nChanges to sync:', {
       added: added.length,
       removed: removed.length,
       renamed: renamed.length,
@@ -15,16 +15,18 @@ export const syncSkillTree = async (changes) => {
     const { data: existingSkills, error: fetchError } = await supabase
       .schema('status')
       .from('skills')
-      .select('id, name')
+      .select('id, name, sort_order')
       .is('deleted_at', null)
 
     if (fetchError) throw fetchError
 
-    // Create a map of skill names to their UUIDs
+    // Create a map of skill names to their UUIDs and current sort order
     const skillIdMap = new Map(existingSkills.map(skill => [skill.name, skill.id]))
+    const currentSortOrders = new Map(existingSkills.map(skill => [skill.name, skill.sort_order]))
 
     // Handle removals (soft delete)
     if (removed.length > 0) {
+      console.log('\nProcessing removals:', removed.map(s => s.name))
       const { error } = await supabase
         .schema('status')
         .from('skills')
@@ -35,7 +37,7 @@ export const syncSkillTree = async (changes) => {
 
     // Handle additions
     for (const skill of added) {
-      console.log('Adding skill:', skill)
+      console.log('\nProcessing addition:', skill.name)
 
       // Skip if skill already exists
       if (skillIdMap.has(skill.name)) {
@@ -60,7 +62,7 @@ export const syncSkillTree = async (changes) => {
         console.error('Error adding skill:', error)
         throw error
       }
-      console.log('Added skill response:', data)
+      console.log('Added skill:', skill.name, 'with sort_order:', skill.sortOrder)
 
       // Add the new skill to our map in case it's needed as a parent for other skills
       if (data && data[0]) {
@@ -70,6 +72,7 @@ export const syncSkillTree = async (changes) => {
 
     // Handle renames
     for (const { from, to } of renamed) {
+      console.log('\nProcessing rename:', `${from.name} -> ${to.name}`)
       const { error } = await supabase
         .schema('status')
         .from('skills')
@@ -81,8 +84,16 @@ export const syncSkillTree = async (changes) => {
       if (error) throw error
     }
 
-    // Handle reordering
+    // Handle reordering - only update if sort_order actually changed
+    let reorderCount = 0
     for (const { skill, newOrder } of reordered) {
+      const currentOrder = currentSortOrders.get(skill.name)
+      if (currentOrder === newOrder) {
+        console.log('Skipping reorder for', skill.name, '- order unchanged:', newOrder)
+        continue
+      }
+
+      console.log('Updating order for', skill.name, 'from', currentOrder, 'to', newOrder)
       const { error } = await supabase
         .schema('status')
         .from('skills')
@@ -92,7 +103,9 @@ export const syncSkillTree = async (changes) => {
         })
         .eq('name', skill.name)
       if (error) throw error
+      reorderCount++
     }
+    console.log('\nTotal reorders performed:', reorderCount)
 
   } catch (error) {
     console.error('Database error:', error)
