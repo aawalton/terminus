@@ -28,7 +28,7 @@
   "type": "module",
   "devDependencies": {
     "dotenv": "^16.4.5",
-    "jest": "^29.7.0",
-    "husky": "^8.0.0"
+    "husky": "^9.1.7",
+    "jest": "^29.7.0"
   }
 }
