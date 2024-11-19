@@ -1,14 +1,15 @@
 import supabase from '../database.js'
 
 export const syncSkillTree = async (changes) => {
-  const { added, removed, renamed, reordered } = changes
+  const { added, removed, renamed, reordered, moved } = changes
 
   try {
     console.log('\nChanges to sync:', {
       added: added.length,
       removed: removed.length,
       renamed: renamed.length,
-      reordered: reordered.length
+      reordered: reordered.length,
+      moved: moved.length
     })
 
     // First, fetch all existing skills to get their UUIDs
@@ -32,6 +33,26 @@ export const syncSkillTree = async (changes) => {
         .from('skills')
         .update({ deleted_at: new Date().toISOString() })
         .in('name', removed.map(skill => skill.name))
+      if (error) throw error
+    }
+
+    // Handle moves (update parent_skill_id)
+    for (const { skill, newParentId } of moved) {
+      console.log('\nMoving skill:', skill.name, 'to new parent:', newParentId)
+      const newParentUuid = skillIdMap.get(newParentId)
+      if (!newParentUuid && newParentId !== null) {
+        throw new Error(`New parent skill not found: ${newParentId}`)
+      }
+
+      const { error } = await supabase
+        .schema('status')
+        .from('skills')
+        .update({
+          parent_skill_id: newParentUuid,
+          sort_order: skill.sortOrder,
+          updated_at: new Date().toISOString()
+        })
+        .eq('name', skill.name)
       if (error) throw error
     }
 

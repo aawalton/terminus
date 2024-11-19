@@ -3,7 +3,8 @@ const diffSkillTrees = (oldSkills, newSkills) => {
     added: [],
     removed: [],
     renamed: [],
-    reordered: []
+    reordered: [],
+    moved: []
   }
 
   console.log('Comparing trees:', {
@@ -14,6 +15,8 @@ const diffSkillTrees = (oldSkills, newSkills) => {
   // Create maps for easier lookup
   const oldSkillMap = new Map(oldSkills.map(skill => [getSkillPath(skill, oldSkills), skill]))
   const newSkillMap = new Map(newSkills.map(skill => [getSkillPath(skill, newSkills), skill]))
+  const oldSkillsByName = new Map(oldSkills.map(skill => [skill.name, skill]))
+  const newSkillsByName = new Map(newSkills.map(skill => [skill.name, skill]))
 
   // Find removed and renamed skills
   for (const [path, oldSkill] of oldSkillMap) {
@@ -23,22 +26,35 @@ const diffSkillTrees = (oldSkills, newSkills) => {
       if (renamedSkill) {
         changes.renamed.push({ from: oldSkill, to: renamedSkill })
       } else {
-        changes.removed.push(oldSkill)
+        // Check if it was moved (exists with different parent)
+        const movedSkill = newSkillsByName.get(oldSkill.name)
+        if (movedSkill && movedSkill.parentId !== oldSkill.parentId) {
+          changes.moved.push({
+            skill: movedSkill,
+            oldParentId: oldSkill.parentId,
+            newParentId: movedSkill.parentId
+          })
+        } else {
+          changes.removed.push(oldSkill)
+        }
       }
     }
   }
 
   // Find added skills
   for (const [path, newSkill] of newSkillMap) {
-    if (!oldSkillMap.has(path) && !newSkill.oldName) {
+    if (!oldSkillMap.has(path) && !newSkill.oldName && !oldSkillsByName.has(newSkill.name)) {
       changes.added.push(newSkill)
     }
   }
 
-  // Find reordered skills
+  // Find reordered skills (excluding moved skills)
+  const movedSkillNames = new Set(changes.moved.map(m => m.skill.name))
   for (const [path, newSkill] of newSkillMap) {
-    const oldSkill = oldSkillMap.get(path)
-    if (oldSkill && oldSkill.sortOrder !== newSkill.sortOrder) {
+    const oldSkill = oldSkillsByName.get(newSkill.name)
+    if (oldSkill &&
+      oldSkill.sortOrder !== newSkill.sortOrder &&
+      !movedSkillNames.has(newSkill.name)) {
       changes.reordered.push({
         skill: newSkill,
         oldOrder: oldSkill.sortOrder,
@@ -51,6 +67,7 @@ const diffSkillTrees = (oldSkills, newSkills) => {
     added: changes.added.map(s => s.name),
     removed: changes.removed.map(s => s.name),
     renamed: changes.renamed.map(r => `${r.from.name} -> ${r.to.name}`),
+    moved: changes.moved.map(m => `${m.skill.name}: ${m.oldParentId} -> ${m.newParentId}`),
     reordered: changes.reordered.map(r => `${r.skill.name}: ${r.oldOrder} -> ${r.newOrder}`)
   })
 
