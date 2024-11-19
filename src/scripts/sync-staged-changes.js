@@ -29,10 +29,8 @@ async function main() {
     const oldSkills = parseSkillTree(committedSkillTree)
     const newSkills = parseSkillTree(stagedSkillTree)
 
-    // Find differences
+    // Find differences and sync changes
     const changes = diffSkillTrees(oldSkills, newSkills)
-
-    // Sync changes to database
     await syncSkillTree(changes)
 
     // If there were renames, simplify them in the file
