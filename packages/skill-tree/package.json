@@ -6,9 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js ",
-    "export-skills": "node -r dotenv/config src/scripts/export-skill-tree.js",
-    "sync-skill-tree": "node -r dotenv/config src/scripts/sync-staged-changes.js",
-    "full-sync-skill-tree": "node -r dotenv/config src/scripts/full-sync-skill-tree.js"
+    "export-skills": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/scripts/export-skill-tree.js",
+    "sync-skill-tree": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/scripts/sync-staged-changes.js",
+    "full-sync-skill-tree": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/scripts/full-sync-skill-tree.js"
   },
   "dependencies": {
     "@terminus/supabase": "workspace:*"
