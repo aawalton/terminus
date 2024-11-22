@@ -1,4 +1,7 @@
+# IMPORTANT: As of husky v10, shell script headers are deprecated
+# Just include the commands directly
+
 # Run skill tree sync if skill-tree.md is staged
-if git diff --cached --name-only | grep -q "src/skills/skill-tree.md"; then
-  yarn sync-skill-tree
+if git diff --cached --name-only | grep -q "packages/skill-tree/src/skill-tree.md"; then
+  yarn workspace @terminus/skill-tree sync-skill-tree
 fi 

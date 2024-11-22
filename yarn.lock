@@ -862,6 +862,64 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@terminus/data-sources@workspace:packages/data-sources":
+  version: 0.0.0-use.local
+  resolution: "@terminus/data-sources@workspace:packages/data-sources"
+  dependencies:
+    puppeteer: "npm:^23.6.0"
+  languageName: unknown
+  linkType: soft
+
+"@terminus/exercise@workspace:packages/exercise":
+  version: 0.0.0-use.local
+  resolution: "@terminus/exercise@workspace:packages/exercise"
+  languageName: unknown
+  linkType: soft
+
+"@terminus/game-mechanics@workspace:packages/game-mechanics":
+  version: 0.0.0-use.local
+  resolution: "@terminus/game-mechanics@workspace:packages/game-mechanics"
+  languageName: unknown
+  linkType: soft
+
+"@terminus/numeric-language@workspace:packages/numeric-language":
+  version: 0.0.0-use.local
+  resolution: "@terminus/numeric-language@workspace:packages/numeric-language"
+  dependencies:
+    dotenv: "npm:^16.0.3"
+    jest: "npm:^29.5.0"
+  languageName: unknown
+  linkType: soft
+
+"@terminus/root@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@terminus/root@workspace:."
+  dependencies:
+    dotenv: "npm:^16.4.5"
+    husky: "npm:^9.1.7"
+  languageName: unknown
+  linkType: soft
+
+"@terminus/skill-tree@workspace:packages/skill-tree":
+  version: 0.0.0-use.local
+  resolution: "@terminus/skill-tree@workspace:packages/skill-tree"
+  dependencies:
+    "@terminus/supabase": "workspace:*"
+    dotenv: "npm:^16.4.5"
+    jest: "npm:^29.7.0"
+  languageName: unknown
+  linkType: soft
+
+"@terminus/supabase@workspace:*, @terminus/supabase@workspace:packages/supabase":
+  version: 0.0.0-use.local
+  resolution: "@terminus/supabase@workspace:packages/supabase"
+  dependencies:
+    "@supabase/supabase-js": "npm:^2.46.1"
+    dotenv: "npm:^16.4.5"
+    jest: "npm:^29.7.0"
+  languageName: unknown
+  linkType: soft
+
 "@tootallnate/quickjs-emscripten@npm:^0.23.0":
   version: 0.23.0
   resolution: "@tootallnate/quickjs-emscripten@npm:0.23.0"
@@ -1645,7 +1703,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.4.5":
+"dotenv@npm:^16.0.3, dotenv@npm:^16.4.5":
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 10c0/48d92870076832af0418b13acd6e5a5a3e83bb00df690d9812e94b24aff62b88ade955ac99a05501305b8dc8f1b0ee7638b18493deb6fe93d680e5220936292f
@@ -2783,7 +2841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.7.0":
+"jest@npm:^29.5.0, jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
@@ -3895,18 +3953,6 @@ __metadata:
   checksum: 10c0/a5eca3eb50bc11552d453488344e6507156b9193efd7635e98e867fab275d527af53d8866e2370cd09dfe74378a18111622ace35af6a608e5223a7d27fe99537
   languageName: node
   linkType: hard
-
-"terminus@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "terminus@workspace:."
-  dependencies:
-    "@supabase/supabase-js": "npm:^2.46.1"
-    dotenv: "npm:^16.4.5"
-    husky: "npm:^9.1.7"
-    jest: "npm:^29.7.0"
-    puppeteer: "npm:^23.6.0"
-  languageName: unknown
-  linkType: soft
 
 "test-exclude@npm:^6.0.0":
   version: 6.0.0

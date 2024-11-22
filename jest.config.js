@@ -1,10 +1,13 @@
+/** @type {import('jest').Config} */
 export default {
   transform: {},
-  moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1'
-  },
   testEnvironment: 'node',
-  moduleFileExtensions: ['js', 'json', 'node'],
-  testMatch: ['**/__tests__/**/*.js', '**/?(*.)+(spec|test).js'],
-  setupFiles: ['./jest.setup.js']
-}; 
+  roots: ['<rootDir>/packages'],
+  projects: ['<rootDir>/packages/*'],
+  moduleDirectories: ['node_modules'],
+  testMatch: [
+    '<rootDir>/packages/**/*.test.js'
+  ],
+  testPathIgnorePatterns: ['/node_modules/'],
+  coverageDirectory: '<rootDir>/coverage'
+} 

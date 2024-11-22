@@ -1,0 +1,10 @@
+{
+  "name": "@terminus/game-mechanics",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {
+    "sync": "node -r dotenv/config src/sync-game-mechanics.js"
+  }
+}

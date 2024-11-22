@@ -1,0 +1,13 @@
+{
+  "name": "@terminus/data-sources",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {
+    "sync": "node -r dotenv/config src/sync-data-sources.js"
+  },
+  "dependencies": {
+    "puppeteer": "^23.6.0"
+  }
+}

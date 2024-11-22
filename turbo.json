@@ -1,0 +1,23 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".env"
+  ],
+  "tasks": {
+    "test": {
+      "inputs": [
+        "src/**/*.js",
+        "test/**/*.js"
+      ]
+    },
+    "export-skills": {
+      "cache": false
+    },
+    "sync-skill-tree": {
+      "cache": false
+    },
+    "full-sync-skill-tree": {
+      "cache": false
+    }
+  }
+}
