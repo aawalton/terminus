@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "sync": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/sync-game-mechanics.js"
+    "print-level-info": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/print-level-info.js"
   },
   "dependencies": {
     "@terminus/supabase": "workspace:*"
