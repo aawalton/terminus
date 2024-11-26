@@ -1,67 +1,23 @@
 import supabase from '@terminus/supabase';
 import { getSkillByName } from './skills.js';
 
-// Cache for type names to avoid repeated lookups
-let ACTIVITY_TYPES = null;
-let LENGTH_TYPES = null;
 let TWI_SKILL_ID = null;
 
-async function initializeTypeIds() {
-  if (!ACTIVITY_TYPES || !LENGTH_TYPES) {
-    // Get activity types
-    const { data: activityTypes, error: activityError } = await supabase
-      .schema('status')
-      .from('activity_types')
-      .select('name');
-
-    if (activityError) {
-      throw new Error(`Failed to fetch activity types: ${activityError.message}`);
-    }
-
-    // Get length types
-    const { data: lengthTypes, error: lengthError } = await supabase
-      .schema('status')
-      .from('length_types')
-      .select('name');
-
-    if (lengthError) {
-      throw new Error(`Failed to fetch length types: ${lengthError.message}`);
-    }
-
-    // Convert to lookup objects with uppercase keys and lowercase names as values
-    ACTIVITY_TYPES = Object.fromEntries(
-      activityTypes.map(type => [type.name.toUpperCase(), type.name.toLowerCase()])
-    );
-
-    LENGTH_TYPES = Object.fromEntries(
-      lengthTypes.map(type => [type.name.toUpperCase(), type.name.toLowerCase()])
-    );
-
-    // Validate required types exist
-    if (!ACTIVITY_TYPES.SEQUENCE || !ACTIVITY_TYPES.TASK) {
-      throw new Error('Required activity types "sequence" and "task" not found in database');
-    }
-
-    if (!LENGTH_TYPES.WORDS) {
-      throw new Error('Required length type "words" not found in database');
-    }
-  }
-
-  // Get TWI skill ID if not already cached
+async function initializeSkillId() {
   if (!TWI_SKILL_ID) {
     TWI_SKILL_ID = await getSkillByName('The Wandering Inn');
   }
 }
 
 export async function getOrCreateSeries(seriesData) {
-  await initializeTypeIds();
+  await initializeSkillId();
 
   const { data: existingSeries, error: queryError } = await supabase
     .schema('status')
     .from('activities')
     .select('id')
     .eq('name', seriesData['series-name'])
-    .eq('type', ACTIVITY_TYPES.SEQUENCE)
+    .eq('type', 'sequence')
     .is('parent_activity_id', null)
     .single();
 
@@ -78,7 +34,7 @@ export async function getOrCreateSeries(seriesData) {
     .from('activities')
     .insert({
       name: seriesData['series-name'],
-      type: ACTIVITY_TYPES.SEQUENCE,
+      type: 'sequence',
       skill_id: TWI_SKILL_ID,
     })
     .select('id')
@@ -92,7 +48,7 @@ export async function getOrCreateSeries(seriesData) {
 }
 
 export async function getOrCreateChapter(chapterData, seriesId) {
-  await initializeTypeIds();
+  await initializeSkillId();
 
   const { data: existingChapter, error: queryError } = await supabase
     .schema('status')
@@ -116,10 +72,10 @@ export async function getOrCreateChapter(chapterData, seriesId) {
     .insert({
       name: chapterData['chapter-name'],
       parent_activity_id: seriesId,
-      type: ACTIVITY_TYPES.TASK,
+      type: 'task',
       skill_id: TWI_SKILL_ID,
       length: chapterData['word-count'],
-      length_type: LENGTH_TYPES.WORDS,
+      length_type: 'words',
     })
     .select('id')
     .single();

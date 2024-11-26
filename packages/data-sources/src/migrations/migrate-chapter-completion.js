@@ -3,10 +3,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import supabase from '@terminus/supabase';
 import { getSkillByName } from '../db/skills.js';
-import { getUserByEmail } from '../db/users.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const USER_ID = 'f5f446d8-95c7-469d-ab38-ce379926ff26';
 
 export async function migrateChapterCompletion() {
   try {
@@ -14,7 +15,6 @@ export async function migrateChapterCompletion() {
 
     // Get required IDs
     const skillId = await getSkillByName('The Wandering Inn');
-    const userId = await getUserByEmail('aawalton@gmail.com');
 
     // Get all chapter files
     const chaptersDir = path.join(process.cwd(), 'data/json/series/the-wandering-inn/chapters');
@@ -51,7 +51,7 @@ export async function migrateChapterCompletion() {
             .from('experience')
             .select('id')
             .eq('activity_id', activity.id)
-            .eq('user_id', userId)
+            .eq('user_id', USER_ID)
             .maybeSingle();
 
           if (expError) {
@@ -66,7 +66,7 @@ export async function migrateChapterCompletion() {
               .from('experience')
               .insert({
                 activity_id: activity.id,
-                user_id: userId,
+                user_id: USER_ID,
                 skill_id: skillId,
                 amount: chapterData['word-count']
               });
