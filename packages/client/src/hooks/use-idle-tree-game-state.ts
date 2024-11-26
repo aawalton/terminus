@@ -100,6 +100,7 @@ export function useIdleTreeGameState() {
 
     // Save updated state
     await saveGame({
+      ...state,
       currentEssence: updatedEssence.toString(),
       dailyCredits: newDailyCredits,
       essenceGainedAt: newEssenceGainedAt.toISOString(),

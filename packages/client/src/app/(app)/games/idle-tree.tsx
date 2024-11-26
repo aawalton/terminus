@@ -23,6 +23,7 @@ export default function IdleTree() {
     )
   }
 
+  console.log(loading, gameState.treeName)
   return (
     <View style={styles.container}>
       {gameState.treeName && (
