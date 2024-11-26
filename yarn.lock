@@ -2594,6 +2594,7 @@ __metadata:
     "@supabase/supabase-js": "npm:^2.46.1"
     "@types/react": "npm:~18.3.12"
     expo: "npm:~52.0.11"
+    expo-linking: "npm:^7.0.3"
     expo-router: "npm:^4.0.9"
     expo-status-bar: "npm:~2.0.0"
     react: "npm:18.3.1"
@@ -4729,6 +4730,19 @@ __metadata:
     expo: "*"
     react: "*"
   checksum: 10c0/5fc70a479ac94463e85edf5c824846fd91da0a35cd034de33c961febabd86856c3522c3149b74c209711574d268eb244888d34c06914ccfb1034cf95d494b0b7
+  languageName: node
+  linkType: hard
+
+"expo-linking@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "expo-linking@npm:7.0.3"
+  dependencies:
+    expo-constants: "npm:~17.0.0"
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/fc1f4e49f8aaf768074aa533891ed11d6cda95c624cfb0962e85127bb1525019cf17ca901c89e4618c48eb8ed0311bb1934d8f6fefca83161ac2b3c8a41c59f9
   languageName: node
   linkType: hard
 

@@ -44,6 +44,16 @@ export default function AppLayout() {
           ),
         }}
       />
+      <Drawer.Screen
+        name="profile"
+        options={{
+          drawerLabel: 'Profile',
+          title: 'Profile',
+          drawerIcon: ({ size, color }: { size: number; color: string }) => (
+            <FontAwesome name="user" size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer>
   );
 } 
