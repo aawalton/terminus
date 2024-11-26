@@ -2615,6 +2615,7 @@ __metadata:
     "@rneui/themed": "npm:^4.0.0-rc.8"
     "@supabase/supabase-js": "npm:^2.46.1"
     "@types/react": "npm:~18.3.12"
+    date-fns: "npm:^4.1.0"
     expo: "npm:~52.0.11"
     expo-linking: "npm:^7.0.3"
     expo-router: "npm:^4.0.9"
@@ -4195,6 +4196,13 @@ __metadata:
   version: 6.0.2
   resolution: "data-uri-to-buffer@npm:6.0.2"
   checksum: 10c0/f76922bf895b3d7d443059ff278c9cc5efc89d70b8b80cd9de0aa79b3adc6d7a17948eefb8692e30398c43635f70ece1673d6085cc9eba2878dbc6c6da5292ac
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: 10c0/b79ff32830e6b7faa009590af6ae0fb8c3fd9ffad46d930548fbb5acf473773b4712ae887e156ba91a7b3dc30591ce0f517d69fd83bd9c38650fdc03b4e0bac8
   languageName: node
   linkType: hard
 
