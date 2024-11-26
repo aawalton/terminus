@@ -3,7 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function AppLayout() {
   return (
-    <Drawer>
+    <Drawer screenOptions={{ headerShown: true }}>
       <Drawer.Screen
         name="index"
         options={{
@@ -22,6 +22,7 @@ export default function AppLayout() {
           drawerIcon: ({ size, color }: { size: number; color: string }) => (
             <FontAwesome name="dashboard" size={size} color={color} />
           ),
+          headerShown: true,
         }}
       />
       <Drawer.Screen
@@ -32,6 +33,7 @@ export default function AppLayout() {
           drawerIcon: ({ size, color }: { size: number; color: string }) => (
             <FontAwesome name="gamepad" size={size} color={color} />
           ),
+          headerShown: true,
         }}
       />
       <Drawer.Screen
