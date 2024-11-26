@@ -1,6 +1,6 @@
 import { Slot, useSegments, useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { useAuth } from './hooks/use-auth';
+import { useAuth } from '../hooks/use-auth';
 
 export default function RootLayout() {
   const { session, initialized } = useAuth();

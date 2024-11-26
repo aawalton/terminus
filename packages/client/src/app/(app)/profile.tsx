@@ -1,5 +1,5 @@
-import Account from '../components/Account'
-import { useAuth } from '../hooks/use-auth'
+import Account from '../../components/Account'
+import { useAuth } from '../../hooks/use-auth'
 
 export default function Profile() {
   const { session } = useAuth()

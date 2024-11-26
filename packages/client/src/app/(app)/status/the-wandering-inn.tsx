@@ -1,6 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
-import { useUnreadChapters, Stats } from '../../hooks/use-unread-chapters'
-import { useCompleteChapter } from '../../hooks/use-complete-chapter'
+import { useUnreadChapters, Stats } from '../../../hooks/use-unread-chapters'
+import { useCompleteChapter } from '../../../hooks/use-complete-chapter'
 import { useState } from 'react'
 
 function formatNumber(num: number): string {
