@@ -1,4 +1,4 @@
-import Auth from '../../components/Auth';
+import Auth from '../components/Auth';
 import { View } from 'react-native';
 
 export default function SignIn() {
