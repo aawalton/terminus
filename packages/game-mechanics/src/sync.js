@@ -1,12 +1,8 @@
-import { syncDataSources } from '@terminus/data-sources';
 import { syncGameMechanics } from './game-mechanics/sync-game-mechanics.js';
 
 async function sync() {
   try {
     console.log('Starting sync process...');
-
-    console.log('Syncing data sources...');
-    await syncDataSources();
 
     console.log('Syncing game mechanics...');
     await syncGameMechanics();
