@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { getOrCreateSeries, getOrCreateChapter } from '../db/activities.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,22 +29,17 @@ async function extractChapterText(filePath) {
     const paragraphs = content.querySelectorAll('p');
     const textArray = Array.from(paragraphs)
       .map(p => {
-        // Check if the paragraph contains an image
         const img = p.querySelector('img');
-        if (img) {
-          // If it contains an image, don't include this paragraph
-          return null;
-        }
+        if (img) return null;
         return p.textContent.trim();
       })
-      .filter(Boolean); // This will remove any null entries
+      .filter(Boolean);
 
     // Remove the last paragraph if it contains "Next Chapter"
     if (textArray[textArray.length - 1] && textArray[textArray.length - 1].includes("Next Chapter")) {
       textArray.pop();
     }
 
-    // Join the text array into a single string
     return {
       chapterName,
       chapterText: textArray.join('\n\n')
@@ -63,6 +59,13 @@ export async function getChaptersJson() {
     await fs.mkdir(chaptersDir, { recursive: true });
     await fs.mkdir(outputDir, { recursive: true });
 
+    // Get series ID first
+    const seriesData = {
+      'series-name': 'The Wandering Inn',
+      'series-id': 'the-wandering-inn'
+    };
+    const seriesId = await getOrCreateSeries(seriesData);
+
     // Check if input directory is empty
     const files = await fs.readdir(chaptersDir);
     if (files.length === 0) {
@@ -78,7 +81,10 @@ export async function getChaptersJson() {
         // Check if the output file already exists
         try {
           await fs.access(outputPath);
-          continue; // Skip to the next file without logging
+          // Even if JSON exists, we still need to process for database
+          const existingData = JSON.parse(await fs.readFile(outputPath, 'utf-8'));
+          await getOrCreateChapter(existingData, seriesId);
+          continue;
         } catch (error) {
           // File doesn't exist, proceed with processing
         }
@@ -96,6 +102,10 @@ export async function getChaptersJson() {
             "completed": false
           };
 
+          // Save to database
+          await getOrCreateChapter(jsonOutput, seriesId);
+
+          // Save to JSON file (keeping existing functionality)
           await fs.writeFile(outputPath, JSON.stringify(jsonOutput, null, 2));
           console.log(`Processed: ${file}`);
         } else {
@@ -107,6 +117,7 @@ export async function getChaptersJson() {
     console.log('All chapters processed successfully.');
   } catch (error) {
     console.error('Error processing chapters:', error);
+    throw error;
   }
 }
 

@@ -2341,6 +2341,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@terminus/data-sources@workspace:packages/data-sources"
   dependencies:
+    "@terminus/supabase": "workspace:*"
     puppeteer: "npm:^23.6.0"
   languageName: unknown
   linkType: soft

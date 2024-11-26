@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { getOrCreateSeries } from '../db/activities.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,17 +59,21 @@ export async function getSeriesJson() {
       "series-id": "the-wandering-inn",
       "series-name": "The Wandering Inn",
       "author-ids": ["pirateaba"],
-      "books": [], // No book information available in current HTML
+      "books": [],
       "chapters": formattedChapters
     };
 
-    // Save the result as JSON
+    // Save to database
+    await getOrCreateSeries(seriesData);
+
+    // Save the result as JSON (keeping existing functionality)
     const jsonPath = path.join(__dirname, '../../data/json/series/the-wandering-inn/the-wandering-inn.json');
     await fs.writeFile(jsonPath, JSON.stringify(seriesData, null, 2));
 
     console.log(`Table of contents saved to ${jsonPath}`);
   } catch (error) {
     console.error(`Error processing series data: ${error}`);
+    throw error;
   }
 }
 

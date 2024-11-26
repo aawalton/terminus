@@ -5,9 +5,10 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "sync": "node -r dotenv/config src/sync-data-sources.js"
+    "sync": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/sync-data-sources.js"
   },
   "dependencies": {
+    "@terminus/supabase": "workspace:*",
     "puppeteer": "^23.6.0"
   }
 }
