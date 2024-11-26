@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const TREE_NAME_KEY = '@tree_name'
+const GAME_STATE_KEY = '@idle_tree_game_state'
 
 interface TreeGameState {
   treeName: string | null
   currentLevel: number
-  maxEssence: bigint
-  currentEssence: bigint
-  essenceRecoveryPerMinute: bigint
+  maxEssence: string
+  currentEssence: string
+  essenceRecoveryPerMinute: string
   essenceGainedAt: string // timestamp
   dailyCredits: number
   dailyCreditsGainedAt: string // timestamp
@@ -18,9 +18,9 @@ interface TreeGameState {
 const DEFAULT_GAME_STATE: TreeGameState = {
   treeName: null,
   currentLevel: 0,
-  maxEssence: BigInt(100),
-  currentEssence: BigInt(10),
-  essenceRecoveryPerMinute: BigInt(1),
+  maxEssence: '100',
+  currentEssence: '10',
+  essenceRecoveryPerMinute: '1',
   essenceGainedAt: new Date().toISOString(),
   dailyCredits: 0,
   dailyCreditsGainedAt: new Date().toISOString(),
@@ -37,9 +37,13 @@ export function useTreeName() {
 
   const loadGame = async () => {
     try {
-      const savedState = await AsyncStorage.getItem(TREE_NAME_KEY)
+      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY)
       if (savedState) {
-        setGameState(JSON.parse(savedState))
+        const parsedState = JSON.parse(savedState)
+        parsedState.maxEssence = BigInt(parsedState.maxEssence).toString()
+        parsedState.currentEssence = BigInt(parsedState.currentEssence).toString()
+        parsedState.essenceRecoveryPerMinute = BigInt(parsedState.essenceRecoveryPerMinute).toString()
+        setGameState(parsedState)
       } else {
         setGameState(DEFAULT_GAME_STATE)
       }
@@ -53,7 +57,12 @@ export function useTreeName() {
   const saveGame = async (newState: Partial<TreeGameState>) => {
     const updatedState = { ...gameState, ...newState }
     setGameState(updatedState)
-    await AsyncStorage.setItem(TREE_NAME_KEY, JSON.stringify(updatedState))
+    await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify({
+      ...updatedState,
+      maxEssence: updatedState.maxEssence.toString(),
+      currentEssence: updatedState.currentEssence.toString(),
+      essenceRecoveryPerMinute: updatedState.essenceRecoveryPerMinute.toString(),
+    }))
     return true
   }
 
