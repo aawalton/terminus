@@ -45,8 +45,7 @@ export function useIdleTreeGameState() {
         parsedState.maxEssence = BigInt(parsedState.maxEssence).toString();
         parsedState.currentEssence = BigInt(parsedState.currentEssence).toString();
         parsedState.essenceRecoveryPerMinute = BigInt(parsedState.essenceRecoveryPerMinute).toString();
-        setGameState(parsedState);
-        updateGameState(parsedState); // Update on load
+        updateGameState(parsedState);
       } else {
         setGameState(DEFAULT_GAME_STATE);
       }
