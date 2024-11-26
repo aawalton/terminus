@@ -4,10 +4,12 @@ import Collapsible from 'react-native-collapsible';
 import { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 function CustomDrawerContent(props: any) {
   const [statusExpanded, setStatusExpanded] = useState(false);
   const [gamesExpanded, setGamesExpanded] = useState(false);
+  const router = useRouter();
 
   return (
     <DrawerContentScrollView {...props}>
@@ -17,7 +19,7 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <MaterialIcons name="home" size={size} color={color} />
         )}
-        onPress={() => props.navigation.navigate('index')}
+        onPress={() => router.push('/')}
       />
 
       {/* Status Section */}
@@ -38,7 +40,7 @@ function CustomDrawerContent(props: any) {
         <View style={{ paddingLeft: 16 }}>
           <DrawerItem
             label="The Wandering Inn"
-            onPress={() => props.navigation.navigate('status/the-wandering-inn')}
+            onPress={() => router.push('/status/the-wandering-inn')}
           />
         </View>
       </Collapsible>
@@ -61,9 +63,8 @@ function CustomDrawerContent(props: any) {
         <View style={{ paddingLeft: 16 }}>
           <DrawerItem
             label="Idle Tree"
-            onPress={() => props.navigation.navigate('games/idle-tree')}
+            onPress={() => router.push('/games/idle-tree')}
           />
-          {/* Add more game items here */}
         </View>
       </Collapsible>
 
@@ -73,7 +74,7 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <MaterialIcons name="list" size={size} color={color} />
         )}
-        onPress={() => props.navigation.navigate('requests')}
+        onPress={() => router.push('/requests')}
       />
 
       {/* Profile */}
@@ -82,7 +83,7 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <MaterialIcons name="person" size={size} color={color} />
         )}
-        onPress={() => props.navigation.navigate('profile')}
+        onPress={() => router.push('/profile')}
       />
     </DrawerContentScrollView>
   );
