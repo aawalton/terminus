@@ -12,6 +12,7 @@ interface TreeGameState {
   essenceGainedAt: string // timestamp
   dailyCredits: number
   dailyCreditsGainedAt: string // timestamp
+  stateVersion: number
 }
 
 const DEFAULT_GAME_STATE: TreeGameState = {
@@ -23,6 +24,7 @@ const DEFAULT_GAME_STATE: TreeGameState = {
   essenceGainedAt: new Date().toISOString(),
   dailyCredits: 0,
   dailyCreditsGainedAt: new Date().toISOString(),
+  stateVersion: 1,
 }
 
 export function useTreeName() {
