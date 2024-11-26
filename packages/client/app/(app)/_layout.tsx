@@ -37,12 +37,8 @@ function CustomDrawerContent(props: any) {
       <Collapsible collapsed={!statusExpanded}>
         <View style={{ paddingLeft: 16 }}>
           <DrawerItem
-            label="System Status"
-            onPress={() => props.navigation.navigate('status/system')}
-          />
-          <DrawerItem
-            label="Network Status"
-            onPress={() => props.navigation.navigate('status/network')}
+            label="The Wandering Inn"
+            onPress={() => props.navigation.navigate('status/the-wandering-inn')}
           />
         </View>
       </Collapsible>
