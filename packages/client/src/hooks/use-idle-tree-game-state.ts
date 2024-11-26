@@ -22,7 +22,7 @@ const DEFAULT_GAME_STATE: TreeGameState = {
   currentEssence: '10',
   essenceRecoveryPerMinute: '1',
   essenceGainedAt: new Date().toISOString(),
-  dailyCredits: 0,
+  dailyCredits: 1,
   dailyCreditsGainedAt: new Date().toISOString(),
   stateVersion: 1,
 };
@@ -101,14 +101,6 @@ export function useIdleTreeGameState() {
 
     // Save updated state
     await saveGame({
-      currentEssence: updatedEssence.toString(),
-      dailyCredits: newDailyCredits,
-      essenceGainedAt: newEssenceGainedAt.toISOString(),
-      dailyCreditsGainedAt: newDailyCreditsGainedAt.toISOString(),
-    });
-
-    // Log the new game state
-    console.log('New game state:', {
       currentEssence: updatedEssence.toString(),
       dailyCredits: newDailyCredits,
       essenceGainedAt: newEssenceGainedAt.toISOString(),
