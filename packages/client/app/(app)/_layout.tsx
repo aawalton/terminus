@@ -1,25 +1,37 @@
 import { Drawer } from 'expo-router/drawer';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import Collapsible from 'react-native-collapsible';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function CustomDrawerContent(props: any) {
   const [statusExpanded, setStatusExpanded] = useState(false);
   const [gamesExpanded, setGamesExpanded] = useState(false);
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+
+  const navigateAndClose = useCallback((path: string) => {
+    router.push(path);
+    props.navigation.closeDrawer();
+  }, [router, props.navigation]);
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={{
+        paddingTop: insets.top,
+      }}
+    >
       {/* Home */}
       <DrawerItem
         label="Home"
         icon={({ color, size }) => (
           <MaterialIcons name="home" size={size} color={color} />
         )}
-        onPress={() => router.push('/')}
+        onPress={() => navigateAndClose('/')}
       />
 
       {/* Status Section */}
@@ -40,7 +52,7 @@ function CustomDrawerContent(props: any) {
         <View style={{ paddingLeft: 16 }}>
           <DrawerItem
             label="The Wandering Inn"
-            onPress={() => router.push('/status/the-wandering-inn')}
+            onPress={() => navigateAndClose('/status/the-wandering-inn')}
           />
         </View>
       </Collapsible>
@@ -63,7 +75,7 @@ function CustomDrawerContent(props: any) {
         <View style={{ paddingLeft: 16 }}>
           <DrawerItem
             label="Idle Tree"
-            onPress={() => router.push('/games/idle-tree')}
+            onPress={() => navigateAndClose('/games/idle-tree')}
           />
         </View>
       </Collapsible>
@@ -74,7 +86,7 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <MaterialIcons name="list" size={size} color={color} />
         )}
-        onPress={() => router.push('/requests')}
+        onPress={() => navigateAndClose('/requests')}
       />
 
       {/* Profile */}
@@ -83,7 +95,7 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <MaterialIcons name="person" size={size} color={color} />
         )}
-        onPress={() => router.push('/profile')}
+        onPress={() => navigateAndClose('/profile')}
       />
     </DrawerContentScrollView>
   );
@@ -95,6 +107,9 @@ export default function AppLayout() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: true,
+        drawerType: 'front',
+        swipeEnabled: true,
+        swipeEdgeWidth: 100,
       }}
     />
   );
