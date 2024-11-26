@@ -98,14 +98,13 @@ export async function getChaptersJson() {
             "chapter-name": chapterData.chapterName,
             "series-id": "the-wandering-inn",
             "chapter-text": chapterData.chapterText,
-            "word-count": chapterData.chapterText.split(/\s+/).length,
-            "completed": false
+            "word-count": chapterData.chapterText.split(/\s+/).length
           };
 
           // Save to database
           await getOrCreateChapter(jsonOutput, seriesId);
 
-          // Save to JSON file (keeping existing functionality)
+          // Save to JSON file
           await fs.writeFile(outputPath, JSON.stringify(jsonOutput, null, 2));
           console.log(`Processed: ${file}`);
         } else {

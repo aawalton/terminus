@@ -1,8 +1,10 @@
 import supabase from '@terminus/supabase';
+import { getSkillByName } from './skills.js';
 
 // Cache for type IDs to avoid repeated lookups
 let ACTIVITY_TYPES = null;
 let LENGTH_TYPES = null;
+let TWI_SKILL_ID = null;
 
 async function initializeTypeIds() {
   if (!ACTIVITY_TYPES || !LENGTH_TYPES) {
@@ -44,6 +46,11 @@ async function initializeTypeIds() {
       throw new Error('Required length type "words" not found in database');
     }
   }
+
+  // Get TWI skill ID if not already cached
+  if (!TWI_SKILL_ID) {
+    TWI_SKILL_ID = await getSkillByName('The Wandering Inn');
+  }
 }
 
 export async function getOrCreateSeries(seriesData) {
@@ -72,7 +79,7 @@ export async function getOrCreateSeries(seriesData) {
     .insert({
       name: seriesData['series-name'],
       type: ACTIVITY_TYPES.SEQUENCE,
-      skill_id: 'a6f8e638-1e9f-4875-a5ca-547d33d902a2', // TWI skill ID
+      skill_id: TWI_SKILL_ID,
     })
     .select('id')
     .single();
@@ -110,7 +117,7 @@ export async function getOrCreateChapter(chapterData, seriesId) {
       name: chapterData['chapter-name'],
       parent_activity_id: seriesId,
       type: ACTIVITY_TYPES.TASK,
-      skill_id: 'a6f8e638-1e9f-4875-a5ca-547d33d902a2', // TWI skill ID
+      skill_id: TWI_SKILL_ID,
       length: chapterData['word-count'],
       length_type: LENGTH_TYPES.WORDS,
     })
