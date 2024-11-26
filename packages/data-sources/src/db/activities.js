@@ -1,7 +1,7 @@
 import supabase from '@terminus/supabase';
 import { getSkillByName } from './skills.js';
 
-// Cache for type IDs to avoid repeated lookups
+// Cache for type names to avoid repeated lookups
 let ACTIVITY_TYPES = null;
 let LENGTH_TYPES = null;
 let TWI_SKILL_ID = null;
@@ -12,7 +12,7 @@ async function initializeTypeIds() {
     const { data: activityTypes, error: activityError } = await supabase
       .schema('status')
       .from('activity_types')
-      .select('id, name');
+      .select('name');
 
     if (activityError) {
       throw new Error(`Failed to fetch activity types: ${activityError.message}`);
@@ -22,19 +22,19 @@ async function initializeTypeIds() {
     const { data: lengthTypes, error: lengthError } = await supabase
       .schema('status')
       .from('length_types')
-      .select('id, name');
+      .select('name');
 
     if (lengthError) {
       throw new Error(`Failed to fetch length types: ${lengthError.message}`);
     }
 
-    // Convert to lookup objects
+    // Convert to lookup objects with uppercase keys and lowercase names as values
     ACTIVITY_TYPES = Object.fromEntries(
-      activityTypes.map(type => [type.name.toUpperCase(), type.id])
+      activityTypes.map(type => [type.name.toUpperCase(), type.name.toLowerCase()])
     );
 
     LENGTH_TYPES = Object.fromEntries(
-      lengthTypes.map(type => [type.name.toUpperCase(), type.id])
+      lengthTypes.map(type => [type.name.toUpperCase(), type.name.toLowerCase()])
     );
 
     // Validate required types exist
