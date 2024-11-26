@@ -81,9 +81,7 @@ export async function getChaptersJson() {
         // Check if the output file already exists
         try {
           await fs.access(outputPath);
-          // Even if JSON exists, we still need to process for database
-          const existingData = JSON.parse(await fs.readFile(outputPath, 'utf-8'));
-          await getOrCreateChapter(existingData, seriesId);
+          console.log(`Skipping ${file} - JSON already exists`);
           continue;
         } catch (error) {
           // File doesn't exist, proceed with processing
