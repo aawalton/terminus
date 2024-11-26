@@ -5,6 +5,6 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "sync": "node -r dotenv/config src/sync-game-mechanics.js"
+    "sync": "DOTENV_CONFIG_PATH=../../.env node -r dotenv/config src/sync-game-mechanics.js"
   }
 }
