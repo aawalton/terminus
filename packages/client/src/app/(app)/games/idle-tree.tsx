@@ -5,7 +5,7 @@ import { useLayoutEffect } from 'react'
 import { useNavigation } from 'expo-router'
 
 export default function IdleTree() {
-  const { treeName, loading, saveTreeName } = useTreeName()
+  const { gameState, loading, saveGame } = useTreeName()
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
@@ -24,13 +24,17 @@ export default function IdleTree() {
 
   return (
     <View style={styles.container}>
-      {treeName && (
-        <Text style={styles.treeName}>{treeName}</Text>
+      {gameState.treeName && (
+        <Text style={styles.treeName}>{gameState.treeName}</Text>
       )}
       <TreeNameModal
-        visible={!treeName}
-        onSubmit={saveTreeName}
+        visible={!gameState.treeName}
+        onSubmit={(name) => saveGame({ treeName: name })}
       />
+      <Text>Current Level: {gameState.currentLevel}</Text>
+      <Text>Current Essence: {gameState.currentEssence.toString()}</Text>
+      <Text>Max Essence: {gameState.maxEssence.toString()}</Text>
+      <Text>Daily Credits: {gameState.dailyCredits}</Text>
     </View>
   )
 }
