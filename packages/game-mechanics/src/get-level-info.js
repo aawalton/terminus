@@ -1,9 +1,8 @@
-import { getTotalWordCount } from './get-total-word-count.js';
+import { getTotalXp } from './get-total-xp.js';
 
 async function getLevelInfo() {
   try {
-    const totalWordCount = await getTotalWordCount();
-    const totalXp = totalWordCount; // Total XP is equal to the total number of words read
+    const totalXp = await getTotalXp();
 
     // Calculate current level
     const currentLevel = Math.floor(Math.sqrt(totalXp / 500)) - 1;
