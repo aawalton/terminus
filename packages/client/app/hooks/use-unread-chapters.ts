@@ -7,9 +7,28 @@ interface Chapter {
   name: string
 }
 
-export function useUnreadChapters() {
-  const [chapters, setChapters] = useState<Chapter[]>([])
-  const [loading, setLoading] = useState(true)
+export interface Stats {
+  totalChapters: number
+  completedChapters: number
+  totalWordsRead: number
+}
+
+export interface UnreadChaptersData {
+  chapters: Chapter[]
+  stats: Stats
+  loading: boolean
+}
+
+export function useUnreadChapters(): UnreadChaptersData {
+  const [data, setData] = useState<UnreadChaptersData>({
+    chapters: [],
+    stats: {
+      totalChapters: 0,
+      completedChapters: 0,
+      totalWordsRead: 0
+    },
+    loading: true
+  })
   const { session } = useAuth()
 
   useEffect(() => {
@@ -35,6 +54,7 @@ export function useUnreadChapters() {
           .select(`
             id,
             name,
+            length,
             experience:experience(id)
           `)
           .eq('parent_activity_id', twiActivity.id)
@@ -42,21 +62,40 @@ export function useUnreadChapters() {
 
         if (!chaptersWithExperience) return
 
-        // Filter out chapters that have experience records
-        const unreadChapters = chaptersWithExperience
-          .filter(chapter => !chapter.experience?.length)
-          .map(({ id, name }) => ({ id, name }))
+        // Calculate stats and filter unread chapters
+        const unreadChapters: Chapter[] = []
+        let completedCount = 0
+        let totalWordsRead = 0
 
-        setChapters(unreadChapters)
+        chaptersWithExperience.forEach(chapter => {
+          if (chapter.experience?.length) {
+            completedCount++
+            totalWordsRead += chapter.length || 0
+          } else {
+            unreadChapters.push({
+              id: chapter.id,
+              name: chapter.name
+            })
+          }
+        })
+
+        setData({
+          chapters: unreadChapters,
+          stats: {
+            totalChapters: chaptersWithExperience.length,
+            completedChapters: completedCount,
+            totalWordsRead
+          },
+          loading: false
+        })
       } catch (error) {
         console.error('Error fetching chapters:', error)
-      } finally {
-        setLoading(false)
+        setData(prev => ({ ...prev, loading: false }))
       }
     }
 
     fetchChapters()
   }, [session])
 
-  return { chapters, loading }
+  return data
 } 

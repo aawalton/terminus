@@ -1,10 +1,33 @@
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
-import { useUnreadChapters } from '../../hooks/use-unread-chapters'
+import { useUnreadChapters, Stats } from '../../hooks/use-unread-chapters'
 import { useCompleteChapter } from '../../hooks/use-complete-chapter'
 import { useState } from 'react'
 
+function formatNumber(num: number): string {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+function StatsView({ stats }: { stats: Stats }) {
+  return (
+    <View style={styles.statsContainer}>
+      <View style={styles.statBox}>
+        <Text style={styles.statNumber}>
+          {stats.completedChapters}/{stats.totalChapters}
+        </Text>
+        <Text style={styles.statLabel}>Chapters Read</Text>
+      </View>
+      <View style={styles.statBox}>
+        <Text style={styles.statNumber}>
+          {formatNumber(stats.totalWordsRead)}
+        </Text>
+        <Text style={styles.statLabel}>Words Read</Text>
+      </View>
+    </View>
+  )
+}
+
 export default function TheWanderingInn() {
-  const { chapters, loading: loadingChapters } = useUnreadChapters()
+  const { chapters, stats, loading: loadingChapters } = useUnreadChapters()
   const { completeChapter, loading: completing } = useCompleteChapter()
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set())
 
@@ -27,6 +50,7 @@ export default function TheWanderingInn() {
 
   return (
     <View style={styles.container}>
+      <StatsView stats={stats} />
       <FlatList
         data={displayedChapters}
         keyExtractor={item => item.id}
@@ -54,6 +78,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 20,
+    marginBottom: 16,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+  },
+  statBox: {
+    alignItems: 'center',
+  },
+  statNumber: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2196F3',
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 4,
   },
   chapterRow: {
     flexDirection: 'row',
