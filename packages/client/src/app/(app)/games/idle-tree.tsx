@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
-import { useTreeName } from '../../../hooks/use-tree-name'
+import { useIdleTreeGameState } from '../../../hooks/use-idle-tree-game-state'
 import { TreeNameModal } from '../../../components/tree-name-modal'
 import { useLayoutEffect } from 'react'
 import { useNavigation } from 'expo-router'
 
 export default function IdleTree() {
-  const { gameState, loading, saveGame } = useTreeName()
+  const { gameState, loading, saveGame } = useIdleTreeGameState()
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
