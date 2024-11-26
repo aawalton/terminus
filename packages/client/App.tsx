@@ -11,10 +11,8 @@ AppState.addEventListener('change', (state) => {
   }
 })
 
-// Import and use expo-router's entry point
-import { ExpoRoot } from 'expo-router'
+import { Stack } from 'expo-router'
 
 export default function App() {
-  const context = {}; // Initialize your context as needed
-  return <ExpoRoot context={context} />
+  return <Stack />
 }
