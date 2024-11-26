@@ -2355,6 +2355,8 @@ __metadata:
 "@terminus/game-mechanics@workspace:packages/game-mechanics":
   version: 0.0.0-use.local
   resolution: "@terminus/game-mechanics@workspace:packages/game-mechanics"
+  dependencies:
+    "@terminus/supabase": "workspace:*"
   languageName: unknown
   linkType: soft
 
