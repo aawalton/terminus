@@ -63,7 +63,7 @@ export async function getSeriesJson() {
     };
 
     // Save the result as JSON
-    const jsonPath = path.join(__dirname, '../../../data/json/series/the-wandering-inn/the-wandering-inn.json');
+    const jsonPath = path.join(__dirname, '../../data/json/series/the-wandering-inn/the-wandering-inn.json');
     await fs.writeFile(jsonPath, JSON.stringify(seriesData, null, 2));
 
     console.log(`Table of contents saved to ${jsonPath}`);

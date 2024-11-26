@@ -2,10 +2,14 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import { setTimeout } from 'timers/promises';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const tocPath = path.join(__dirname, '../../data/json/series/the-wandering-inn/the-wandering-inn.json');
+const outputDir = path.join(__dirname, '../../data/html/series/the-wandering-inn/chapters');
 
 export async function getChaptersHtml() {
-  const tocPath = path.join('data', 'json', 'series', 'the-wandering-inn.json');
-  const outputDir = path.join('data', 'html', 'series', 'the-wandering-inn', 'chapters');
 
   try {
     // Check if TOC file exists
