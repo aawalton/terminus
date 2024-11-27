@@ -1,5 +1,8 @@
+For each task, first ask questions as needed until you understand what I'm trying to accomplish. When you understand, make a project plan and then execute the plan.
+
+Technical constraints:
 Always use Yarn as the package manager.
 Always use Jest when writing tests. Only write tests when requested. Tests should be in the same folder as the code they are testing.
-Ensure scripts have access to the environment variables by using `node -r dotenv/config`.
+Ensure scripts in package.json files have access to the environment variables by using `DOTENV_CONFIG_PATH=../../.env node -r dotenv/config <script>`.
 Don't use Babel to transpile the code.
 File names should use kebab-case.
