@@ -77,9 +77,29 @@ function getCultivationStage(level: number): string {
   return 'Unknown';
 }
 
+// Add new interface for calculated values
+interface TreeGameStateCalculated extends CurrentTreeGameState {
+  ageInDays: number;
+  cultivationStage: string;
+}
+
+// Add helper function to calculate age
+function calculateAgeInDays(createdAt: string): number {
+  const created = new Date(createdAt);
+  const now = new Date();
+  return Math.floor((now.getTime() - created.getTime()) / 3600000);
+}
+
 export function useIdleTreeGameState() {
   const [gameState, setGameState] = useState<CurrentTreeGameState>(DEFAULT_GAME_STATE);
   const [loading, setLoading] = useState(true);
+
+  // Calculate derived state
+  const calculatedState: TreeGameStateCalculated = {
+    ...gameState,
+    ageInDays: calculateAgeInDays(gameState.createdAt),
+    cultivationStage: getCultivationStage(gameState.currentLevel),
+  };
 
   useEffect(() => {
     loadGame();
@@ -168,9 +188,8 @@ export function useIdleTreeGameState() {
   };
 
   return {
-    gameState,
+    gameState: calculatedState, // Now returning the augmented state
     loading,
     saveGame,
-    getCultivationStage, // Export the function if needed elsewhere
   };
 } 

@@ -5,7 +5,7 @@ import { useLayoutEffect } from 'react'
 import { useNavigation } from 'expo-router'
 
 export default function IdleTree() {
-  const { gameState, loading, saveGame, getCultivationStage } = useIdleTreeGameState()
+  const { gameState, loading, saveGame } = useIdleTreeGameState()
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
@@ -22,15 +22,6 @@ export default function IdleTree() {
     )
   }
 
-  // Calculate age in days
-  const createdAt = new Date(gameState.createdAt)
-  const now = new Date()
-  const hoursPassed = Math.floor((now.getTime() - createdAt.getTime()) / 3600000)
-  const ageInDays = hoursPassed
-
-  // Get cultivation stage
-  const cultivationStage = getCultivationStage(gameState.currentLevel)
-
   console.log(loading, gameState.treeName)
   return (
     <View style={styles.container}>
@@ -41,8 +32,8 @@ export default function IdleTree() {
         visible={!gameState.treeName && !loading}
         onSubmit={(name) => saveGame({ ...gameState, treeName: name })}
       />
-      <Text>Age: {ageInDays} days</Text>
-      <Text>Cultivation Stage: {cultivationStage}</Text>
+      <Text>Age: {gameState.ageInDays} days</Text>
+      <Text>Cultivation Stage: {gameState.cultivationStage}</Text>
       <Text>Essence: {gameState.currentEssence.toString()} / {gameState.maxEssence.toString()}</Text>
       <Text>Daily Credits: {gameState.dailyCredits}</Text>
     </View>
