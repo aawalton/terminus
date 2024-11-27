@@ -23,6 +23,12 @@ export default function IdleTree() {
     )
   }
 
+  // Calculate age in days
+  const createdAt = new Date(gameState.createdAt)
+  const now = new Date()
+  const hoursPassed = Math.floor((now.getTime() - createdAt.getTime()) / 3600000)
+  const ageInDays = hoursPassed
+
   console.log(loading, gameState.treeName)
   return (
     <View style={styles.container}>
@@ -31,14 +37,13 @@ export default function IdleTree() {
       )}
       <TreeNameModal
         visible={!gameState.treeName && !loading}
-        onSubmit={(name) => saveGame({ treeName: name })}
+        onSubmit={(name) => saveGame({ ...gameState, treeName: name })}
       />
+      <Text>Age: {ageInDays} days</Text>
       <Text>Current Level: {gameState.currentLevel}</Text>
       <Text>Current Essence: {gameState.currentEssence.toString()}</Text>
       <Text>Max Essence: {gameState.maxEssence.toString()}</Text>
       <Text>Daily Credits: {gameState.dailyCredits}</Text>
-      <Text>Essence Gained At: {format(new Date(gameState.essenceGainedAt), 'p')}</Text>
-      <Text>Daily Credits Gained At: {format(new Date(gameState.dailyCreditsGainedAt), 'p')}</Text>
     </View>
   )
 }

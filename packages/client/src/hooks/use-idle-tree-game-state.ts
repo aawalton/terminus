@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
 
-interface TreeGameState {
+// Define versioned interfaces
+interface TreeGameStateV1 {
   treeName: string | null;
   currentLevel: number;
   maxEssence: string;
@@ -12,10 +13,27 @@ interface TreeGameState {
   essenceGainedAt: string; // timestamp
   dailyCredits: number;
   dailyCreditsGainedAt: string; // timestamp
-  stateVersion: number;
+  stateVersion: 1;
 }
 
-const DEFAULT_GAME_STATE: TreeGameState = {
+interface TreeGameStateV2 {
+  treeName: string | null;
+  currentLevel: number;
+  maxEssence: string;
+  currentEssence: string;
+  essenceRecoveryPerMinute: string;
+  essenceGainedAt: string; // timestamp
+  dailyCredits: number;
+  dailyCreditsGainedAt: string; // timestamp
+  createdAt: string; // New field for creation timestamp
+  stateVersion: 2;
+}
+
+type TreeGameState = TreeGameStateV1 | TreeGameStateV2;
+
+type CurrentTreeGameState = TreeGameStateV2;
+
+const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   treeName: null,
   currentLevel: 0,
   maxEssence: '100',
@@ -24,16 +42,33 @@ const DEFAULT_GAME_STATE: TreeGameState = {
   essenceGainedAt: new Date().toISOString(),
   dailyCredits: 1,
   dailyCreditsGainedAt: new Date().toISOString(),
-  stateVersion: 1,
+  stateVersion: 2,
+  createdAt: new Date().toISOString(),
+};
+
+// Update migration function
+const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
+  switch (state.stateVersion) {
+    case 1:
+      return {
+        ...state,
+        createdAt: new Date().toISOString(),
+        stateVersion: 2,
+      };
+    case 2:
+      return state as TreeGameStateV2;
+    default:
+      throw new Error(`Unsupported state version: ${state['stateVersion']}`);
+  }
 };
 
 export function useIdleTreeGameState() {
-  const [gameState, setGameState] = useState<TreeGameState>(DEFAULT_GAME_STATE);
+  const [gameState, setGameState] = useState<CurrentTreeGameState>(DEFAULT_GAME_STATE);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadGame();
-    const intervalId = setInterval(updateGameState, 60000); // Update every minute
+    const intervalId = setInterval(() => updateGameState(), 60000); // Update every minute
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
@@ -41,7 +76,11 @@ export function useIdleTreeGameState() {
     try {
       const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
       if (savedState) {
-        const parsedState = JSON.parse(savedState);
+        let parsedState: TreeGameState = JSON.parse(savedState);
+
+        // Migrate state if necessary
+        parsedState = migrateGameState(parsedState);
+
         parsedState.maxEssence = BigInt(parsedState.maxEssence).toString();
         parsedState.currentEssence = BigInt(parsedState.currentEssence).toString();
         parsedState.essenceRecoveryPerMinute = BigInt(parsedState.essenceRecoveryPerMinute).toString();
@@ -56,7 +95,7 @@ export function useIdleTreeGameState() {
     }
   };
 
-  const saveGame = async (newState: Partial<TreeGameState>) => {
+  const saveGame = async (newState: CurrentTreeGameState) => {
     const updatedState = { ...gameState, ...newState };
     setGameState(updatedState);
     await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify({
@@ -68,9 +107,14 @@ export function useIdleTreeGameState() {
     return true;
   };
 
-  const updateGameState = async (loadedState?: TreeGameState) => {
+  const updateGameState = async (loadedState?: CurrentTreeGameState) => {
     const state = loadedState || gameState;
     const now = new Date();
+
+    // Calculate age in days (1 day = 1 hour)
+    const createdAt = new Date(state.createdAt);
+    const ageInHours = Math.floor((now.getTime() - createdAt.getTime()) / 3600000);
+    const ageInDays = ageInHours;
 
     // Update essence
     const essenceGainedAt = new Date(state.essenceGainedAt);
@@ -98,7 +142,7 @@ export function useIdleTreeGameState() {
     console.log(`Essence gained: ${essenceToAdd.toString()} (Total: ${updatedEssence.toString()})`);
     console.log(`Daily credits gained: ${hoursPassed} (Total: ${newDailyCredits})`);
 
-    // Save updated state
+    // Save updated state with recalculated age if needed
     await saveGame({
       ...state,
       currentEssence: updatedEssence.toString(),
