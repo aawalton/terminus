@@ -163,6 +163,7 @@ function calculateMaxEssence(level: number): bigint {
 export function useIdleTreeGameState() {
   const [gameState, setGameState] = useState<CurrentTreeGameState>(DEFAULT_GAME_STATE);
   const [loading, setLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Calculate derived state
   const calculatedState: TreeGameStateCalculated = {
@@ -174,9 +175,14 @@ export function useIdleTreeGameState() {
 
   useEffect(() => {
     loadGame();
-    const intervalId = setInterval(() => updateGameState(), 60000); // Update every minute
-    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const intervalId = setInterval(() => updateGameState(), 60000);
+    return () => clearInterval(intervalId);
+  }, [isLoaded]);
 
   const loadGame = async () => {
     try {
@@ -197,6 +203,7 @@ export function useIdleTreeGameState() {
       console.error('Error loading game state:', error);
     } finally {
       setLoading(false);
+      setIsLoaded(true);
     }
   };
 
