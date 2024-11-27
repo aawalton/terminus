@@ -3,7 +3,6 @@ import { useIdleTreeGameState } from '../../../hooks/use-idle-tree-game-state'
 import { TreeNameModal } from '../../../components/tree-name-modal'
 import { useLayoutEffect } from 'react'
 import { useNavigation } from 'expo-router'
-import { format } from 'date-fns'
 
 export default function IdleTree() {
   const { gameState, loading, saveGame } = useIdleTreeGameState()
@@ -41,8 +40,7 @@ export default function IdleTree() {
       />
       <Text>Age: {ageInDays} days</Text>
       <Text>Current Level: {gameState.currentLevel}</Text>
-      <Text>Current Essence: {gameState.currentEssence.toString()}</Text>
-      <Text>Max Essence: {gameState.maxEssence.toString()}</Text>
+      <Text>Essence: {gameState.currentEssence.toString()} / {gameState.maxEssence.toString()}</Text>
       <Text>Daily Credits: {gameState.dailyCredits}</Text>
     </View>
   )
