@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
 
-// Define versioned interfaces
+// Define base interface
 interface TreeGameStateV1 {
   treeName: string | null;
   currentLevel: number;
@@ -16,18 +16,11 @@ interface TreeGameStateV1 {
   stateVersion: 1;
 }
 
-interface TreeGameStateV2 {
-  treeName: string | null;
-  currentLevel: number;
-  maxEssence: string;
-  currentEssence: string;
-  essenceRecoveryPerMinute: string;
-  essenceGainedAt: string; // timestamp
-  dailyCredits: number;
-  dailyCreditsGainedAt: string; // timestamp
-  createdAt: string; // New field for creation timestamp
+// V2 adds createdAt and changes version
+type TreeGameStateV2 = Omit<TreeGameStateV1, 'stateVersion'> & {
+  createdAt: string;
   stateVersion: 2;
-}
+};
 
 type TreeGameState = TreeGameStateV1 | TreeGameStateV2;
 
@@ -42,8 +35,8 @@ const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   essenceGainedAt: new Date().toISOString(),
   dailyCredits: 1,
   dailyCreditsGainedAt: new Date().toISOString(),
-  stateVersion: 2,
   createdAt: new Date().toISOString(),
+  stateVersion: 2,
 };
 
 // Update migration function
