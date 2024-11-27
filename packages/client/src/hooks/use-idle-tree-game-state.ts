@@ -62,6 +62,28 @@ const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
   }
 };
 
+// Add the cultivation stages mapping function
+function getCultivationStage(level: number): string {
+  const tiers = [
+    { name: 'Mortal', startLevel: 0, maxStage: 0 },
+    { name: 'Essence Gathering', startLevel: 1, maxStage: 9 },
+    { name: 'Soul Fire', startLevel: 14, maxStage: 9 },
+    { name: 'Star Core', startLevel: 23, maxStage: 9 },
+    { name: 'Nascent Soul', startLevel: 32, maxStage: 9 },
+    { name: 'Monarch', startLevel: 41, maxStage: 9 },
+  ];
+
+  for (let i = tiers.length - 1; i >= 0; i--) {
+    const tier = tiers[i];
+    if (level >= tier.startLevel) {
+      const stageNumber = tier.maxStage === 0 ? 0 : Math.min(level - tier.startLevel + 1, tier.maxStage);
+      return tier.maxStage === 0 ? tier.name : `${tier.name} ${stageNumber}`;
+    }
+  }
+
+  return 'Unknown';
+}
+
 export function useIdleTreeGameState() {
   const [gameState, setGameState] = useState<CurrentTreeGameState>(DEFAULT_GAME_STATE);
   const [loading, setLoading] = useState(true);
@@ -156,5 +178,6 @@ export function useIdleTreeGameState() {
     gameState,
     loading,
     saveGame,
+    getCultivationStage, // Export the function if needed elsewhere
   };
 } 
