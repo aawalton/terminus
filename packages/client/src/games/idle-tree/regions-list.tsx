@@ -77,7 +77,7 @@ export function RegionsList() {
                         {zone.name}
                       </ListItem.Title>
                       <ListItem.Subtitle style={styles.zoneStats}>
-                        Explored: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
+                        Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
                       </ListItem.Subtitle>
                     </ListItem.Content>
                   </ListItem>
