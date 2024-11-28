@@ -10,6 +10,8 @@ import {
   calculateAgeInDays,
   calculateMaxEssence,
   calculateTotalEssenceGeneration,
+  calculateTotalAllocation,
+  calculateNetGeneration,
 } from '@terminus/idle-tree';
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
@@ -19,14 +21,19 @@ export function useIdleTreeGameState() {
   const [loading, setLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Move the calculation into a function so we can reuse it
+  const calculateDerivedState = (state: CurrentTreeGameState): TreeGameStateCalculated => ({
+    ...state,
+    ageInDays: calculateAgeInDays(state.createdAt),
+    cultivationStage: getCultivationStage(state.currentLevel),
+    maxEssence: calculateMaxEssence(state.currentLevel).toString(),
+    essenceRecoveryPerMinute: calculateTotalEssenceGeneration(state),
+    totalAllocation: calculateTotalAllocation(state),
+    netGeneration: calculateNetGeneration(state),
+  });
+
   // Calculate derived state
-  const calculatedState: TreeGameStateCalculated = {
-    ...gameState,
-    ageInDays: calculateAgeInDays(gameState.createdAt),
-    cultivationStage: getCultivationStage(gameState.currentLevel),
-    maxEssence: calculateMaxEssence(gameState.currentLevel).toString(),
-    essenceRecoveryPerMinute: calculateTotalEssenceGeneration(gameState),
-  };
+  const calculatedState = calculateDerivedState(gameState);
 
   useEffect(() => {
     loadGame();
@@ -111,7 +118,8 @@ export function useIdleTreeGameState() {
         [zoneId]: amount
       }
     };
-    await saveGame(newState);
+    setGameState(newState); // Immediately update the state
+    await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(newState)); // Save in background
   };
 
   return {

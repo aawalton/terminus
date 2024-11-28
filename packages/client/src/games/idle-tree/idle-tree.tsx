@@ -57,6 +57,12 @@ export default function IdleTree() {
         <Text style={styles.statText}>
           Total Generation: {gameState.essenceRecoveryPerMinute}/min
         </Text>
+        <Text style={styles.statText}>
+          Total Allocation: {gameState.totalAllocation}/min
+        </Text>
+        <Text style={styles.statText}>
+          Net Generation: {gameState.netGeneration}/min
+        </Text>
         <Text style={styles.statText}>Daily Credits: {gameState.dailyCredits}</Text>
         <Text style={styles.statText}>Current Level: {gameState.currentLevel}</Text>
       </View>

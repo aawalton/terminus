@@ -52,6 +52,8 @@ export interface TreeGameStateCalculated extends CurrentTreeGameState {
   cultivationStage: string;
   maxEssence: string;
   essenceRecoveryPerMinute: string;
+  totalAllocation: string;
+  netGeneration: string;
 }
 
 export interface CultivationStage {

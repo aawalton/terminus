@@ -184,4 +184,20 @@ export function calculateTotalEssenceGeneration(gameState: CurrentTreeGameState)
   });
 
   return total.toString();
+}
+
+export function calculateTotalAllocation(gameState: CurrentTreeGameState): string {
+  let total = BigInt(0);
+
+  for (const allocation of Object.values(gameState.rootEssenceAllocation)) {
+    total += BigInt(allocation || '0');
+  }
+
+  return total.toString();
+}
+
+export function calculateNetGeneration(gameState: CurrentTreeGameState): string {
+  const totalGeneration = BigInt(calculateTotalEssenceGeneration(gameState));
+  const totalAllocation = BigInt(calculateTotalAllocation(gameState));
+  return (totalGeneration - totalAllocation).toString();
 } 
