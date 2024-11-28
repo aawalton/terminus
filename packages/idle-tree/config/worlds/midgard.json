@@ -1,0 +1,966 @@
+{
+  "universeName": "Norse Mythology",
+  "worldName": "Midgard",
+  "regions": [
+    {
+      "name": "Peaceful Lowlands",
+      "dangerLevel": 1,
+      "zones": [
+        {
+          "name": "Spirit Meadow Vale",
+          "size": 87,
+          "density": 1,
+          "difficulty": 59
+        },
+        {
+          "name": "Three Harmony Fields",
+          "size": 76,
+          "density": 1,
+          "difficulty": 116
+        },
+        {
+          "name": "Prosperity Plain",
+          "size": 78,
+          "density": 1,
+          "difficulty": 111
+        },
+        {
+          "name": "Golden Essence Valley",
+          "size": 106,
+          "density": 1,
+          "difficulty": 85
+        },
+        {
+          "name": "Tranquil Essence Grove",
+          "size": 94,
+          "density": 1,
+          "difficulty": 77
+        },
+        {
+          "name": "Peaceful Cultivation Gardens",
+          "size": 71,
+          "density": 1,
+          "difficulty": 93
+        },
+        {
+          "name": "Summer Spirit Pastures",
+          "size": 78,
+          "density": 1,
+          "difficulty": 113
+        }
+      ]
+    },
+    {
+      "name": "Farmlands",
+      "dangerLevel": 2,
+      "zones": [
+        {
+          "name": "Abundant Essence Fields",
+          "size": 80,
+          "density": 1,
+          "difficulty": 71
+        },
+        {
+          "name": "Nine Fruits Valley",
+          "size": 92,
+          "density": 1,
+          "difficulty": 120
+        },
+        {
+          "name": "Spirit Beast Plains",
+          "size": 95,
+          "density": 1,
+          "difficulty": 73
+        },
+        {
+          "name": "Harvest Moon Valley",
+          "size": 102,
+          "density": 2,
+          "difficulty": 88
+        },
+        {
+          "name": "Three Wells Basin",
+          "size": 61,
+          "density": 2,
+          "difficulty": 77
+        },
+        {
+          "name": "Ancient Grain Hills",
+          "size": 73,
+          "density": 1,
+          "difficulty": 122
+        },
+        {
+          "name": "Golden Honey Meadows",
+          "size": 99,
+          "density": 2,
+          "difficulty": 114
+        },
+        {
+          "name": "Essence Gathering Mill Vale",
+          "size": 65,
+          "density": 1,
+          "difficulty": 121
+        }
+      ]
+    },
+    {
+      "name": "Coastal Realm",
+      "dangerLevel": 3,
+      "zones": [
+        {
+          "name": "Sea Spirit Haven",
+          "size": 66,
+          "density": 1,
+          "difficulty": 124
+        },
+        {
+          "name": "Salt Essence Shore",
+          "size": 71,
+          "density": 1,
+          "difficulty": 83
+        },
+        {
+          "name": "Seven Trading Winds Bay",
+          "size": 78,
+          "density": 1,
+          "difficulty": 60
+        },
+        {
+          "name": "Storm Rune Harbor",
+          "size": 67,
+          "density": 1,
+          "difficulty": 116
+        },
+        {
+          "name": "Great Whale's Rest",
+          "size": 114,
+          "density": 2,
+          "difficulty": 118
+        },
+        {
+          "name": "Sacred Seal Waters",
+          "size": 76,
+          "density": 1,
+          "difficulty": 131
+        },
+        {
+          "name": "Shipwright's Spirit Coast",
+          "size": 130,
+          "density": 1,
+          "difficulty": 102
+        },
+        {
+          "name": "Nine Voyages Port",
+          "size": 87,
+          "density": 2,
+          "difficulty": 112
+        },
+        {
+          "name": "Tide Spirit Pools",
+          "size": 60,
+          "density": 1,
+          "difficulty": 69
+        },
+        {
+          "name": "Mystic Mist Cove",
+          "size": 98,
+          "density": 1,
+          "difficulty": 140
+        }
+      ]
+    },
+    {
+      "name": "Trade Lands",
+      "dangerLevel": 4,
+      "zones": [
+        {
+          "name": "Nine Markets Square",
+          "size": 79,
+          "density": 3,
+          "difficulty": 90
+        },
+        {
+          "name": "Wanderer's Spirit Rest",
+          "size": 65,
+          "density": 1,
+          "difficulty": 105
+        },
+        {
+          "name": "Merchant's Fate Road",
+          "size": 97,
+          "density": 3,
+          "difficulty": 100
+        },
+        {
+          "name": "Three Treasures Post",
+          "size": 108,
+          "density": 1,
+          "difficulty": 97
+        },
+        {
+          "name": "Ancient Guild Quarter",
+          "size": 76,
+          "density": 1,
+          "difficulty": 132
+        },
+        {
+          "name": "Spirit Storage Halls",
+          "size": 84,
+          "density": 3,
+          "difficulty": 66
+        },
+        {
+          "name": "Craftsman's Dao Way",
+          "size": 112,
+          "density": 1,
+          "difficulty": 88
+        },
+        {
+          "name": "Seven Roads Crossing",
+          "size": 55,
+          "density": 4,
+          "difficulty": 104
+        }
+      ]
+    },
+    {
+      "name": "Ancient Forest Realm",
+      "dangerLevel": 5,
+      "zones": [
+        {
+          "name": "Three Spirit Woods",
+          "size": 95,
+          "density": 4,
+          "difficulty": 80
+        },
+        {
+          "name": "World Tree Haven",
+          "size": 89,
+          "density": 2,
+          "difficulty": 86
+        },
+        {
+          "name": "Deep Essence Thicket",
+          "size": 73,
+          "density": 2,
+          "difficulty": 95
+        },
+        {
+          "name": "Wild Rune Forest",
+          "size": 76,
+          "density": 1,
+          "difficulty": 109
+        },
+        {
+          "name": "Nine Ravens Grove",
+          "size": 106,
+          "density": 1,
+          "difficulty": 122
+        },
+        {
+          "name": "Root Power Woods",
+          "size": 83,
+          "density": 3,
+          "difficulty": 103
+        },
+        {
+          "name": "Ancient Pine Meditation Vale",
+          "size": 40,
+          "density": 4,
+          "difficulty": 98
+        },
+        {
+          "name": "Elder Spirit Forest",
+          "size": 67,
+          "density": 5,
+          "difficulty": 92
+        },
+        {
+          "name": "Mystic Gathering Woods",
+          "size": 66,
+          "density": 1,
+          "difficulty": 138
+        },
+        {
+          "name": "Whispering Wisdom Grove",
+          "size": 93,
+          "density": 3,
+          "difficulty": 112
+        },
+        {
+          "name": "Green Heart of the World",
+          "size": 94,
+          "density": 3,
+          "difficulty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lake Kingdom",
+      "dangerLevel": 6,
+      "zones": [
+        {
+          "name": "Crystal Spirit Waters",
+          "size": 38,
+          "density": 1,
+          "difficulty": 112
+        },
+        {
+          "name": "Three Reed Essence",
+          "size": 101,
+          "density": 4,
+          "difficulty": 69
+        },
+        {
+          "name": "Mirror of Wisdom Lake",
+          "size": 106,
+          "density": 1,
+          "difficulty": 101
+        },
+        {
+          "name": "Fish Spirit Haven",
+          "size": 70,
+          "density": 1,
+          "difficulty": 121
+        },
+        {
+          "name": "Water Dragon's Edge",
+          "size": 81,
+          "density": 2,
+          "difficulty": 15
+        },
+        {
+          "name": "Sacred Isle Chain",
+          "size": 82,
+          "density": 5,
+          "difficulty": 106
+        },
+        {
+          "name": "Deep Destiny Waters",
+          "size": 74,
+          "density": 3,
+          "difficulty": 126
+        }
+      ]
+    },
+    {
+      "name": "Hill Country",
+      "dangerLevel": 7,
+      "zones": [
+        {
+          "name": "Rolling Spirit Hills",
+          "size": 48,
+          "density": 6,
+          "difficulty": 74
+        },
+        {
+          "name": "Three Winds Rise",
+          "size": 66,
+          "density": 1,
+          "difficulty": 60
+        },
+        {
+          "name": "High Essence Meadows",
+          "size": 52,
+          "density": 3,
+          "difficulty": 101
+        },
+        {
+          "name": "Ancient Stone Hills",
+          "size": 30,
+          "density": 3,
+          "difficulty": 66
+        },
+        {
+          "name": "Wind Gathering Peak",
+          "size": 81,
+          "density": 1,
+          "difficulty": 47
+        },
+        {
+          "name": "Spirit Path Slopes",
+          "size": 66,
+          "density": 1,
+          "difficulty": 133
+        },
+        {
+          "name": "Thunder Rock Garden",
+          "size": 82,
+          "density": 6,
+          "difficulty": 96
+        },
+        {
+          "name": "Nine Guardians Fort",
+          "size": 84,
+          "density": 1,
+          "difficulty": 90
+        },
+        {
+          "name": "Misty Summit Dao",
+          "size": 82,
+          "density": 3,
+          "difficulty": 75
+        }
+      ]
+    },
+    {
+      "name": "Mountain Realm",
+      "dangerLevel": 8,
+      "zones": [
+        {
+          "name": "Lower Spirit Peaks",
+          "size": 67,
+          "density": 1,
+          "difficulty": 142
+        },
+        {
+          "name": "High Destiny Pass",
+          "size": 132,
+          "density": 3,
+          "difficulty": 79
+        },
+        {
+          "name": "Stone Essence Valley",
+          "size": 59,
+          "density": 2,
+          "difficulty": 137
+        },
+        {
+          "name": "Thunder Eagle's Perch",
+          "size": 82,
+          "density": 7,
+          "difficulty": 102
+        },
+        {
+          "name": "Nine Storms Peak",
+          "size": 77,
+          "density": 1,
+          "difficulty": 113
+        },
+        {
+          "name": "Cloud Spirit Rise",
+          "size": 17,
+          "density": 1,
+          "difficulty": 104
+        },
+        {
+          "name": "Ancient Rock Face",
+          "size": 81,
+          "density": 4,
+          "difficulty": 113
+        },
+        {
+          "name": "Mountain Heart Dao",
+          "size": 89,
+          "density": 8,
+          "difficulty": 104
+        },
+        {
+          "name": "Frost Giant's Peak",
+          "size": 92,
+          "density": 1,
+          "difficulty": 105
+        },
+        {
+          "name": "Avalanche Spirit Path",
+          "size": 110,
+          "density": 2,
+          "difficulty": 130
+        },
+        {
+          "name": "Crystal Cave of Wisdom",
+          "size": 73,
+          "density": 8,
+          "difficulty": 120
+        },
+        {
+          "name": "Summit's Edge of Heaven",
+          "size": 66,
+          "density": 2,
+          "difficulty": 91
+        }
+      ]
+    },
+    {
+      "name": "Storm Lands",
+      "dangerLevel": 9,
+      "zones": [
+        {
+          "name": "Thunder Spirit Plains",
+          "size": 90,
+          "density": 7,
+          "difficulty": 51
+        },
+        {
+          "name": "Lightning Essence Fields",
+          "size": 85,
+          "density": 7,
+          "difficulty": 98
+        },
+        {
+          "name": "Three Rains Valley",
+          "size": 71,
+          "density": 9,
+          "difficulty": 118
+        },
+        {
+          "name": "Storm Dragon Peak",
+          "size": 77,
+          "density": 1,
+          "difficulty": 95
+        },
+        {
+          "name": "Nine Winds Plains",
+          "size": 85,
+          "density": 1,
+          "difficulty": 116
+        },
+        {
+          "name": "Tempest Spirit Hills",
+          "size": 60,
+          "density": 1,
+          "difficulty": 45
+        },
+        {
+          "name": "Thunder Heart Basin",
+          "size": 91,
+          "density": 1,
+          "difficulty": 83
+        },
+        {
+          "name": "Storm's Inner Eye",
+          "size": 89,
+          "density": 1,
+          "difficulty": 90
+        }
+      ]
+    },
+    {
+      "name": "Frozen Wastes",
+      "dangerLevel": 10,
+      "zones": [
+        {
+          "name": "Ice Spirit Fields",
+          "size": 107,
+          "density": 6,
+          "difficulty": 187
+        },
+        {
+          "name": "Frost Essence Valley",
+          "size": 34,
+          "density": 3,
+          "difficulty": 137
+        },
+        {
+          "name": "Three Snows Plain",
+          "size": 73,
+          "density": 1,
+          "difficulty": 88
+        },
+        {
+          "name": "Frozen Dragon Lake",
+          "size": 60,
+          "density": 1,
+          "difficulty": 127
+        },
+        {
+          "name": "Bitter Spirit Coast",
+          "size": 47,
+          "density": 1,
+          "difficulty": 113
+        },
+        {
+          "name": "Nine Ice Caves",
+          "size": 67,
+          "density": 1,
+          "difficulty": 117
+        },
+        {
+          "name": "Winter's Heart of Power",
+          "size": 38,
+          "density": 7,
+          "difficulty": 93
+        },
+        {
+          "name": "Frozen World Forest",
+          "size": 72,
+          "density": 8,
+          "difficulty": 82
+        },
+        {
+          "name": "Snow Spirit Peak",
+          "size": 70,
+          "density": 6,
+          "difficulty": 95
+        },
+        {
+          "name": "Ancient Glacier's Edge",
+          "size": 98,
+          "density": 2,
+          "difficulty": 94
+        }
+      ]
+    },
+    {
+      "name": "Giant Territory",
+      "dangerLevel": 11,
+      "zones": [
+        {
+          "name": "Ancient Giant's Path",
+          "size": 103,
+          "density": 4,
+          "difficulty": 108
+        },
+        {
+          "name": "Stone Giant's Spirit Vale",
+          "size": 85,
+          "density": 1,
+          "difficulty": 76
+        },
+        {
+          "name": "Frost Giant's Sacred Walk",
+          "size": 96,
+          "density": 1,
+          "difficulty": 110
+        },
+        {
+          "name": "Giant's Thunder Throne",
+          "size": 91,
+          "density": 8,
+          "difficulty": 89
+        },
+        {
+          "name": "Nine Peaks of Power",
+          "size": 87,
+          "density": 1,
+          "difficulty": 60
+        },
+        {
+          "name": "Giant's Spirit Quarry",
+          "size": 71,
+          "density": 5,
+          "difficulty": 148
+        },
+        {
+          "name": "Colossal Destiny Ridge",
+          "size": 86,
+          "density": 1,
+          "difficulty": 97
+        },
+        {
+          "name": "Giant's Meditation Rest",
+          "size": 72,
+          "density": 10,
+          "difficulty": 97
+        },
+        {
+          "name": "Thunder Giant's Trial",
+          "size": 84,
+          "density": 4,
+          "difficulty": 82
+        }
+      ]
+    },
+    {
+      "name": "Troll Country",
+      "dangerLevel": 12,
+      "zones": [
+        {
+          "name": "Troll's Spirit Bridge",
+          "size": 93,
+          "density": 11,
+          "difficulty": 88
+        },
+        {
+          "name": "Ancient Stone Cave",
+          "size": 95,
+          "density": 5,
+          "difficulty": 107
+        },
+        {
+          "name": "Dark Essence Valley",
+          "size": 68,
+          "density": 8,
+          "difficulty": 85
+        },
+        {
+          "name": "Nine Trolls' Den",
+          "size": 101,
+          "density": 1,
+          "difficulty": 123
+        },
+        {
+          "name": "Thunder Rock Hollow",
+          "size": 104,
+          "density": 1,
+          "difficulty": 120
+        },
+        {
+          "name": "Night Spirit Cave",
+          "size": 68,
+          "density": 1,
+          "difficulty": 95
+        },
+        {
+          "name": "Troll's Secret Market",
+          "size": 57,
+          "density": 1,
+          "difficulty": 57
+        },
+        {
+          "name": "Shadow Trial Pass",
+          "size": 125,
+          "density": 1,
+          "difficulty": 83
+        }
+      ]
+    },
+    {
+      "name": "Beast Realm",
+      "dangerLevel": 13,
+      "zones": [
+        {
+          "name": "Spirit Wolf's Den",
+          "size": 51,
+          "density": 9,
+          "difficulty": 41
+        },
+        {
+          "name": "Three Bears' Domain",
+          "size": 113,
+          "density": 1,
+          "difficulty": 86
+        },
+        {
+          "name": "Wild Hunt Sacred Grounds",
+          "size": 99,
+          "density": 11,
+          "difficulty": 95
+        },
+        {
+          "name": "Ancient Beast's Lair",
+          "size": 61,
+          "density": 1,
+          "difficulty": 105
+        },
+        {
+          "name": "Savage Spirit Woods",
+          "size": 63,
+          "density": 4,
+          "difficulty": 92
+        },
+        {
+          "name": "Beast King's Valley",
+          "size": 121,
+          "density": 1,
+          "difficulty": 121
+        },
+        {
+          "name": "Nine Predators' Path",
+          "size": 69,
+          "density": 1,
+          "difficulty": 81
+        },
+        {
+          "name": "Monster's Spirit Den",
+          "size": 47,
+          "density": 1,
+          "difficulty": 110
+        },
+        {
+          "name": "Dark Beast Thicket",
+          "size": 71,
+          "density": 1,
+          "difficulty": 112
+        },
+        {
+          "name": "Untamed Spirit Wilds",
+          "size": 98,
+          "density": 13,
+          "difficulty": 71
+        }
+      ]
+    },
+    {
+      "name": "Dragon Territory",
+      "dangerLevel": 14,
+      "zones": [
+        {
+          "name": "Thunder Dragon Ridge",
+          "size": 75,
+          "density": 8,
+          "difficulty": 69
+        },
+        {
+          "name": "Wyrm's Spirit Valley",
+          "size": 56,
+          "density": 1,
+          "difficulty": 78
+        },
+        {
+          "name": "Ancient Dragon's Lair",
+          "size": 76,
+          "density": 4,
+          "difficulty": 123
+        },
+        {
+          "name": "Nine Flames Peak",
+          "size": 90,
+          "density": 9,
+          "difficulty": 81
+        },
+        {
+          "name": "Scale Spirit Canyon",
+          "size": 73,
+          "density": 1,
+          "difficulty": 108
+        },
+        {
+          "name": "Wing's Thunder Rest",
+          "size": 79,
+          "density": 3,
+          "difficulty": 80
+        },
+        {
+          "name": "Dragon's Sacred Roost",
+          "size": 93,
+          "density": 2,
+          "difficulty": 120
+        },
+        {
+          "name": "Flame Heart Valley",
+          "size": 83,
+          "density": 1,
+          "difficulty": 95
+        },
+        {
+          "name": "Spirit Ash Plains",
+          "size": 59,
+          "density": 1,
+          "difficulty": 147
+        }
+      ]
+    },
+    {
+      "name": "Dark Realm",
+      "dangerLevel": 15,
+      "zones": [
+        {
+          "name": "Shadow Spirit Woods",
+          "size": 75,
+          "density": 1,
+          "difficulty": 115
+        },
+        {
+          "name": "Dark Heart of Wisdom",
+          "size": 68,
+          "density": 9,
+          "difficulty": 108
+        },
+        {
+          "name": "Black Forest Dao",
+          "size": 69,
+          "density": 4,
+          "difficulty": 91
+        },
+        {
+          "name": "Three Dim Valleys",
+          "size": 95,
+          "density": 2,
+          "difficulty": 43
+        },
+        {
+          "name": "Twilight Spirit Grove",
+          "size": 86,
+          "density": 8,
+          "difficulty": 144
+        },
+        {
+          "name": "Night's Sacred Edge",
+          "size": 69,
+          "density": 10,
+          "difficulty": 106
+        },
+        {
+          "name": "Dark Thunder Peak",
+          "size": 45,
+          "density": 1,
+          "difficulty": 148
+        },
+        {
+          "name": "Nine Glooms Hollow",
+          "size": 78,
+          "density": 11,
+          "difficulty": 111
+        },
+        {
+          "name": "Shade's Final Rest",
+          "size": 99,
+          "density": 4,
+          "difficulty": 101
+        }
+      ]
+    },
+    {
+      "name": "Shadow Realm",
+      "dangerLevel": 16,
+      "zones": [
+        {
+          "name": "Shadow's Spirit Edge",
+          "size": 61,
+          "density": 15,
+          "difficulty": 96
+        },
+        {
+          "name": "Darkness Gathering Falls",
+          "size": 89,
+          "density": 16,
+          "difficulty": 126
+        },
+        {
+          "name": "Deep Shadow Dao",
+          "size": 80,
+          "density": 2,
+          "difficulty": 114
+        },
+        {
+          "name": "Umbral Spirit Woods",
+          "size": 74,
+          "density": 2,
+          "difficulty": 108
+        },
+        {
+          "name": "Shadow Dragon Peak",
+          "size": 78,
+          "density": 1,
+          "difficulty": 120
+        },
+        {
+          "name": "Dark Water's Heart",
+          "size": 36,
+          "density": 12,
+          "difficulty": 63
+        },
+        {
+          "name": "Night's Sacred Core",
+          "size": 53,
+          "density": 5,
+          "difficulty": 64
+        },
+        {
+          "name": "Shadow Spirit Valley",
+          "size": 78,
+          "density": 1,
+          "difficulty": 89
+        },
+        {
+          "name": "Nine Twilights' End",
+          "size": 71,
+          "density": 3,
+          "difficulty": 71
+        }
+      ]
+    }
+  ]
+}
