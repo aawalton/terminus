@@ -1,7 +1,6 @@
 import { Slot, useSegments, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useAuth } from '../hooks/use-auth';
-import Toast from 'react-native-toast-message'
 
 export default function RootLayout() {
   const { session, initialized } = useAuth();
@@ -26,7 +25,6 @@ export default function RootLayout() {
   return (
     <>
       <Slot />
-      <Toast />
     </>
   );
 } 
