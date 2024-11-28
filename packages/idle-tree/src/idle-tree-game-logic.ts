@@ -171,4 +171,17 @@ export function calculateMaxEssence(level: number): bigint {
   // Regular level within a tier
   const stageIndex = Math.min(level, CULTIVATION_STAGES.length - 1);
   return CULTIVATION_STAGES[stageIndex].essence;
+}
+
+export function canAdvanceCultivation(currentLevel: number, currentEssence: bigint): boolean {
+  const maxEssence = calculateMaxEssence(currentLevel);
+  return currentEssence >= maxEssence;
+}
+
+export function advanceCultivation(gameState: CurrentTreeGameState): CurrentTreeGameState {
+  return {
+    ...gameState,
+    currentLevel: gameState.currentLevel + 1,
+    currentEssence: "0",
+  };
 } 
