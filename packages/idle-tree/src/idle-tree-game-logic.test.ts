@@ -1,8 +1,8 @@
 import {
   getCultivationStage,
   calculateAgeInDays,
-  getFibonacciEssence,
   calculateMaxEssence,
+  CULTIVATION_STAGES,
 } from './idle-tree-game-logic';
 
 describe('Cultivation System', () => {
@@ -14,13 +14,12 @@ describe('Cultivation System', () => {
         { level: 2, name: 'Essence Gathering 2', essence: '300' },
         { level: 3, name: 'Essence Gathering 3', essence: '500' },
         { level: 4, name: 'Essence Gathering 4', essence: '800' },
-        { level: 10, name: 'Breakthrough to Soul Fire', essence: '21200' },
-        { level: 14, name: 'Soul Fire 1', essence: '14400' },
+        { level: 10, name: 'Soul Fire 1', essence: '14400' },
       ];
 
       expectedStages.forEach(({ level, name, essence }) => {
         expect(getCultivationStage(level)).toBe(name);
-        expect(getFibonacciEssence(level).toString()).toBe(essence);
+        expect(calculateMaxEssence(level).toString()).toBe(essence);
       });
     });
   });
@@ -34,10 +33,10 @@ describe('Cultivation System', () => {
       test('progresses through main tiers', () => {
         const expectedProgression = [
           { level: 1, expected: 'Essence Gathering 1' },
-          { level: 14, expected: 'Soul Fire 1' },
-          { level: 23, expected: 'Star Core 1' },
-          { level: 32, expected: 'Nascent Soul 1' },
-          { level: 41, expected: 'Monarch 1' },
+          { level: 10, expected: 'Soul Fire 1' },
+          { level: 19, expected: 'Star Core 1' },
+          { level: 28, expected: 'Nascent Soul 1' },
+          { level: 37, expected: 'Monarch 1' },
         ];
 
         expectedProgression.forEach(({ level, expected }) => {
@@ -52,51 +51,31 @@ describe('Cultivation System', () => {
           expect(getCultivationStage(i)).toBe(`Essence Gathering ${i}`);
         }
       });
-
-      // Similar tests for other tiers can be added as needed
     });
 
     describe('Edge cases', () => {
-      test('handles levels between tiers', () => {
-        expect(getCultivationStage(13)).toBe('Essence Gathering 9');
-        expect(getCultivationStage(50)).toBe('Monarch 9');
+      test('handles levels beyond defined stages', () => {
+        const lastDefinedStage = CULTIVATION_STAGES[CULTIVATION_STAGES.length - 1].name;
+        expect(getCultivationStage(999)).toBe(lastDefinedStage);
       });
     });
   });
 
   describe('Essence calculations', () => {
-    describe('getFibonacciEssence', () => {
-      test('follows defined sequence for initial levels', () => {
-        const expectedSequence = [
-          { level: 0, essence: '100' }, // Mortal
-          { level: 1, essence: '200' }, // EG 1
-          { level: 2, essence: '300' }, // EG 2
-          { level: 3, essence: '500' }, // EG 3
-          { level: 4, essence: '800' }, // EG 4
-        ];
-
-        expectedSequence.forEach(({ level, essence }) => {
-          expect(getFibonacciEssence(level).toString()).toBe(essence);
-        });
+    describe('Regular stages', () => {
+      test('returns correct essence for normal levels', () => {
+        expect(calculateMaxEssence(5).toString()).toBe('1300'); // EG 5
       });
     });
 
-    describe('calculateMaxEssence', () => {
-      describe('Regular stages', () => {
-        test('uses Fibonacci sequence for normal levels', () => {
-          expect(calculateMaxEssence(5).toString()).toBe(getFibonacciEssence(5).toString());
-        });
-      });
+    describe('Breakthrough levels', () => {
+      test('sums previous 5 levels for tier transitions', () => {
+        // Test breakthrough from EG to Soul Fire
+        const breakthrough = calculateMaxEssence(10);
+        const sum = Array.from({ length: 5 })
+          .reduce((acc, _, i) => acc + CULTIVATION_STAGES[10 - i].essence, BigInt(0));
 
-      describe('Breakthrough levels', () => {
-        test('sums previous 5 levels for tier transitions', () => {
-          // Test breakthrough from EG to Soul Fire (level 10)
-          const breakthrough = calculateMaxEssence(10);
-          const sum = Array.from({ length: 5 })
-            .reduce((acc, _, i) => acc + getFibonacciEssence(10 - i), BigInt(0));
-
-          expect(breakthrough.toString()).toBe(sum.toString());
-        });
+        expect(breakthrough.toString()).toBe(sum.toString());
       });
     });
   });
