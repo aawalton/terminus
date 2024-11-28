@@ -73,7 +73,7 @@ describe('Cultivation System', () => {
         // Test breakthrough from EG to Soul Fire
         const breakthrough = calculateMaxEssence(10);
         const sum = Array.from({ length: 5 })
-          .reduce((acc, _, i) => acc + CULTIVATION_STAGES[10 - i].essence, BigInt(0));
+          .reduce((acc: bigint, _, i) => acc + CULTIVATION_STAGES[10 - i].essence, BigInt(0));
 
         expect(breakthrough.toString()).toBe(sum.toString());
       });

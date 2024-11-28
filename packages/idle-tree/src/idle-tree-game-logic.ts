@@ -49,7 +49,38 @@ export const CULTIVATION_STAGES: CultivationStage[] = [
   { tier: 'Soul Fire', name: 'Soul Fire 8', essence: BigInt(418100) },
   { tier: 'Soul Fire', name: 'Soul Fire 9', essence: BigInt(676500) },
 
-  // Continue pattern for other tiers...
+  // Star Core Tier
+  { tier: 'Star Core', name: 'Star Core 1', essence: BigInt(1094600) },
+  { tier: 'Star Core', name: 'Star Core 2', essence: BigInt(1771100) },
+  { tier: 'Star Core', name: 'Star Core 3', essence: BigInt(2865700) },
+  { tier: 'Star Core', name: 'Star Core 4', essence: BigInt(4636800) },
+  { tier: 'Star Core', name: 'Star Core 5', essence: BigInt(7502500) },
+  { tier: 'Star Core', name: 'Star Core 6', essence: BigInt(12139300) },
+  { tier: 'Star Core', name: 'Star Core 7', essence: BigInt(19641800) },
+  { tier: 'Star Core', name: 'Star Core 8', essence: BigInt(31781100) },
+  { tier: 'Star Core', name: 'Star Core 9', essence: BigInt(51422900) },
+
+  // Nascent Soul Tier
+  { tier: 'Nascent Soul', name: 'Nascent Soul 1', essence: BigInt(83204000) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 2', essence: BigInt(134626900) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 3', essence: BigInt(217830900) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 4', essence: BigInt(352457800) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 5', essence: BigInt(570288700) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 6', essence: BigInt(922746500) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 7', essence: BigInt(1493035200) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 8', essence: BigInt(2415781700) },
+  { tier: 'Nascent Soul', name: 'Nascent Soul 9', essence: BigInt(3908816900) },
+
+  // Monarch Tier
+  { tier: 'Monarch', name: 'Monarch 1', essence: BigInt(6324598600) },
+  { tier: 'Monarch', name: 'Monarch 2', essence: BigInt(10233415500) },
+  { tier: 'Monarch', name: 'Monarch 3', essence: BigInt(16558014100) },
+  { tier: 'Monarch', name: 'Monarch 4', essence: BigInt(26791429600) },
+  { tier: 'Monarch', name: 'Monarch 5', essence: BigInt(43349443700) },
+  { tier: 'Monarch', name: 'Monarch 6', essence: BigInt(70140873300) },
+  { tier: 'Monarch', name: 'Monarch 7', essence: BigInt(113490317000) },
+  { tier: 'Monarch', name: 'Monarch 8', essence: BigInt(183631190300) },
+  { tier: 'Monarch', name: 'Monarch 9', essence: BigInt(297121507300) }
 ];
 
 export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
