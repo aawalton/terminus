@@ -103,9 +103,21 @@ export function useIdleTreeGameState() {
     });
   };
 
+  const updateAllocation = async (zoneId: string, amount: string) => {
+    const newState = {
+      ...gameState,
+      rootEssenceAllocation: {
+        ...gameState.rootEssenceAllocation,
+        [zoneId]: amount
+      }
+    };
+    await saveGame(newState);
+  };
+
   return {
     gameState: calculatedState,
     loading,
     saveGame,
+    updateAllocation,
   };
 } 

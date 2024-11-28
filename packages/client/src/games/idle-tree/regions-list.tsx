@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ListItem, Divider } from '@rneui/themed';
+import { ListItem, Button } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTreeGameState } from './use-idle-tree-game-state';
 import { calculateZoneExploration, calculateZoneEssenceGeneration } from '@terminus/idle-tree';
 
 export function RegionsList() {
   const { worldData, loading } = useWorldData();
-  const { gameState } = useIdleTreeGameState();
+  const { gameState, updateAllocation } = useIdleTreeGameState();
   const [isRegionsExpanded, setIsRegionsExpanded] = useState(false);
   const [expandedRegions, setExpandedRegions] = useState<{ [key: string]: boolean }>({});
 
@@ -20,6 +20,14 @@ export function RegionsList() {
       ...prev,
       [regionId]: !prev[regionId]
     }));
+  };
+
+  const handleAllocationChange = (zoneId: string, delta: number) => {
+    const currentAllocation = BigInt(gameState.rootEssenceAllocation[zoneId] || '0');
+    const newAllocation = (currentAllocation + BigInt(delta)).toString();
+    if (BigInt(newAllocation) >= 0) {
+      updateAllocation(zoneId, newAllocation);
+    }
   };
 
   return (
@@ -65,6 +73,8 @@ export function RegionsList() {
                   essenceInvested,
                   zone.difficulty
                 );
+                const currentAllocation = BigInt(gameState.rootEssenceAllocation[zone.id] || '0');
+                const isFullySaturated = exploration >= 100;
 
                 return (
                   <ListItem
@@ -79,9 +89,24 @@ export function RegionsList() {
                       <ListItem.Subtitle style={styles.zoneStats}>
                         Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
                       </ListItem.Subtitle>
-                      <ListItem.Subtitle style={styles.zoneStats}>
-                        Allocated: {(gameState.rootEssenceAllocation[zone.id] || '0')}/min
-                      </ListItem.Subtitle>
+                      {!isFullySaturated && (
+                        <View style={styles.allocationContainer}>
+                          <Button
+                            title="-"
+                            disabled={currentAllocation <= 0}
+                            onPress={() => handleAllocationChange(zone.id, -1)}
+                            buttonStyle={styles.allocationButton}
+                          />
+                          <ListItem.Subtitle style={styles.allocationText}>
+                            Allocated: {currentAllocation.toString()}/min
+                          </ListItem.Subtitle>
+                          <Button
+                            title="+"
+                            onPress={() => handleAllocationChange(zone.id, 1)}
+                            buttonStyle={styles.allocationButton}
+                          />
+                        </View>
+                      )}
                     </ListItem.Content>
                   </ListItem>
                 );
@@ -135,5 +160,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     marginTop: 4,
+  },
+  allocationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  allocationButton: {
+    minWidth: 40,
+    paddingHorizontal: 8,
+    marginHorizontal: 8,
+  },
+  allocationText: {
+    flex: 1,
+    textAlign: 'center',
   },
 }); 
