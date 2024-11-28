@@ -10,45 +10,53 @@
           "name": "Spirit Meadow Vale",
           "size": 87,
           "density": 1,
-          "difficulty": 59
+          "difficulty": 59,
+          "id": "midgard-0-0"
         },
         {
           "name": "Three Harmony Fields",
           "size": 76,
           "density": 1,
-          "difficulty": 116
+          "difficulty": 116,
+          "id": "midgard-0-1"
         },
         {
           "name": "Prosperity Plain",
           "size": 78,
           "density": 1,
-          "difficulty": 111
+          "difficulty": 111,
+          "id": "midgard-0-2"
         },
         {
           "name": "Golden Essence Valley",
           "size": 106,
           "density": 1,
-          "difficulty": 85
+          "difficulty": 85,
+          "id": "midgard-0-3"
         },
         {
           "name": "Tranquil Essence Grove",
           "size": 94,
           "density": 1,
-          "difficulty": 77
+          "difficulty": 77,
+          "id": "midgard-0-4"
         },
         {
           "name": "Peaceful Cultivation Gardens",
           "size": 71,
           "density": 1,
-          "difficulty": 93
+          "difficulty": 93,
+          "id": "midgard-0-5"
         },
         {
           "name": "Summer Spirit Pastures",
           "size": 78,
           "density": 1,
-          "difficulty": 113
+          "difficulty": 113,
+          "id": "midgard-0-6"
         }
-      ]
+      ],
+      "id": "midgard-0"
     },
     {
       "name": "Farmlands",
@@ -58,51 +66,60 @@
           "name": "Abundant Essence Fields",
           "size": 80,
           "density": 1,
-          "difficulty": 71
+          "difficulty": 71,
+          "id": "midgard-1-0"
         },
         {
           "name": "Nine Fruits Valley",
           "size": 92,
           "density": 1,
-          "difficulty": 120
+          "difficulty": 120,
+          "id": "midgard-1-1"
         },
         {
           "name": "Spirit Beast Plains",
           "size": 95,
           "density": 1,
-          "difficulty": 73
+          "difficulty": 73,
+          "id": "midgard-1-2"
         },
         {
           "name": "Harvest Moon Valley",
           "size": 102,
           "density": 2,
-          "difficulty": 88
+          "difficulty": 88,
+          "id": "midgard-1-3"
         },
         {
           "name": "Three Wells Basin",
           "size": 61,
           "density": 2,
-          "difficulty": 77
+          "difficulty": 77,
+          "id": "midgard-1-4"
         },
         {
           "name": "Ancient Grain Hills",
           "size": 73,
           "density": 1,
-          "difficulty": 122
+          "difficulty": 122,
+          "id": "midgard-1-5"
         },
         {
           "name": "Golden Honey Meadows",
           "size": 99,
           "density": 2,
-          "difficulty": 114
+          "difficulty": 114,
+          "id": "midgard-1-6"
         },
         {
           "name": "Essence Gathering Mill Vale",
           "size": 65,
           "density": 1,
-          "difficulty": 121
+          "difficulty": 121,
+          "id": "midgard-1-7"
         }
-      ]
+      ],
+      "id": "midgard-1"
     },
     {
       "name": "Coastal Realm",
@@ -111,64 +128,75 @@
         {
           "name": "Sea Spirit Haven",
           "size": 66,
-          "density": 1,
-          "difficulty": 124
+          "density": 3,
+          "difficulty": 124,
+          "id": "midgard-2-0"
         },
         {
           "name": "Salt Essence Shore",
           "size": 71,
-          "density": 1,
-          "difficulty": 83
+          "density": 3,
+          "difficulty": 83,
+          "id": "midgard-2-1"
         },
         {
           "name": "Seven Trading Winds Bay",
           "size": 78,
-          "density": 1,
-          "difficulty": 60
+          "density": 3,
+          "difficulty": 60,
+          "id": "midgard-2-2"
         },
         {
           "name": "Storm Rune Harbor",
           "size": 67,
-          "density": 1,
-          "difficulty": 116
+          "density": 3,
+          "difficulty": 116,
+          "id": "midgard-2-3"
         },
         {
           "name": "Great Whale's Rest",
           "size": 114,
           "density": 2,
-          "difficulty": 118
+          "difficulty": 118,
+          "id": "midgard-2-4"
         },
         {
           "name": "Sacred Seal Waters",
           "size": 76,
-          "density": 1,
-          "difficulty": 131
+          "density": 3,
+          "difficulty": 131,
+          "id": "midgard-2-5"
         },
         {
           "name": "Shipwright's Spirit Coast",
           "size": 130,
-          "density": 1,
-          "difficulty": 102
+          "density": 3,
+          "difficulty": 102,
+          "id": "midgard-2-6"
         },
         {
           "name": "Nine Voyages Port",
           "size": 87,
           "density": 2,
-          "difficulty": 112
+          "difficulty": 112,
+          "id": "midgard-2-7"
         },
         {
           "name": "Tide Spirit Pools",
           "size": 60,
-          "density": 1,
-          "difficulty": 69
+          "density": 3,
+          "difficulty": 69,
+          "id": "midgard-2-8"
         },
         {
           "name": "Mystic Mist Cove",
           "size": 98,
-          "density": 1,
-          "difficulty": 140
+          "density": 3,
+          "difficulty": 140,
+          "id": "midgard-2-9"
         }
-      ]
+      ],
+      "id": "midgard-2"
     },
     {
       "name": "Trade Lands",
@@ -178,51 +206,60 @@
           "name": "Nine Markets Square",
           "size": 79,
           "density": 3,
-          "difficulty": 90
+          "difficulty": 90,
+          "id": "midgard-3-0"
         },
         {
           "name": "Wanderer's Spirit Rest",
           "size": 65,
-          "density": 1,
-          "difficulty": 105
+          "density": 4,
+          "difficulty": 105,
+          "id": "midgard-3-1"
         },
         {
           "name": "Merchant's Fate Road",
           "size": 97,
           "density": 3,
-          "difficulty": 100
+          "difficulty": 100,
+          "id": "midgard-3-2"
         },
         {
           "name": "Three Treasures Post",
           "size": 108,
-          "density": 1,
-          "difficulty": 97
+          "density": 4,
+          "difficulty": 97,
+          "id": "midgard-3-3"
         },
         {
           "name": "Ancient Guild Quarter",
           "size": 76,
-          "density": 1,
-          "difficulty": 132
+          "density": 3,
+          "difficulty": 132,
+          "id": "midgard-3-4"
         },
         {
           "name": "Spirit Storage Halls",
           "size": 84,
           "density": 3,
-          "difficulty": 66
+          "difficulty": 66,
+          "id": "midgard-3-5"
         },
         {
           "name": "Craftsman's Dao Way",
           "size": 112,
-          "density": 1,
-          "difficulty": 88
+          "density": 4,
+          "difficulty": 88,
+          "id": "midgard-3-6"
         },
         {
           "name": "Seven Roads Crossing",
           "size": 55,
           "density": 4,
-          "difficulty": 104
+          "difficulty": 104,
+          "id": "midgard-3-7"
         }
-      ]
+      ],
+      "id": "midgard-3"
     },
     {
       "name": "Ancient Forest Realm",
@@ -232,69 +269,81 @@
           "name": "Three Spirit Woods",
           "size": 95,
           "density": 4,
-          "difficulty": 80
+          "difficulty": 80,
+          "id": "midgard-4-0"
         },
         {
           "name": "World Tree Haven",
           "size": 89,
-          "density": 2,
-          "difficulty": 86
+          "density": 5,
+          "difficulty": 86,
+          "id": "midgard-4-1"
         },
         {
           "name": "Deep Essence Thicket",
           "size": 73,
-          "density": 2,
-          "difficulty": 95
+          "density": 5,
+          "difficulty": 95,
+          "id": "midgard-4-2"
         },
         {
           "name": "Wild Rune Forest",
           "size": 76,
-          "density": 1,
-          "difficulty": 109
+          "density": 4,
+          "difficulty": 109,
+          "id": "midgard-4-3"
         },
         {
           "name": "Nine Ravens Grove",
           "size": 106,
-          "density": 1,
-          "difficulty": 122
+          "density": 5,
+          "difficulty": 122,
+          "id": "midgard-4-4"
         },
         {
           "name": "Root Power Woods",
           "size": 83,
           "density": 3,
-          "difficulty": 103
+          "difficulty": 103,
+          "id": "midgard-4-5"
         },
         {
           "name": "Ancient Pine Meditation Vale",
           "size": 40,
           "density": 4,
-          "difficulty": 98
+          "difficulty": 98,
+          "id": "midgard-4-6"
         },
         {
           "name": "Elder Spirit Forest",
           "size": 67,
           "density": 5,
-          "difficulty": 92
+          "difficulty": 92,
+          "id": "midgard-4-7"
         },
         {
           "name": "Mystic Gathering Woods",
           "size": 66,
-          "density": 1,
-          "difficulty": 138
+          "density": 4,
+          "difficulty": 138,
+          "id": "midgard-4-8"
         },
         {
           "name": "Whispering Wisdom Grove",
           "size": 93,
           "density": 3,
-          "difficulty": 112
+          "difficulty": 112,
+          "id": "midgard-4-9"
         },
         {
           "name": "Green Heart of the World",
           "size": 94,
           "density": 3,
-          "difficulty": 99
+          "difficulty": 99,
+          "id": "midgard-4-10"
         }
-      ]
+      ],
+      "id": "midgard-4"
     },
     {
       "name": "Lake Kingdom",
@@ -303,46 +352,54 @@
         {
           "name": "Crystal Spirit Waters",
           "size": 38,
-          "density": 1,
-          "difficulty": 112
+          "density": 5,
+          "difficulty": 112,
+          "id": "midgard-5-0"
         },
         {
           "name": "Three Reed Essence",
           "size": 101,
           "density": 4,
-          "difficulty": 69
+          "difficulty": 69,
+          "id": "midgard-5-1"
         },
         {
           "name": "Mirror of Wisdom Lake",
           "size": 106,
-          "density": 1,
-          "difficulty": 101
+          "density": 5,
+          "difficulty": 101,
+          "id": "midgard-5-2"
         },
         {
           "name": "Fish Spirit Haven",
           "size": 70,
-          "density": 1,
-          "difficulty": 121
+          "density": 5,
+          "difficulty": 121,
+          "id": "midgard-5-3"
         },
         {
           "name": "Water Dragon's Edge",
           "size": 81,
-          "density": 2,
-          "difficulty": 15
+          "density": 5,
+          "difficulty": 15,
+          "id": "midgard-5-4"
         },
         {
           "name": "Sacred Isle Chain",
           "size": 82,
           "density": 5,
-          "difficulty": 106
+          "difficulty": 106,
+          "id": "midgard-5-5"
         },
         {
           "name": "Deep Destiny Waters",
           "size": 74,
           "density": 3,
-          "difficulty": 126
+          "difficulty": 126,
+          "id": "midgard-5-6"
         }
-      ]
+      ],
+      "id": "midgard-5"
     },
     {
       "name": "Hill Country",
@@ -352,57 +409,67 @@
           "name": "Rolling Spirit Hills",
           "size": 48,
           "density": 6,
-          "difficulty": 74
+          "difficulty": 74,
+          "id": "midgard-6-0"
         },
         {
           "name": "Three Winds Rise",
           "size": 66,
-          "density": 1,
-          "difficulty": 60
+          "density": 7,
+          "difficulty": 60,
+          "id": "midgard-6-1"
         },
         {
           "name": "High Essence Meadows",
           "size": 52,
-          "density": 3,
-          "difficulty": 101
+          "density": 7,
+          "difficulty": 101,
+          "id": "midgard-6-2"
         },
         {
           "name": "Ancient Stone Hills",
           "size": 30,
-          "density": 3,
-          "difficulty": 66
+          "density": 7,
+          "difficulty": 66,
+          "id": "midgard-6-3"
         },
         {
           "name": "Wind Gathering Peak",
           "size": 81,
-          "density": 1,
-          "difficulty": 47
+          "density": 7,
+          "difficulty": 47,
+          "id": "midgard-6-4"
         },
         {
           "name": "Spirit Path Slopes",
           "size": 66,
-          "density": 1,
-          "difficulty": 133
+          "density": 6,
+          "difficulty": 133,
+          "id": "midgard-6-5"
         },
         {
           "name": "Thunder Rock Garden",
           "size": 82,
           "density": 6,
-          "difficulty": 96
+          "difficulty": 96,
+          "id": "midgard-6-6"
         },
         {
           "name": "Nine Guardians Fort",
           "size": 84,
-          "density": 1,
-          "difficulty": 90
+          "density": 7,
+          "difficulty": 90,
+          "id": "midgard-6-7"
         },
         {
           "name": "Misty Summit Dao",
           "size": 82,
-          "density": 3,
-          "difficulty": 75
+          "density": 5,
+          "difficulty": 75,
+          "id": "midgard-6-8"
         }
-      ]
+      ],
+      "id": "midgard-6"
     },
     {
       "name": "Mountain Realm",
@@ -411,76 +478,89 @@
         {
           "name": "Lower Spirit Peaks",
           "size": 67,
-          "density": 1,
-          "difficulty": 142
+          "density": 6,
+          "difficulty": 142,
+          "id": "midgard-7-0"
         },
         {
           "name": "High Destiny Pass",
           "size": 132,
-          "density": 3,
-          "difficulty": 79
+          "density": 8,
+          "difficulty": 79,
+          "id": "midgard-7-1"
         },
         {
           "name": "Stone Essence Valley",
           "size": 59,
-          "density": 2,
-          "difficulty": 137
+          "density": 8,
+          "difficulty": 137,
+          "id": "midgard-7-2"
         },
         {
           "name": "Thunder Eagle's Perch",
           "size": 82,
           "density": 7,
-          "difficulty": 102
+          "difficulty": 102,
+          "id": "midgard-7-3"
         },
         {
           "name": "Nine Storms Peak",
           "size": 77,
-          "density": 1,
-          "difficulty": 113
+          "density": 8,
+          "difficulty": 113,
+          "id": "midgard-7-4"
         },
         {
           "name": "Cloud Spirit Rise",
           "size": 17,
-          "density": 1,
-          "difficulty": 104
+          "density": 7,
+          "difficulty": 104,
+          "id": "midgard-7-5"
         },
         {
           "name": "Ancient Rock Face",
           "size": 81,
           "density": 4,
-          "difficulty": 113
+          "difficulty": 113,
+          "id": "midgard-7-6"
         },
         {
           "name": "Mountain Heart Dao",
           "size": 89,
           "density": 8,
-          "difficulty": 104
+          "difficulty": 104,
+          "id": "midgard-7-7"
         },
         {
           "name": "Frost Giant's Peak",
           "size": 92,
-          "density": 1,
-          "difficulty": 105
+          "density": 8,
+          "difficulty": 105,
+          "id": "midgard-7-8"
         },
         {
           "name": "Avalanche Spirit Path",
           "size": 110,
-          "density": 2,
-          "difficulty": 130
+          "density": 5,
+          "difficulty": 130,
+          "id": "midgard-7-9"
         },
         {
           "name": "Crystal Cave of Wisdom",
           "size": 73,
           "density": 8,
-          "difficulty": 120
+          "difficulty": 120,
+          "id": "midgard-7-10"
         },
         {
           "name": "Summit's Edge of Heaven",
           "size": 66,
-          "density": 2,
-          "difficulty": 91
+          "density": 6,
+          "difficulty": 91,
+          "id": "midgard-7-11"
         }
-      ]
+      ],
+      "id": "midgard-7"
     },
     {
       "name": "Storm Lands",
@@ -490,51 +570,60 @@
           "name": "Thunder Spirit Plains",
           "size": 90,
           "density": 7,
-          "difficulty": 51
+          "difficulty": 51,
+          "id": "midgard-8-0"
         },
         {
           "name": "Lightning Essence Fields",
           "size": 85,
           "density": 7,
-          "difficulty": 98
+          "difficulty": 98,
+          "id": "midgard-8-1"
         },
         {
           "name": "Three Rains Valley",
           "size": 71,
           "density": 9,
-          "difficulty": 118
+          "difficulty": 118,
+          "id": "midgard-8-2"
         },
         {
           "name": "Storm Dragon Peak",
           "size": 77,
-          "density": 1,
-          "difficulty": 95
+          "density": 9,
+          "difficulty": 95,
+          "id": "midgard-8-3"
         },
         {
           "name": "Nine Winds Plains",
           "size": 85,
-          "density": 1,
-          "difficulty": 116
+          "density": 9,
+          "difficulty": 116,
+          "id": "midgard-8-4"
         },
         {
           "name": "Tempest Spirit Hills",
           "size": 60,
-          "density": 1,
-          "difficulty": 45
+          "density": 9,
+          "difficulty": 45,
+          "id": "midgard-8-5"
         },
         {
           "name": "Thunder Heart Basin",
           "size": 91,
-          "density": 1,
-          "difficulty": 83
+          "density": 8,
+          "difficulty": 83,
+          "id": "midgard-8-6"
         },
         {
           "name": "Storm's Inner Eye",
           "size": 89,
-          "density": 1,
-          "difficulty": 90
+          "density": 8,
+          "difficulty": 90,
+          "id": "midgard-8-7"
         }
-      ]
+      ],
+      "id": "midgard-8"
     },
     {
       "name": "Frozen Wastes",
@@ -544,63 +633,74 @@
           "name": "Ice Spirit Fields",
           "size": 107,
           "density": 6,
-          "difficulty": 187
+          "difficulty": 187,
+          "id": "midgard-9-0"
         },
         {
           "name": "Frost Essence Valley",
           "size": 34,
-          "density": 3,
-          "difficulty": 137
+          "density": 10,
+          "difficulty": 137,
+          "id": "midgard-9-1"
         },
         {
           "name": "Three Snows Plain",
           "size": 73,
-          "density": 1,
-          "difficulty": 88
+          "density": 6,
+          "difficulty": 88,
+          "id": "midgard-9-2"
         },
         {
           "name": "Frozen Dragon Lake",
           "size": 60,
-          "density": 1,
-          "difficulty": 127
+          "density": 10,
+          "difficulty": 127,
+          "id": "midgard-9-3"
         },
         {
           "name": "Bitter Spirit Coast",
           "size": 47,
-          "density": 1,
-          "difficulty": 113
+          "density": 7,
+          "difficulty": 113,
+          "id": "midgard-9-4"
         },
         {
           "name": "Nine Ice Caves",
           "size": 67,
-          "density": 1,
-          "difficulty": 117
+          "density": 8,
+          "difficulty": 117,
+          "id": "midgard-9-5"
         },
         {
           "name": "Winter's Heart of Power",
           "size": 38,
           "density": 7,
-          "difficulty": 93
+          "difficulty": 93,
+          "id": "midgard-9-6"
         },
         {
           "name": "Frozen World Forest",
           "size": 72,
           "density": 8,
-          "difficulty": 82
+          "difficulty": 82,
+          "id": "midgard-9-7"
         },
         {
           "name": "Snow Spirit Peak",
           "size": 70,
           "density": 6,
-          "difficulty": 95
+          "difficulty": 95,
+          "id": "midgard-9-8"
         },
         {
           "name": "Ancient Glacier's Edge",
           "size": 98,
-          "density": 2,
-          "difficulty": 94
+          "density": 10,
+          "difficulty": 94,
+          "id": "midgard-9-9"
         }
-      ]
+      ],
+      "id": "midgard-9"
     },
     {
       "name": "Giant Territory",
@@ -609,58 +709,68 @@
         {
           "name": "Ancient Giant's Path",
           "size": 103,
-          "density": 4,
-          "difficulty": 108
+          "density": 11,
+          "difficulty": 108,
+          "id": "midgard-10-0"
         },
         {
           "name": "Stone Giant's Spirit Vale",
           "size": 85,
-          "density": 1,
-          "difficulty": 76
+          "density": 11,
+          "difficulty": 76,
+          "id": "midgard-10-1"
         },
         {
           "name": "Frost Giant's Sacred Walk",
           "size": 96,
-          "density": 1,
-          "difficulty": 110
+          "density": 9,
+          "difficulty": 110,
+          "id": "midgard-10-2"
         },
         {
           "name": "Giant's Thunder Throne",
           "size": 91,
           "density": 8,
-          "difficulty": 89
+          "difficulty": 89,
+          "id": "midgard-10-3"
         },
         {
           "name": "Nine Peaks of Power",
           "size": 87,
-          "density": 1,
-          "difficulty": 60
+          "density": 11,
+          "difficulty": 60,
+          "id": "midgard-10-4"
         },
         {
           "name": "Giant's Spirit Quarry",
           "size": 71,
-          "density": 5,
-          "difficulty": 148
+          "density": 11,
+          "difficulty": 148,
+          "id": "midgard-10-5"
         },
         {
           "name": "Colossal Destiny Ridge",
           "size": 86,
-          "density": 1,
-          "difficulty": 97
+          "density": 11,
+          "difficulty": 97,
+          "id": "midgard-10-6"
         },
         {
           "name": "Giant's Meditation Rest",
           "size": 72,
           "density": 10,
-          "difficulty": 97
+          "difficulty": 97,
+          "id": "midgard-10-7"
         },
         {
           "name": "Thunder Giant's Trial",
           "size": 84,
-          "density": 4,
-          "difficulty": 82
+          "density": 10,
+          "difficulty": 82,
+          "id": "midgard-10-8"
         }
-      ]
+      ],
+      "id": "midgard-10"
     },
     {
       "name": "Troll Country",
@@ -670,51 +780,60 @@
           "name": "Troll's Spirit Bridge",
           "size": 93,
           "density": 11,
-          "difficulty": 88
+          "difficulty": 88,
+          "id": "midgard-11-0"
         },
         {
           "name": "Ancient Stone Cave",
           "size": 95,
-          "density": 5,
-          "difficulty": 107
+          "density": 12,
+          "difficulty": 107,
+          "id": "midgard-11-1"
         },
         {
           "name": "Dark Essence Valley",
           "size": 68,
           "density": 8,
-          "difficulty": 85
+          "difficulty": 85,
+          "id": "midgard-11-2"
         },
         {
           "name": "Nine Trolls' Den",
           "size": 101,
-          "density": 1,
-          "difficulty": 123
+          "density": 12,
+          "difficulty": 123,
+          "id": "midgard-11-3"
         },
         {
           "name": "Thunder Rock Hollow",
           "size": 104,
-          "density": 1,
-          "difficulty": 120
+          "density": 11,
+          "difficulty": 120,
+          "id": "midgard-11-4"
         },
         {
           "name": "Night Spirit Cave",
           "size": 68,
-          "density": 1,
-          "difficulty": 95
+          "density": 8,
+          "difficulty": 95,
+          "id": "midgard-11-5"
         },
         {
           "name": "Troll's Secret Market",
           "size": 57,
-          "density": 1,
-          "difficulty": 57
+          "density": 12,
+          "difficulty": 57,
+          "id": "midgard-11-6"
         },
         {
           "name": "Shadow Trial Pass",
           "size": 125,
-          "density": 1,
-          "difficulty": 83
+          "density": 8,
+          "difficulty": 83,
+          "id": "midgard-11-7"
         }
-      ]
+      ],
+      "id": "midgard-11"
     },
     {
       "name": "Beast Realm",
@@ -724,63 +843,74 @@
           "name": "Spirit Wolf's Den",
           "size": 51,
           "density": 9,
-          "difficulty": 41
+          "difficulty": 41,
+          "id": "midgard-12-0"
         },
         {
           "name": "Three Bears' Domain",
           "size": 113,
-          "density": 1,
-          "difficulty": 86
+          "density": 13,
+          "difficulty": 86,
+          "id": "midgard-12-1"
         },
         {
           "name": "Wild Hunt Sacred Grounds",
           "size": 99,
           "density": 11,
-          "difficulty": 95
+          "difficulty": 95,
+          "id": "midgard-12-2"
         },
         {
           "name": "Ancient Beast's Lair",
           "size": 61,
-          "density": 1,
-          "difficulty": 105
+          "density": 13,
+          "difficulty": 105,
+          "id": "midgard-12-3"
         },
         {
           "name": "Savage Spirit Woods",
           "size": 63,
-          "density": 4,
-          "difficulty": 92
+          "density": 13,
+          "difficulty": 92,
+          "id": "midgard-12-4"
         },
         {
           "name": "Beast King's Valley",
           "size": 121,
-          "density": 1,
-          "difficulty": 121
+          "density": 13,
+          "difficulty": 121,
+          "id": "midgard-12-5"
         },
         {
           "name": "Nine Predators' Path",
           "size": 69,
-          "density": 1,
-          "difficulty": 81
+          "density": 12,
+          "difficulty": 81,
+          "id": "midgard-12-6"
         },
         {
           "name": "Monster's Spirit Den",
           "size": 47,
-          "density": 1,
-          "difficulty": 110
+          "density": 13,
+          "difficulty": 110,
+          "id": "midgard-12-7"
         },
         {
           "name": "Dark Beast Thicket",
           "size": 71,
-          "density": 1,
-          "difficulty": 112
+          "density": 10,
+          "difficulty": 112,
+          "id": "midgard-12-8"
         },
         {
           "name": "Untamed Spirit Wilds",
           "size": 98,
           "density": 13,
-          "difficulty": 71
+          "difficulty": 71,
+          "id": "midgard-12-9"
         }
-      ]
+      ],
+      "id": "midgard-12"
     },
     {
       "name": "Dragon Territory",
@@ -790,57 +920,67 @@
           "name": "Thunder Dragon Ridge",
           "size": 75,
           "density": 8,
-          "difficulty": 69
+          "difficulty": 69,
+          "id": "midgard-13-0"
         },
         {
           "name": "Wyrm's Spirit Valley",
           "size": 56,
-          "density": 1,
-          "difficulty": 78
+          "density": 14,
+          "difficulty": 78,
+          "id": "midgard-13-1"
         },
         {
           "name": "Ancient Dragon's Lair",
           "size": 76,
-          "density": 4,
-          "difficulty": 123
+          "density": 14,
+          "difficulty": 123,
+          "id": "midgard-13-2"
         },
         {
           "name": "Nine Flames Peak",
           "size": 90,
           "density": 9,
-          "difficulty": 81
+          "difficulty": 81,
+          "id": "midgard-13-3"
         },
         {
           "name": "Scale Spirit Canyon",
           "size": 73,
-          "density": 1,
-          "difficulty": 108
+          "density": 10,
+          "difficulty": 108,
+          "id": "midgard-13-4"
         },
         {
           "name": "Wing's Thunder Rest",
           "size": 79,
-          "density": 3,
-          "difficulty": 80
+          "density": 14,
+          "difficulty": 80,
+          "id": "midgard-13-5"
         },
         {
           "name": "Dragon's Sacred Roost",
           "size": 93,
-          "density": 2,
-          "difficulty": 120
+          "density": 13,
+          "difficulty": 120,
+          "id": "midgard-13-6"
         },
         {
           "name": "Flame Heart Valley",
           "size": 83,
-          "density": 1,
-          "difficulty": 95
+          "density": 14,
+          "difficulty": 95,
+          "id": "midgard-13-7"
         },
         {
           "name": "Spirit Ash Plains",
           "size": 59,
-          "density": 1,
-          "difficulty": 147
+          "density": 12,
+          "difficulty": 147,
+          "id": "midgard-13-8"
         }
-      ]
+      ],
+      "id": "midgard-13"
     },
     {
       "name": "Dark Realm",
@@ -849,58 +989,68 @@
         {
           "name": "Shadow Spirit Woods",
           "size": 75,
-          "density": 1,
-          "difficulty": 115
+          "density": 15,
+          "difficulty": 115,
+          "id": "midgard-14-0"
         },
         {
           "name": "Dark Heart of Wisdom",
           "size": 68,
           "density": 9,
-          "difficulty": 108
+          "difficulty": 108,
+          "id": "midgard-14-1"
         },
         {
           "name": "Black Forest Dao",
           "size": 69,
-          "density": 4,
-          "difficulty": 91
+          "density": 15,
+          "difficulty": 91,
+          "id": "midgard-14-2"
         },
         {
           "name": "Three Dim Valleys",
           "size": 95,
-          "density": 2,
-          "difficulty": 43
+          "density": 15,
+          "difficulty": 43,
+          "id": "midgard-14-3"
         },
         {
           "name": "Twilight Spirit Grove",
           "size": 86,
           "density": 8,
-          "difficulty": 144
+          "difficulty": 144,
+          "id": "midgard-14-4"
         },
         {
           "name": "Night's Sacred Edge",
           "size": 69,
           "density": 10,
-          "difficulty": 106
+          "difficulty": 106,
+          "id": "midgard-14-5"
         },
         {
           "name": "Dark Thunder Peak",
           "size": 45,
-          "density": 1,
-          "difficulty": 148
+          "density": 15,
+          "difficulty": 148,
+          "id": "midgard-14-6"
         },
         {
           "name": "Nine Glooms Hollow",
           "size": 78,
           "density": 11,
-          "difficulty": 111
+          "difficulty": 111,
+          "id": "midgard-14-7"
         },
         {
           "name": "Shade's Final Rest",
           "size": 99,
-          "density": 4,
-          "difficulty": 101
+          "density": 15,
+          "difficulty": 101,
+          "id": "midgard-14-8"
         }
-      ]
+      ],
+      "id": "midgard-14"
     },
     {
       "name": "Shadow Realm",
@@ -910,57 +1060,68 @@
           "name": "Shadow's Spirit Edge",
           "size": 61,
           "density": 15,
-          "difficulty": 96
+          "difficulty": 96,
+          "id": "midgard-15-0"
         },
         {
           "name": "Darkness Gathering Falls",
           "size": 89,
           "density": 16,
-          "difficulty": 126
+          "difficulty": 126,
+          "id": "midgard-15-1"
         },
         {
           "name": "Deep Shadow Dao",
           "size": 80,
-          "density": 2,
-          "difficulty": 114
+          "density": 16,
+          "difficulty": 114,
+          "id": "midgard-15-2"
         },
         {
           "name": "Umbral Spirit Woods",
           "size": 74,
-          "density": 2,
-          "difficulty": 108
+          "density": 14,
+          "difficulty": 108,
+          "id": "midgard-15-3"
         },
         {
           "name": "Shadow Dragon Peak",
           "size": 78,
-          "density": 1,
-          "difficulty": 120
+          "density": 15,
+          "difficulty": 120,
+          "id": "midgard-15-4"
         },
         {
           "name": "Dark Water's Heart",
           "size": 36,
           "density": 12,
-          "difficulty": 63
+          "difficulty": 63,
+          "id": "midgard-15-5"
         },
         {
           "name": "Night's Sacred Core",
           "size": 53,
-          "density": 5,
-          "difficulty": 64
+          "density": 16,
+          "difficulty": 64,
+          "id": "midgard-15-6"
         },
         {
           "name": "Shadow Spirit Valley",
           "size": 78,
-          "density": 1,
-          "difficulty": 89
+          "density": 14,
+          "difficulty": 89,
+          "id": "midgard-15-7"
         },
         {
           "name": "Nine Twilights' End",
           "size": 71,
-          "density": 3,
-          "difficulty": 71
+          "density": 15,
+          "difficulty": 71,
+          "id": "midgard-15-8"
         }
-      ]
+      ],
+      "id": "midgard-15"
     }
-  ]
+  ],
+  "id": "midgard"
 }
