@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { ListItem, Button, Text } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
-import { calculateZoneExploration, calculateZoneEssenceGeneration, calculateFinalHuntingCost } from '@terminus/idle-tree';
+import { calculateZoneExploration, calculateZoneEssenceGeneration, calculateFinalHuntingCost, type Creature, type Zone } from '@terminus/idle-tree';
 import { Icon } from '@rneui/themed';
 import { HuntingResultModal } from './hunting-result-modal';
 
@@ -14,10 +14,15 @@ export function RegionsList() {
   const [expandedRegions, setExpandedRegions] = useState<{ [key: string]: boolean }>({});
   const [huntingResult, setHuntingResult] = useState<{
     visible: boolean;
-    creature?: any;
+    creature?: Creature;
     essenceGained?: bigint;
     creditsGained?: number;
-  }>({ visible: false });
+  }>({
+    visible: false,
+    creature: undefined,
+    essenceGained: undefined,
+    creditsGained: undefined
+  });
 
   if (loading || !worldData || !gameState) {
     return null;
@@ -38,7 +43,7 @@ export function RegionsList() {
     }
   };
 
-  const handleHunt = async (zone: any) => {
+  const handleHunt = async (zone: Zone) => {
     try {
       const result = await hunt(zone);
       setHuntingResult({
@@ -255,10 +260,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   huntButton: {
-    backgroundColor: '#8B4513',
+    backgroundColor: '#2196F3',
     borderRadius: 8,
+    paddingVertical: 12,
     paddingHorizontal: 24,
-    marginBottom: 4,
   },
   huntingCost: {
     fontSize: 12,

@@ -218,6 +218,23 @@ export function useIdleTreeGameState() {
 
   const hunt = async (zone: Zone) => {
     try {
+      // Calculate hunting cost
+      const exploration = calculateZoneExploration(
+        gameState.rootSaturation[zone.id] || '0',
+        zone.size,
+        zone.density,
+        zone.difficulty
+      );
+      const huntingCost = calculateFinalHuntingCost(
+        BigInt(gameState.zoneHuntingCosts[zone.id] || '0'),
+        exploration / 100
+      );
+
+      // Verify we can afford the hunt
+      if (BigInt(gameState.currentEssence) < huntingCost) {
+        throw new Error('Not enough essence to hunt');
+      }
+
       // Generate creature and calculate rewards
       const creature = generateCreature(zone);
       const { essence: essenceReward, credits: creditsReward } = calculateHuntingRewards(
@@ -230,8 +247,8 @@ export function useIdleTreeGameState() {
       const currentCost = BigInt(newHuntingCosts[zone.id] || '0');
       newHuntingCosts[zone.id] = (currentCost + calculateHuntingCostIncrease(zone)).toString();
 
-      // Update essence and credits
-      const newEssence = BigInt(gameState.currentEssence) + essenceReward;
+      // Update essence (deduct cost and add reward) and credits
+      const newEssence = BigInt(gameState.currentEssence) - huntingCost + essenceReward;
       const newCredits = gameState.dailyCredits + creditsReward;
 
       // Save new state
