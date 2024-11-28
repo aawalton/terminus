@@ -81,10 +81,13 @@ const styles = StyleSheet.create({
   mainHeader: {
     fontSize: 18,
     fontWeight: 'bold',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   mainAccordion: {
     padding: 0,
     backgroundColor: 'white',
+    paddingRight: 16
   },
   regionContainer: {
     marginTop: 1,
