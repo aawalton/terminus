@@ -79,6 +79,9 @@ export function RegionsList() {
                       <ListItem.Subtitle style={styles.zoneStats}>
                         Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
                       </ListItem.Subtitle>
+                      <ListItem.Subtitle style={styles.zoneStats}>
+                        Allocated: {(gameState.rootEssenceAllocation[zone.id] || '0')}/min
+                      </ListItem.Subtitle>
                     </ListItem.Content>
                   </ListItem>
                 );

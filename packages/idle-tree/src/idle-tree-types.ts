@@ -35,8 +35,16 @@ export type TreeGameStateV5 = Omit<TreeGameStateV4, 'essenceRecoveryPerMinute' |
   stateVersion: 5;
 };
 
-export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5;
-export type CurrentTreeGameState = TreeGameStateV5;
+// V6 adds rootEssenceAllocation and changes version
+export type TreeGameStateV6 = Omit<TreeGameStateV5, 'stateVersion'> & {
+  rootEssenceAllocation: {
+    [zoneId: string]: string;
+  };
+  stateVersion: 6;
+};
+
+export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6;
+export type CurrentTreeGameState = TreeGameStateV6;
 
 // Calculated state interface
 export interface TreeGameStateCalculated extends CurrentTreeGameState {

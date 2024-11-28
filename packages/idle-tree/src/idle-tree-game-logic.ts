@@ -38,9 +38,10 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   dailyCreditsGainedAt: new Date().toISOString(),
   createdAt: new Date().toISOString(),
   rootSaturation: {
-    'midgard-0-0': '59', // Spirit Meadow Vale's difficulty
+    'midgard-0-0': '59',
   },
-  stateVersion: 5,
+  rootEssenceAllocation: {},
+  stateVersion: 6,
 };
 
 export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
@@ -67,11 +68,17 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
       });
     case 4:
       const { essenceRecoveryPerMinute, ...stateWithoutRecovery } = state;
-      return {
+      return migrateGameState({
         ...stateWithoutRecovery,
         stateVersion: 5,
-      };
+      });
     case 5:
+      return migrateGameState({
+        ...state,
+        rootEssenceAllocation: {},
+        stateVersion: 6,
+      });
+    case 6:
       return state;
     default:
       throw new Error(`Unsupported state version: ${state['stateVersion']}`);
