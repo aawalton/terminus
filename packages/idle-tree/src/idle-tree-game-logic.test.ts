@@ -3,7 +3,7 @@ import {
   calculateAgeInDays,
   getFibonacciEssence,
   calculateMaxEssence,
-} from './use-idle-tree-game-state';
+} from './idle-tree-game-logic';
 
 describe('getCultivationStage', () => {
   test('returns correct stage for Mortal tier', () => {

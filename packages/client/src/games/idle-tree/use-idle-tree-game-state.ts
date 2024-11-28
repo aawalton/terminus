@@ -3,15 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   TreeGameState,
   CurrentTreeGameState,
-  TreeGameStateCalculated
-} from './idle-tree-types';
-import {
+  TreeGameStateCalculated,
   DEFAULT_GAME_STATE,
   migrateGameState,
   getCultivationStage,
   calculateAgeInDays,
   calculateMaxEssence,
-} from './idle-tree-game-logic';
+} from '@terminus/idle-tree';
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
 
