@@ -101,9 +101,15 @@ export function useIdleTreeGameState() {
     try {
       const updatedState = { ...gameState, ...newState }
       setGameState(updatedState)
-      return await IdleTreeCloudService.saveGameState(updatedState)
+      const success = await IdleTreeCloudService.saveGameState(updatedState)
+      if (!success) {
+        console.error('Cloud service returned false when saving game state')
+        return false
+      }
+      return true
     } catch (error) {
       console.error('Error saving game state:', error)
+      // Optionally show an error toast/alert to the user here
       return false
     }
   }
@@ -260,7 +266,7 @@ export function useIdleTreeGameState() {
       });
 
       if (!success) {
-        throw new Error('Failed to save game state after hunting');
+        throw new Error('Failed to save game state after hunting. Please try again.');
       }
 
       return {
@@ -270,7 +276,8 @@ export function useIdleTreeGameState() {
       };
     } catch (error) {
       console.error('Error during hunting:', error);
-      throw error;
+      // Re-throw the error with a more user-friendly message
+      throw new Error(error instanceof Error ? error.message : 'An error occurred while hunting');
     }
   };
 

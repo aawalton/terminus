@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { ListItem, Button, Text } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
@@ -54,6 +54,10 @@ export function RegionsList() {
       });
     } catch (error) {
       console.error('Error during hunting:', error);
+      Alert.alert(
+        'Hunting Failed',
+        error instanceof Error ? error.message : 'An error occurred while hunting'
+      );
     }
   };
 
