@@ -67,7 +67,7 @@ const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
 };
 
 // Add the cultivation stages mapping function
-function getCultivationStage(level: number): string {
+export function getCultivationStage(level: number): string {
   const tiers = [
     { name: 'Mortal', startLevel: 0, maxStage: 0 },
     { name: 'Essence Gathering', startLevel: 1, maxStage: 9 },
@@ -96,7 +96,7 @@ interface TreeGameStateCalculated extends CurrentTreeGameState {
 }
 
 // Add helper function to calculate age
-function calculateAgeInDays(createdAt: string): number {
+export function calculateAgeInDays(createdAt: string): number {
   const created = new Date(createdAt);
   const now = new Date();
   return Math.floor((now.getTime() - created.getTime()) / 3600000);
@@ -104,7 +104,7 @@ function calculateAgeInDays(createdAt: string): number {
 
 // Add these functions before useIdleTreeGameState
 
-function getFibonacciEssence(level: number): bigint {
+export function getFibonacciEssence(level: number): bigint {
   if (level === 0) return BigInt(100); // Mortal
   if (level === 1) return BigInt(200); // First level of Essence Gathering
   if (level === 2) return BigInt(300); // Second level of Essence Gathering
@@ -122,7 +122,7 @@ function getFibonacciEssence(level: number): bigint {
   return current;
 }
 
-function calculateMaxEssence(level: number): bigint {
+export function calculateMaxEssence(level: number): bigint {
   const tiers = [
     { name: 'Mortal', startLevel: 0, maxStage: 0 },
     { name: 'Essence Gathering', startLevel: 1, maxStage: 9 },
