@@ -11,6 +11,8 @@
  * 4. Star Core (9 stages)
  * 5. Nascent Soul (9 stages)
  * 6. Monarch (9 stages)
+ * 
+ * 7. Between each tier is a 
  */
 
 import {

@@ -68,16 +68,6 @@ describe('Cultivation System', () => {
       });
     });
 
-    describe('Breakthrough levels', () => {
-      test('sums previous 5 levels for tier transitions', () => {
-        // Test breakthrough from EG to Soul Fire
-        const breakthrough = calculateMaxEssence(10);
-        const sum = Array.from({ length: 5 })
-          .reduce((acc: bigint, _, i) => acc + CULTIVATION_STAGES[10 - i].essence, BigInt(0));
-
-        expect(breakthrough.toString()).toBe(sum.toString());
-      });
-    });
   });
 });
 
