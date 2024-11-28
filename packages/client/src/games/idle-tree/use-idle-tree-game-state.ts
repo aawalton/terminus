@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   TreeGameState,
   CurrentTreeGameState,
   TreeGameStateCalculated,
   DEFAULT_GAME_STATE,
-  migrateGameState,
   getCultivationStage,
   calculateAgeInDays,
   calculateMaxEssence,
@@ -23,8 +21,6 @@ import {
   calculateZoneExploration,
 } from '@terminus/idle-tree';
 import { IdleTreeCloudService } from './idle-tree-cloud-service'
-
-const GAME_STATE_KEY = '@idle_tree_game_state';
 
 export function useIdleTreeGameState() {
   const [gameState, setGameState] = useState<CurrentTreeGameState>(DEFAULT_GAME_STATE);
@@ -56,36 +52,11 @@ export function useIdleTreeGameState() {
 
   const loadGame = async () => {
     try {
-      // First try to load from cloud
       const cloudState = await IdleTreeCloudService.loadCloudSave()
 
-      // Then check local storage
-      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY)
-      let localState: TreeGameState | null = null
-      if (savedState) {
-        localState = JSON.parse(savedState)
-        if (!localState) {
-          throw new Error('Failed to parse local game state')
-        }
-        localState = migrateGameState(localState)
-
-        // If we loaded from cloud, clear local storage
-        if (cloudState) {
-          await AsyncStorage.removeItem(GAME_STATE_KEY)
-        }
-      }
-
-      // Prefer cloud state if it exists
       if (cloudState) {
         cloudState.currentEssence = BigInt(cloudState.currentEssence).toString()
         updateGameState(cloudState)
-      } else if (localState) {
-        // If only local state exists, migrate it to cloud
-        localState.currentEssence = BigInt(localState.currentEssence).toString()
-        await IdleTreeCloudService.saveGameState(localState)
-        updateGameState(localState)
-        // Clear local storage after migrating to cloud
-        await AsyncStorage.removeItem(GAME_STATE_KEY)
       } else {
         setGameState(DEFAULT_GAME_STATE)
       }
@@ -109,7 +80,6 @@ export function useIdleTreeGameState() {
       return true
     } catch (error) {
       console.error('Error saving game state:', error)
-      // Optionally show an error toast/alert to the user here
       return false
     }
   }

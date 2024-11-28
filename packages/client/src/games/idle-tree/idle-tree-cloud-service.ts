@@ -19,9 +19,9 @@ export class IdleTreeCloudService {
         .eq('game_id', this.GAME_ID)
         .eq('user_id', user.id)
         .is('deleted_at', null)
-        .single()
+        .maybeSingle()
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error('Error loading cloud save:', error)
         return null
       }
