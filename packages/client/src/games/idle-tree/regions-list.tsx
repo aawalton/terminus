@@ -4,6 +4,7 @@ import { ListItem, Button } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
 import { calculateZoneExploration, calculateZoneEssenceGeneration } from '@terminus/idle-tree';
+import { Icon } from '@rneui/themed';
 
 export function RegionsList() {
   const { worldData, loading } = useWorldData();
@@ -32,6 +33,12 @@ export function RegionsList() {
 
   const canIncreaseAllocation = BigInt(gameState.netGeneration) > 0;
 
+  const accessibleRegions = worldData.regions.filter(
+    region => region.dangerLevel <= gameState.currentLevel
+  );
+
+  const hasLockedRegions = accessibleRegions.length < worldData.regions.length;
+
   return (
     <View style={styles.container}>
       <ListItem.Accordion
@@ -46,7 +53,7 @@ export function RegionsList() {
         onPress={() => setIsRegionsExpanded(!isRegionsExpanded)}
         containerStyle={styles.mainAccordion}
       >
-        {worldData.regions.map((region) => (
+        {accessibleRegions.map((region) => (
           <View key={region.id} style={styles.regionContainer}>
             <ListItem.Accordion
               content={
@@ -54,9 +61,6 @@ export function RegionsList() {
                   <ListItem.Title style={styles.regionTitle}>
                     {region.name}
                   </ListItem.Title>
-                  <ListItem.Subtitle style={styles.dangerLevel}>
-                    Danger Level: {region.dangerLevel}
-                  </ListItem.Subtitle>
                 </ListItem.Content>
               }
               isExpanded={expandedRegions[region.id]}
@@ -117,6 +121,17 @@ export function RegionsList() {
             </ListItem.Accordion>
           </View>
         ))}
+
+        {hasLockedRegions && (
+          <ListItem containerStyle={styles.lockedRegion}>
+            <Icon name="lock" type="material" color="#666" />
+            <ListItem.Content>
+              <ListItem.Title style={styles.lockedText}>
+                Advance your cultivation to unlock more regions
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        )}
       </ListItem.Accordion>
     </View>
   );
@@ -177,5 +192,16 @@ const styles = StyleSheet.create({
   allocationText: {
     flex: 1,
     textAlign: 'center',
+  },
+  lockedRegion: {
+    backgroundColor: '#f5f5f5',
+    marginTop: 4,
+    borderRadius: 8,
+  },
+  lockedText: {
+    color: '#666',
+    fontSize: 14,
+    textAlign: 'center',
+    marginLeft: 8,
   },
 }); 
