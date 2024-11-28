@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "universeName",
+    "worldName",
+    "regions"
+  ],
+  "properties": {
+    "universeName": {
+      "type": "string",
+      "description": "The name of the universe this world belongs to"
+    },
+    "worldName": {
+      "type": "string",
+      "description": "The name of the world"
+    },
+    "regions": {
+      "type": "array",
+      "description": "List of regions in the world",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "dangerLevel",
+          "zones"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the region"
+          },
+          "dangerLevel": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Danger level of the region"
+          },
+          "zones": {
+            "type": "array",
+            "description": "List of zones within the region",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "size",
+                "density",
+                "difficulty"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the zone"
+                },
+                "size": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Size of the zone"
+                },
+                "density": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Density level of the zone"
+                },
+                "difficulty": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Difficulty level of the zone"
+                }
+              },
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}
