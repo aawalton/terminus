@@ -33,7 +33,7 @@ export function HuntingResultModal({
             Gained {essenceGained.toString()} essence
           </Text>
           <Text style={styles.rewardInfo}>
-            Gained {creditsGained} credits
+            Gained {creditsGained} sacrificial credit{creditsGained === 1 ? '' : 's'}
           </Text>
           <Button
             title="Close"

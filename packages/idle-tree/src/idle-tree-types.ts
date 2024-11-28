@@ -51,8 +51,14 @@ export type TreeGameStateV7 = Omit<TreeGameStateV6, 'stateVersion'> & {
   stateVersion: 7;
 };
 
-export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6 | TreeGameStateV7;
-export type CurrentTreeGameState = TreeGameStateV7;
+// V8 adds sacrificialCredits and changes version
+export type TreeGameStateV8 = Omit<TreeGameStateV7, 'stateVersion'> & {
+  sacrificialCredits: number;
+  stateVersion: 8;
+};
+
+export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6 | TreeGameStateV7 | TreeGameStateV8;
+export type CurrentTreeGameState = TreeGameStateV8;
 
 // Calculated state interface
 export interface TreeGameStateCalculated extends CurrentTreeGameState {

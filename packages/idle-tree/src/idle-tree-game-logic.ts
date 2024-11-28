@@ -35,6 +35,7 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   currentEssence: '10',
   essenceGainedAt: new Date().toISOString(),
   dailyCredits: 1,
+  sacrificialCredits: 0,
   dailyCreditsGainedAt: new Date().toISOString(),
   createdAt: new Date().toISOString(),
   rootSaturation: {
@@ -42,7 +43,7 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   },
   rootEssenceAllocation: {},
   zoneHuntingCosts: {},
-  stateVersion: 7,
+  stateVersion: 8,
 };
 
 export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
@@ -86,6 +87,12 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
         stateVersion: 7,
       });
     case 7:
+      return migrateGameState({
+        ...state,
+        sacrificialCredits: 0,
+        stateVersion: 8,
+      });
+    case 8:
       return state;
     default:
       throw new Error(`Unsupported state version: ${state['stateVersion']}`);

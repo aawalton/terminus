@@ -73,6 +73,7 @@ function IdleTreeContent() {
           Net Generation: {gameState.netGeneration}/min
         </Text>
         <Text style={styles.statText}>Daily Credits: {gameState.dailyCredits}</Text>
+        <Text style={styles.statText}>Sacrificial Credits: {gameState.sacrificialCredits}</Text>
         <Text style={styles.statText}>Current Level: {gameState.currentLevel}</Text>
       </View>
 

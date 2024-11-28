@@ -218,8 +218,8 @@ export function useIdleTreeGameState() {
       rootEssenceAllocation: newAllocation
     };
 
-    setGameState(newState);
-    await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(newState));
+    // Replace the local storage operation with cloud save
+    await saveGame(newState);
   };
 
   const hunt = async (zone: Zone) => {
@@ -255,13 +255,13 @@ export function useIdleTreeGameState() {
 
       // Update essence (deduct cost and add reward) and credits
       const newEssence = BigInt(gameState.currentEssence) - huntingCost + essenceReward;
-      const newCredits = gameState.dailyCredits + creditsReward;
+      const newSacrificalCredits = gameState.sacrificialCredits + creditsReward;
 
       // Save new state
       const success = await saveGame({
         ...gameState,
         currentEssence: newEssence.toString(),
-        dailyCredits: newCredits,
+        sacrificialCredits: newSacrificalCredits,
         zoneHuntingCosts: newHuntingCosts,
       });
 
@@ -276,7 +276,6 @@ export function useIdleTreeGameState() {
       };
     } catch (error) {
       console.error('Error during hunting:', error);
-      // Re-throw the error with a more user-friendly message
       throw new Error(error instanceof Error ? error.message : 'An error occurred while hunting');
     }
   };
