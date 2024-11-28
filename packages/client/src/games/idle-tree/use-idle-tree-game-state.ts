@@ -13,6 +13,14 @@ import {
   calculateTotalAllocation,
   calculateNetGeneration,
   worlds,
+  Zone,
+  getBaseHuntingCost,
+  calculateHuntingCostIncrease,
+  calculateHuntingCostReduction,
+  calculateFinalHuntingCost,
+  generateCreature,
+  calculateHuntingRewards,
+  calculateZoneExploration,
 } from '@terminus/idle-tree';
 import { IdleTreeCloudService } from './idle-tree-cloud-service'
 
@@ -166,6 +174,17 @@ export function useIdleTreeGameState() {
     const newDailyCreditsGainedAt = new Date(now);
     newDailyCreditsGainedAt.setMinutes(0, 0, 0);
 
+    // Reduce hunting costs
+    const newHuntingCosts = { ...state.zoneHuntingCosts };
+    for (const [zoneId, cost] of Object.entries(newHuntingCosts)) {
+      const zone = zoneMap.get(zoneId);
+      if (zone) {
+        const currentCost = BigInt(cost);
+        const reduction = calculateHuntingCostReduction(zone);
+        newHuntingCosts[zoneId] = Math.max(0, Number(currentCost - reduction)).toString();
+      }
+    }
+
     await saveGame({
       ...state,
       currentEssence: updatedEssence.toString(),
@@ -174,6 +193,7 @@ export function useIdleTreeGameState() {
       dailyCredits: newDailyCredits,
       essenceGainedAt: newEssenceGainedAt.toISOString(),
       dailyCreditsGainedAt: newDailyCreditsGainedAt.toISOString(),
+      zoneHuntingCosts: newHuntingCosts,
     });
   };
 
@@ -196,10 +216,52 @@ export function useIdleTreeGameState() {
     await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(newState));
   };
 
+  const hunt = async (zone: Zone) => {
+    try {
+      // Generate creature and calculate rewards
+      const creature = generateCreature(zone);
+      const { essence: essenceReward, credits: creditsReward } = calculateHuntingRewards(
+        creature,
+        gameState.currentLevel
+      );
+
+      // Update hunting cost
+      const newHuntingCosts = { ...gameState.zoneHuntingCosts };
+      const currentCost = BigInt(newHuntingCosts[zone.id] || '0');
+      newHuntingCosts[zone.id] = (currentCost + calculateHuntingCostIncrease(zone)).toString();
+
+      // Update essence and credits
+      const newEssence = BigInt(gameState.currentEssence) + essenceReward;
+      const newCredits = gameState.dailyCredits + creditsReward;
+
+      // Save new state
+      const success = await saveGame({
+        ...gameState,
+        currentEssence: newEssence.toString(),
+        dailyCredits: newCredits,
+        zoneHuntingCosts: newHuntingCosts,
+      });
+
+      if (!success) {
+        throw new Error('Failed to save game state after hunting');
+      }
+
+      return {
+        creature,
+        essenceGained: essenceReward,
+        creditsGained: creditsReward,
+      };
+    } catch (error) {
+      console.error('Error during hunting:', error);
+      throw error;
+    }
+  };
+
   return {
     gameState: calculatedState,
     loading,
     saveGame,
     updateAllocation,
+    hunt,
   };
 } 
