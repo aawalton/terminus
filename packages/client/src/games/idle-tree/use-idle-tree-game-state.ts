@@ -46,7 +46,7 @@ export function useIdleTreeGameState() {
   useEffect(() => {
     if (!isLoaded) return;
 
-    const intervalId = setInterval(() => updateGameState(), 60000);
+    const intervalId = setInterval(() => updateGameState(), 6000);
     return () => clearInterval(intervalId);
   }, [isLoaded]);
 
