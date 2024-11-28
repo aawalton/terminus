@@ -22,15 +22,29 @@ export function useIdleTreeGameState() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Move the calculation into a function so we can reuse it
-  const calculateDerivedState = (state: CurrentTreeGameState): TreeGameStateCalculated => ({
-    ...state,
-    ageInDays: calculateAgeInDays(state.createdAt),
-    cultivationStage: getCultivationStage(state.currentLevel),
-    maxEssence: calculateMaxEssence(state.currentLevel).toString(),
-    essenceRecoveryPerMinute: calculateTotalEssenceGeneration(state),
-    totalAllocation: calculateTotalAllocation(state),
-    netGeneration: calculateNetGeneration(state),
-  });
+  const calculateDerivedState = (state: CurrentTreeGameState): TreeGameStateCalculated => {
+    console.log('Calculating derived state:', {
+      currentEssence: state.currentEssence,
+      rootEssenceAllocation: state.rootEssenceAllocation
+    });
+
+    const calculated = {
+      ...state,
+      ageInDays: calculateAgeInDays(state.createdAt),
+      cultivationStage: getCultivationStage(state.currentLevel),
+      maxEssence: calculateMaxEssence(state.currentLevel).toString(),
+      essenceRecoveryPerMinute: calculateTotalEssenceGeneration(state),
+      totalAllocation: calculateTotalAllocation(state),
+      netGeneration: calculateNetGeneration(state),
+    };
+
+    console.log('Derived state calculated:', {
+      totalAllocation: calculated.totalAllocation,
+      netGeneration: calculated.netGeneration
+    });
+
+    return calculated;
+  };
 
   // Calculate derived state
   const calculatedState = calculateDerivedState(gameState);
@@ -111,6 +125,8 @@ export function useIdleTreeGameState() {
   };
 
   const updateAllocation = async (zoneId: string, amount: string) => {
+    console.log('updateAllocation called:', { zoneId, amount });
+
     const newState = {
       ...gameState,
       rootEssenceAllocation: {
@@ -118,9 +134,22 @@ export function useIdleTreeGameState() {
         [zoneId]: amount
       }
     };
+
+    console.log('Setting new state:', {
+      oldAllocation: gameState.rootEssenceAllocation,
+      newAllocation: newState.rootEssenceAllocation
+    });
+
     setGameState(newState); // Immediately update the state
     await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(newState)); // Save in background
   };
+
+  // Add an effect to log state changes
+  useEffect(() => {
+    console.log('gameState changed:', {
+      rootEssenceAllocation: gameState.rootEssenceAllocation
+    });
+  }, [gameState]);
 
   return {
     gameState: calculatedState,

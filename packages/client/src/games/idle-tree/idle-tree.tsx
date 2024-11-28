@@ -6,9 +6,18 @@ import { useLayoutEffect } from 'react'
 import { useNavigation } from 'expo-router'
 import { Button } from '@rneui/themed'
 import { canAdvanceCultivation } from '@terminus/idle-tree'
+import { IdleTreeProvider, useIdleTree } from './idle-tree-context'
 
 export default function IdleTree() {
-  const { gameState, loading, saveGame } = useIdleTreeGameState()
+  return (
+    <IdleTreeProvider>
+      <IdleTreeContent />
+    </IdleTreeProvider>
+  );
+}
+
+function IdleTreeContent() {
+  const { gameState, loading, saveGame } = useIdleTree();
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
