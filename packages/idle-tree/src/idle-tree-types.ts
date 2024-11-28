@@ -43,8 +43,16 @@ export type TreeGameStateV6 = Omit<TreeGameStateV5, 'stateVersion'> & {
   stateVersion: 6;
 };
 
-export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6;
-export type CurrentTreeGameState = TreeGameStateV6;
+// V7 adds hunting costs and changes version
+export type TreeGameStateV7 = Omit<TreeGameStateV6, 'stateVersion'> & {
+  zoneHuntingCosts: {
+    [zoneId: string]: string;  // BigInt as string
+  };
+  stateVersion: 7;
+};
+
+export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6 | TreeGameStateV7;
+export type CurrentTreeGameState = TreeGameStateV7;
 
 // Calculated state interface
 export interface TreeGameStateCalculated extends CurrentTreeGameState {

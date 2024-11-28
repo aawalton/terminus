@@ -41,7 +41,8 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
     'midgard-0-0': '59',
   },
   rootEssenceAllocation: {},
-  stateVersion: 6,
+  zoneHuntingCosts: {},
+  stateVersion: 7,
 };
 
 export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
@@ -79,6 +80,12 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
         stateVersion: 6,
       });
     case 6:
+      return migrateGameState({
+        ...state,
+        zoneHuntingCosts: {},
+        stateVersion: 7,
+      });
+    case 7:
       return state;
     default:
       throw new Error(`Unsupported state version: ${state['stateVersion']}`);
