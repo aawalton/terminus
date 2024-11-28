@@ -88,6 +88,7 @@ export function useIdleTreeGameState() {
 
     // 2. Process allocated essence for each active allocation
     const newRootSaturation = { ...state.rootSaturation };
+    const newAllocation = { ...state.rootEssenceAllocation };
     let surplusEssence = BigInt(0);
 
     const world = worlds[0]; // Currently only using Midgard
@@ -110,7 +111,13 @@ export function useIdleTreeGameState() {
           const remainingCapacity = maxSaturation - currentSaturation;
           const absorbed = remainingCapacity < essenceAllocated ? remainingCapacity : essenceAllocated;
 
-          newRootSaturation[zoneId] = (currentSaturation + absorbed).toString();
+          const newSaturation = currentSaturation + absorbed;
+          newRootSaturation[zoneId] = newSaturation.toString();
+
+          // Reset allocation if zone is now saturated
+          if (newSaturation >= maxSaturation) {
+            delete newAllocation[zoneId];
+          }
 
           if (essenceAllocated > absorbed) {
             surplusEssence += (essenceAllocated - absorbed);
@@ -139,6 +146,7 @@ export function useIdleTreeGameState() {
       ...state,
       currentEssence: updatedEssence.toString(),
       rootSaturation: newRootSaturation,
+      rootEssenceAllocation: newAllocation,
       dailyCredits: newDailyCredits,
       essenceGainedAt: newEssenceGainedAt.toISOString(),
       dailyCreditsGainedAt: newDailyCreditsGainedAt.toISOString(),
