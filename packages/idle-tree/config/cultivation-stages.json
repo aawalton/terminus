@@ -1,4 +1,5 @@
 {
+  "$schema": "./cultivation-stages.schema.json",
   "stages": [
     {
       "tier": "Mortal",
