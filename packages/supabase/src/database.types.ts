@@ -105,7 +105,7 @@ export type Database = {
         Row: {
           created_at: string | null
           deleted_at: string | null
-          game_id: string | null
+          game_id: string
           id: string
           state: Json | null
           state_version: number
@@ -115,7 +115,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           deleted_at?: string | null
-          game_id?: string | null
+          game_id: string
           id?: string
           state?: Json | null
           state_version: number
@@ -125,7 +125,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           deleted_at?: string | null
-          game_id?: string | null
+          game_id?: string
           id?: string
           state?: Json | null
           state_version?: number

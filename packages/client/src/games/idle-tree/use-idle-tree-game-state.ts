@@ -14,6 +14,7 @@ import {
   calculateNetGeneration,
   worlds,
 } from '@terminus/idle-tree';
+import { IdleTreeCloudService } from './idle-tree-cloud-service'
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
 
@@ -47,34 +48,57 @@ export function useIdleTreeGameState() {
 
   const loadGame = async () => {
     try {
-      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
+      // First try to load from cloud
+      const cloudState = await IdleTreeCloudService.loadCloudSave()
+
+      // Then check local storage
+      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY)
+      let localState: TreeGameState | null = null
       if (savedState) {
-        let parsedState: TreeGameState = JSON.parse(savedState);
-        parsedState = migrateGameState(parsedState);
-        parsedState.currentEssence = BigInt(parsedState.currentEssence).toString();
-        updateGameState(parsedState);
+        localState = JSON.parse(savedState)
+        if (!localState) {
+          throw new Error('Failed to parse local game state')
+        }
+        localState = migrateGameState(localState)
+
+        // If we loaded from cloud, clear local storage
+        if (cloudState) {
+          await AsyncStorage.removeItem(GAME_STATE_KEY)
+        }
+      }
+
+      // Prefer cloud state if it exists
+      if (cloudState) {
+        cloudState.currentEssence = BigInt(cloudState.currentEssence).toString()
+        updateGameState(cloudState)
+      } else if (localState) {
+        // If only local state exists, migrate it to cloud
+        localState.currentEssence = BigInt(localState.currentEssence).toString()
+        await IdleTreeCloudService.saveGameState(localState)
+        updateGameState(localState)
+        // Clear local storage after migrating to cloud
+        await AsyncStorage.removeItem(GAME_STATE_KEY)
       } else {
-        setGameState(DEFAULT_GAME_STATE);
+        setGameState(DEFAULT_GAME_STATE)
       }
     } catch (error) {
-      console.error('Error loading game state:', error);
+      console.error('Error loading game state:', error)
     } finally {
-      setLoading(false);
-      setIsLoaded(true);
+      setLoading(false)
+      setIsLoaded(true)
     }
-  };
+  }
 
   const saveGame = async (newState: CurrentTreeGameState) => {
     try {
-      const updatedState = { ...gameState, ...newState };
-      setGameState(updatedState);
-      await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(updatedState));
-      return true;
+      const updatedState = { ...gameState, ...newState }
+      setGameState(updatedState)
+      return await IdleTreeCloudService.saveGameState(updatedState)
     } catch (error) {
       console.error('Error saving game state:', error)
-      return false;
+      return false
     }
-  };
+  }
 
   const updateGameState = async (loadedState?: CurrentTreeGameState) => {
     const state = loadedState || gameState;
