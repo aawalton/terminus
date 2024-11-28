@@ -78,8 +78,9 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 16,
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#2196F3',
     borderRadius: 8,
     paddingVertical: 12,
+    minWidth: 120,
   },
 }); 

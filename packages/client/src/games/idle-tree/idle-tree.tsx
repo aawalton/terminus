@@ -115,8 +115,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   advanceButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#2196F3',
     borderRadius: 8,
     paddingVertical: 12,
+    minWidth: 120,
   },
 }) 

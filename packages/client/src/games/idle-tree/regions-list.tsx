@@ -237,16 +237,23 @@ const styles = StyleSheet.create({
   allocationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 8,
   },
   allocationButton: {
     minWidth: 40,
-    paddingHorizontal: 8,
-    marginHorizontal: 8,
+    height: 40,
+    padding: 0,
+    marginHorizontal: 0,
+    backgroundColor: '#2196F3',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   allocationText: {
     flex: 1,
     textAlign: 'center',
+    minWidth: 120,
   },
   lockedRegion: {
     backgroundColor: '#f5f5f5',
@@ -268,6 +275,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
+    minWidth: 120,
   },
   huntingCost: {
     fontSize: 12,

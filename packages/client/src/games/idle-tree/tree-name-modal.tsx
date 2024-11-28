@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     backgroundColor: '#2196F3',
+    minWidth: 120,
   },
   buttonDisabled: {
     backgroundColor: '#ccc',
