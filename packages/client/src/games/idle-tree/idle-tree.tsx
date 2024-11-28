@@ -48,11 +48,18 @@ export default function IdleTree() {
         visible={!gameState.treeName && !loading}
         onSubmit={(name) => saveGame({ ...gameState, treeName: name })}
       />
-      <Text>Age: {gameState.ageInDays} days</Text>
-      <Text>Cultivation Stage: {gameState.cultivationStage}</Text>
-      <Text>Essence: {gameState.currentEssence.toString()} / {gameState.maxEssence.toString()}</Text>
-      <Text>Daily Credits: {gameState.dailyCredits}</Text>
-      <Text>Current Level: {gameState.currentLevel}</Text>
+      <View style={styles.statsContainer}>
+        <Text style={styles.statText}>Age: {gameState.ageInDays} days</Text>
+        <Text style={styles.statText}>Cultivation Stage: {gameState.cultivationStage}</Text>
+        <Text style={styles.statText}>
+          Essence: {gameState.currentEssence.toString()} / {gameState.maxEssence.toString()}
+        </Text>
+        <Text style={styles.statText}>
+          Total Generation: {gameState.essenceRecoveryPerMinute}/min
+        </Text>
+        <Text style={styles.statText}>Daily Credits: {gameState.dailyCredits}</Text>
+        <Text style={styles.statText}>Current Level: {gameState.currentLevel}</Text>
+      </View>
 
       {canAdvance && (
         <Button
@@ -78,6 +85,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 16,
+  },
+  statsContainer: {
+    backgroundColor: '#f5f5f5',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  statText: {
+    fontSize: 16,
+    marginVertical: 4,
   },
   advanceButtonContainer: {
     marginTop: 20,

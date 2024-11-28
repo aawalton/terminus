@@ -33,7 +33,6 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   treeName: null,
   currentLevel: 0,
   currentEssence: '10',
-  essenceRecoveryPerMinute: '1',
   essenceGainedAt: new Date().toISOString(),
   dailyCredits: 1,
   dailyCreditsGainedAt: new Date().toISOString(),
@@ -41,7 +40,7 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   rootSaturation: {
     'midgard-0-0': '59', // Spirit Meadow Vale's difficulty
   },
-  stateVersion: 4,
+  stateVersion: 5,
 };
 
 export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
@@ -53,22 +52,26 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
         stateVersion: 2,
       });
     case 2:
-      // Migrate to V3 by removing maxEssence
       const { maxEssence, ...stateWithoutMaxEssence } = state;
       return migrateGameState({
         ...stateWithoutMaxEssence,
         stateVersion: 3,
       });
     case 3:
-      // Migrate to V4 by adding rootSaturation
-      return {
+      return migrateGameState({
         ...state,
         rootSaturation: {
-          'midgard-0-0': '59', // Spirit Meadow Vale's difficulty
+          'midgard-0-0': '59',
         },
         stateVersion: 4,
-      };
+      });
     case 4:
+      const { essenceRecoveryPerMinute, ...stateWithoutRecovery } = state;
+      return {
+        ...stateWithoutRecovery,
+        stateVersion: 5,
+      };
+    case 5:
       return state;
     default:
       throw new Error(`Unsupported state version: ${state['stateVersion']}`);
@@ -160,4 +163,18 @@ export function calculateZoneEssenceGeneration(
 ): number {
   const invested = BigInt(essenceInvested || '0');
   return Number(invested / BigInt(difficulty));
+}
+
+export function calculateTotalEssenceGeneration(gameState: CurrentTreeGameState): string {
+  const world = worlds[0]; // Currently only using Midgard
+  let total = BigInt(0);
+
+  world.regions.forEach(region => {
+    region.zones.forEach(zone => {
+      const essenceInvested = gameState.rootSaturation[zone.id] || '0';
+      total += BigInt(calculateZoneEssenceGeneration(essenceInvested, zone.difficulty));
+    });
+  });
+
+  return total.toString();
 } 

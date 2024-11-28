@@ -9,6 +9,7 @@ import {
   getCultivationStage,
   calculateAgeInDays,
   calculateMaxEssence,
+  calculateTotalEssenceGeneration,
 } from '@terminus/idle-tree';
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
@@ -24,6 +25,7 @@ export function useIdleTreeGameState() {
     ageInDays: calculateAgeInDays(gameState.createdAt),
     cultivationStage: getCultivationStage(gameState.currentLevel),
     maxEssence: calculateMaxEssence(gameState.currentLevel).toString(),
+    essenceRecoveryPerMinute: calculateTotalEssenceGeneration(gameState),
   };
 
   useEffect(() => {
@@ -47,7 +49,6 @@ export function useIdleTreeGameState() {
         parsedState = migrateGameState(parsedState);
 
         parsedState.currentEssence = BigInt(parsedState.currentEssence).toString();
-        parsedState.essenceRecoveryPerMinute = BigInt(parsedState.essenceRecoveryPerMinute).toString();
         updateGameState(parsedState);
       } else {
         setGameState(DEFAULT_GAME_STATE);
@@ -64,11 +65,7 @@ export function useIdleTreeGameState() {
     try {
       const updatedState = { ...gameState, ...newState };
       setGameState(updatedState);
-      await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify({
-        ...updatedState,
-        currentEssence: updatedState.currentEssence.toString(),
-        essenceRecoveryPerMinute: updatedState.essenceRecoveryPerMinute.toString(),
-      }));
+      await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(updatedState));
       return true;
     } catch (error) {
       console.error('Error saving game state:', error)
@@ -80,13 +77,9 @@ export function useIdleTreeGameState() {
     const state = loadedState || gameState;
     const now = new Date();
 
-    const createdAt = new Date(state.createdAt);
-    const ageInHours = Math.floor((now.getTime() - createdAt.getTime()) / 3600000);
-    const ageInDays = ageInHours;
-
     const essenceGainedAt = new Date(state.essenceGainedAt);
     const minutesPassed = Math.floor((now.getTime() - essenceGainedAt.getTime()) / 60000);
-    const essenceToAdd = BigInt(minutesPassed) * BigInt(state.essenceRecoveryPerMinute);
+    const essenceToAdd = BigInt(minutesPassed) * BigInt(calculateTotalEssenceGeneration(state));
     const newEssence = BigInt(state.currentEssence) + essenceToAdd;
 
     const maxEssence = calculateMaxEssence(state.currentLevel);

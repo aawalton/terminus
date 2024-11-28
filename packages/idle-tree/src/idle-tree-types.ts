@@ -30,14 +30,20 @@ export type TreeGameStateV4 = Omit<TreeGameStateV3, 'stateVersion'> & {
   stateVersion: 4;
 };
 
-export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4;
-export type CurrentTreeGameState = TreeGameStateV4;
+// V5 removes essenceRecoveryPerMinute and changes version
+export type TreeGameStateV5 = Omit<TreeGameStateV4, 'essenceRecoveryPerMinute' | 'stateVersion'> & {
+  stateVersion: 5;
+};
+
+export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5;
+export type CurrentTreeGameState = TreeGameStateV5;
 
 // Calculated state interface
 export interface TreeGameStateCalculated extends CurrentTreeGameState {
   ageInDays: number;
   cultivationStage: string;
   maxEssence: string;
+  essenceRecoveryPerMinute: string;
 }
 
 export interface CultivationStage {
