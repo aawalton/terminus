@@ -1,4 +1,5 @@
 {
+  "$schema": "./world.schema.json",
   "universeName": "Norse Mythology",
   "worldName": "Midgard",
   "regions": [
