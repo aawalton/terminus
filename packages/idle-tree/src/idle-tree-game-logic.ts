@@ -140,4 +140,24 @@ export function advanceCultivation(gameState: CurrentTreeGameState): CurrentTree
     currentLevel: gameState.currentLevel + 1,
     currentEssence: "0",
   };
+}
+
+export function calculateZoneExploration(
+  essenceInvested: string,
+  size: number,
+  density: number,
+  difficulty: number
+): number {
+  const invested = BigInt(essenceInvested || '0');
+  const total = BigInt(size) * BigInt(density) * BigInt(difficulty);
+  // Convert to percentage with 2 decimal places
+  return Number((invested * BigInt(10000) / total)) / 100;
+}
+
+export function calculateZoneEssenceGeneration(
+  essenceInvested: string,
+  difficulty: number
+): number {
+  const invested = BigInt(essenceInvested || '0');
+  return Number(invested / BigInt(difficulty));
 } 

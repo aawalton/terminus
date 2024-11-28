@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem, Divider } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
+import { useIdleTreeGameState } from './use-idle-tree-game-state';
+import { calculateZoneExploration, calculateZoneEssenceGeneration } from '@terminus/idle-tree';
 
 export function RegionsList() {
   const { worldData, loading } = useWorldData();
+  const { gameState } = useIdleTreeGameState();
   const [isRegionsExpanded, setIsRegionsExpanded] = useState(false);
   const [expandedRegions, setExpandedRegions] = useState<{ [key: string]: boolean }>({});
 
-  if (loading || !worldData) {
+  if (loading || !worldData || !gameState) {
     return null;
   }
 
@@ -50,22 +53,36 @@ export function RegionsList() {
               onPress={() => toggleRegion(region.id)}
               containerStyle={styles.regionAccordion}
             >
-              {region.zones.map((zone) => (
-                <ListItem
-                  key={zone.id}
-                  bottomDivider
-                  containerStyle={styles.zoneItem}
-                >
-                  <ListItem.Content>
-                    <ListItem.Title style={styles.zoneName}>
-                      {zone.name}
-                    </ListItem.Title>
-                    <ListItem.Subtitle style={styles.zoneStats}>
-                      Size: {zone.size} • Density: {zone.density} • Difficulty: {zone.difficulty}
-                    </ListItem.Subtitle>
-                  </ListItem.Content>
-                </ListItem>
-              ))}
+              {region.zones.map((zone) => {
+                const essenceInvested = gameState.rootSaturation[zone.id] || '0';
+                const exploration = calculateZoneExploration(
+                  essenceInvested,
+                  zone.size,
+                  zone.density,
+                  zone.difficulty
+                );
+                const essenceGeneration = calculateZoneEssenceGeneration(
+                  essenceInvested,
+                  zone.difficulty
+                );
+
+                return (
+                  <ListItem
+                    key={zone.id}
+                    bottomDivider
+                    containerStyle={styles.zoneItem}
+                  >
+                    <ListItem.Content>
+                      <ListItem.Title style={styles.zoneName}>
+                        {zone.name}
+                      </ListItem.Title>
+                      <ListItem.Subtitle style={styles.zoneStats}>
+                        Explored: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
+                      </ListItem.Subtitle>
+                    </ListItem.Content>
+                  </ListItem>
+                );
+              })}
             </ListItem.Accordion>
           </View>
         ))}
