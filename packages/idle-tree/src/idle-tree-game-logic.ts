@@ -1,3 +1,27 @@
+/**
+ * Idle Tree Cultivation System
+ * 
+ * Players progress through cultivation tiers and stages by accumulating essence.
+ * 
+ * Cultivation Tiers (in order):
+ * 1. Mortal (single stage)
+ * 2. Essence Gathering (9 stages)
+ * 3. Soul Fire (9 stages)
+ * 4. Star Core (9 stages)
+ * 5. Nascent Soul (9 stages)
+ * 6. Monarch (9 stages)
+ * 
+ * Essence Requirements:
+ * - Regular stages follow a Fibonacci sequence starting at:
+ *   - Level 0 (Mortal): 100 essence
+ *   - Level 1 (EG 1): 200 essence  
+ *   - Level 2 (EG 2): 300 essence
+ *   - Level 3+ follows Fibonacci: 500, 800, 1300, etc.
+ * 
+ * - Advancing between tiers (breakthrough levels) requires essence equal to
+ *   the sum of the previous 5 stage requirements
+ */
+
 import {
   TreeGameState,
   CurrentTreeGameState,

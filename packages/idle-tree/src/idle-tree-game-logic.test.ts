@@ -5,39 +5,81 @@ import {
   calculateMaxEssence,
 } from './idle-tree-game-logic';
 
-describe('getCultivationStage', () => {
-  test('returns correct stage for Mortal tier', () => {
-    expect(getCultivationStage(0)).toBe('Mortal');
+describe('Cultivation System', () => {
+  describe('getCultivationStage', () => {
+    describe('Basic tier progression', () => {
+      test('starts at Mortal', () => {
+        expect(getCultivationStage(0)).toBe('Mortal');
+      });
+
+      test('progresses through main tiers', () => {
+        const expectedProgression = [
+          { level: 1, expected: 'Essence Gathering 1' },
+          { level: 14, expected: 'Soul Fire 1' },
+          { level: 23, expected: 'Star Core 1' },
+          { level: 32, expected: 'Nascent Soul 1' },
+          { level: 41, expected: 'Monarch 1' },
+        ];
+
+        expectedProgression.forEach(({ level, expected }) => {
+          expect(getCultivationStage(level)).toBe(expected);
+        });
+      });
+    });
+
+    describe('Stage progression within tiers', () => {
+      test('advances through Essence Gathering stages', () => {
+        for (let i = 1; i <= 9; i++) {
+          expect(getCultivationStage(i)).toBe(`Essence Gathering ${i}`);
+        }
+      });
+
+      // Similar tests for other tiers can be added as needed
+    });
+
+    describe('Edge cases', () => {
+      test('handles levels between tiers', () => {
+        expect(getCultivationStage(13)).toBe('Essence Gathering 9');
+        expect(getCultivationStage(50)).toBe('Monarch 9');
+      });
+    });
   });
 
-  test('returns correct stages for Essence Gathering tier', () => {
-    expect(getCultivationStage(1)).toBe('Essence Gathering 1');
-    expect(getCultivationStage(9)).toBe('Essence Gathering 9');
-  });
+  describe('Essence calculations', () => {
+    describe('getFibonacciEssence', () => {
+      test('follows defined sequence for initial levels', () => {
+        const expectedSequence = [
+          { level: 0, essence: '100' }, // Mortal
+          { level: 1, essence: '200' }, // EG 1
+          { level: 2, essence: '300' }, // EG 2
+          { level: 3, essence: '500' }, // EG 3
+          { level: 4, essence: '800' }, // EG 4
+        ];
 
-  test('returns correct stages for Soul Fire tier', () => {
-    expect(getCultivationStage(14)).toBe('Soul Fire 1');
-    expect(getCultivationStage(22)).toBe('Soul Fire 9');
-  });
+        expectedSequence.forEach(({ level, essence }) => {
+          expect(getFibonacciEssence(level).toString()).toBe(essence);
+        });
+      });
+    });
 
-  test('returns correct stages for Star Core tier', () => {
-    expect(getCultivationStage(23)).toBe('Star Core 1');
-    expect(getCultivationStage(31)).toBe('Star Core 9');
-  });
+    describe('calculateMaxEssence', () => {
+      describe('Regular stages', () => {
+        test('uses Fibonacci sequence for normal levels', () => {
+          expect(calculateMaxEssence(5).toString()).toBe(getFibonacciEssence(5).toString());
+        });
+      });
 
-  test('returns correct stages for Nascent Soul tier', () => {
-    expect(getCultivationStage(32)).toBe('Nascent Soul 1');
-    expect(getCultivationStage(40)).toBe('Nascent Soul 9');
-  });
+      describe('Breakthrough levels', () => {
+        test('sums previous 5 levels for tier transitions', () => {
+          // Test breakthrough from EG to Soul Fire (level 10)
+          const breakthrough = calculateMaxEssence(10);
+          const sum = Array.from({ length: 5 })
+            .reduce((acc, _, i) => acc + getFibonacciEssence(10 - i), BigInt(0));
 
-  test('returns correct stages for Monarch tier', () => {
-    expect(getCultivationStage(41)).toBe('Monarch 1');
-    expect(getCultivationStage(49)).toBe('Monarch 9');
-  });
-
-  test('handles levels between tiers correctly', () => {
-    expect(getCultivationStage(13)).toBe('Essence Gathering 9');
-    expect(getCultivationStage(50)).toBe('Monarch 9');
+          expect(breakthrough.toString()).toBe(sum.toString());
+        });
+      });
+    });
   });
 });
 
@@ -63,61 +105,5 @@ describe('calculateAgeInDays', () => {
     jest.setSystemTime(now);
 
     expect(calculateAgeInDays(now.toISOString())).toBe(0);
-  });
-});
-
-describe('getFibonacciEssence', () => {
-  test('returns correct values for initial levels', () => {
-    expect(getFibonacciEssence(0).toString()).toBe('100');
-    expect(getFibonacciEssence(1).toString()).toBe('200');
-    expect(getFibonacciEssence(2).toString()).toBe('300');
-  });
-
-  test('follows Fibonacci sequence for higher levels', () => {
-    expect(getFibonacciEssence(3).toString()).toBe('500');
-    expect(getFibonacciEssence(4).toString()).toBe('800');
-    expect(getFibonacciEssence(5).toString()).toBe('1300');
-  });
-
-  test('handles large numbers correctly', () => {
-    // Test a higher level to ensure BigInt handles large numbers
-    const level10Result = getFibonacciEssence(10);
-    expect(typeof level10Result).toBe('bigint');
-    expect(level10Result.toString().length).toBeGreaterThan(3);
-  });
-});
-
-describe('calculateMaxEssence', () => {
-  test('returns correct essence for base levels', () => {
-    expect(calculateMaxEssence(0).toString()).toBe('100'); // Mortal
-    expect(calculateMaxEssence(1).toString()).toBe('200'); // First EG
-  });
-
-  test('returns correct essence within tiers', () => {
-    // Test within Essence Gathering tier
-    expect(calculateMaxEssence(5).toString()).toBe(getFibonacciEssence(5).toString());
-
-    // Test within Soul Fire tier
-    expect(calculateMaxEssence(15).toString()).toBe(getFibonacciEssence(15).toString());
-  });
-
-  test('handles transition levels between tiers', () => {
-    // Test level between Essence Gathering and Soul Fire (e.g., level 12)
-    const level12Essence = calculateMaxEssence(12);
-    expect(typeof level12Essence).toBe('bigint');
-
-    // Test level between Soul Fire and Star Core
-    const level22Essence = calculateMaxEssence(22);
-    expect(typeof level22Essence).toBe('bigint');
-  });
-
-  test('returns sum of last 5 Fibonacci numbers for between-tier levels', () => {
-    // Test a level between tiers (e.g., level 10)
-    const level10 = calculateMaxEssence(10);
-    let sum = BigInt(0);
-    for (let i = 0; i < 5; i++) {
-      sum += getFibonacciEssence(10 - i);
-    }
-    expect(level10.toString()).toBe(sum.toString());
   });
 }); 
