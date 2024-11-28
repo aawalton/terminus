@@ -5,4 +5,4 @@ Ensure scripts in package.json files have access to the environment variables by
 Don't use Babel to transpile the code.
 File names should use kebab-case.
 
-For each task, first ask questions as needed until you understand what I'm trying to accomplish. When you understand, make a project plan and then execute the plan.
+If you are unsure about anything, ask questions before proceeding.

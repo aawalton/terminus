@@ -30,4 +30,10 @@ export interface TreeGameStateCalculated extends CurrentTreeGameState {
   ageInDays: number;
   cultivationStage: string;
   maxEssence: string;
-} 
+}
+
+export interface CultivationStage {
+  tier: string;
+  name: string;
+  essence: bigint;
+}

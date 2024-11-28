@@ -1,0 +1,234 @@
+{
+  "stages": [
+    {
+      "tier": "Mortal",
+      "name": "Mortal",
+      "essence": "100"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 1",
+      "essence": "200"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 2",
+      "essence": "300"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 3",
+      "essence": "500"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 4",
+      "essence": "800"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 5",
+      "essence": "1300"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 6",
+      "essence": "2100"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 7",
+      "essence": "3400"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 8",
+      "essence": "5500"
+    },
+    {
+      "tier": "Essence Gathering",
+      "name": "Essence Gathering 9",
+      "essence": "8900"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 1",
+      "essence": "14400"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 2",
+      "essence": "23300"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 3",
+      "essence": "37700"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 4",
+      "essence": "61000"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 5",
+      "essence": "98700"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 6",
+      "essence": "159700"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 7",
+      "essence": "258400"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 8",
+      "essence": "418100"
+    },
+    {
+      "tier": "Soul Fire",
+      "name": "Soul Fire 9",
+      "essence": "676500"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 1",
+      "essence": "1094600"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 2",
+      "essence": "1771100"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 3",
+      "essence": "2865700"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 4",
+      "essence": "4636800"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 5",
+      "essence": "7502500"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 6",
+      "essence": "12139300"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 7",
+      "essence": "19641800"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 8",
+      "essence": "31781100"
+    },
+    {
+      "tier": "Star Core",
+      "name": "Star Core 9",
+      "essence": "51422900"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 1",
+      "essence": "83204000"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 2",
+      "essence": "134626900"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 3",
+      "essence": "217830900"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 4",
+      "essence": "352457800"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 5",
+      "essence": "570288700"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 6",
+      "essence": "922746500"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 7",
+      "essence": "1493035200"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 8",
+      "essence": "2415781700"
+    },
+    {
+      "tier": "Nascent Soul",
+      "name": "Nascent Soul 9",
+      "essence": "3908816900"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 1",
+      "essence": "6324598600"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 2",
+      "essence": "10233415500"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 3",
+      "essence": "16558014100"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 4",
+      "essence": "26791429600"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 5",
+      "essence": "43349443700"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 6",
+      "essence": "70140873300"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 7",
+      "essence": "113490317000"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 8",
+      "essence": "183631190300"
+    },
+    {
+      "tier": "Monarch",
+      "name": "Monarch 9",
+      "essence": "297121507300"
+    }
+  ]
+}
