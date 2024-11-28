@@ -1,7 +1,6 @@
 import {
   TreeGameState,
   CurrentTreeGameState,
-  TreeGameStateCalculated
 } from './idle-tree-types';
 
 export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
@@ -71,8 +70,8 @@ export function getFibonacciEssence(level: number): bigint {
   if (level === 2) return BigInt(300); // Second level of Essence Gathering
 
   // For level 3 and above, follow Fibonacci sequence starting with 300, 500
-  let prev = BigInt(300);
-  let current = BigInt(500);
+  let prev = BigInt(200);
+  let current = BigInt(300);
 
   for (let i = 3; i <= level; i++) {
     const next = prev + current;
