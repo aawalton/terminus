@@ -12,6 +12,7 @@ import {
   calculateTotalEssenceGeneration,
   calculateTotalAllocation,
   calculateNetGeneration,
+  worlds,
 } from '@terminus/idle-tree';
 
 const GAME_STATE_KEY = '@idle_tree_game_state';
@@ -21,32 +22,16 @@ export function useIdleTreeGameState() {
   const [loading, setLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Move the calculation into a function so we can reuse it
-  const calculateDerivedState = (state: CurrentTreeGameState): TreeGameStateCalculated => {
-    console.log('Calculating derived state:', {
-      currentEssence: state.currentEssence,
-      rootEssenceAllocation: state.rootEssenceAllocation
-    });
+  const calculateDerivedState = (state: CurrentTreeGameState): TreeGameStateCalculated => ({
+    ...state,
+    ageInDays: calculateAgeInDays(state.createdAt),
+    cultivationStage: getCultivationStage(state.currentLevel),
+    maxEssence: calculateMaxEssence(state.currentLevel).toString(),
+    essenceRecoveryPerMinute: calculateTotalEssenceGeneration(state),
+    totalAllocation: calculateTotalAllocation(state),
+    netGeneration: calculateNetGeneration(state),
+  });
 
-    const calculated = {
-      ...state,
-      ageInDays: calculateAgeInDays(state.createdAt),
-      cultivationStage: getCultivationStage(state.currentLevel),
-      maxEssence: calculateMaxEssence(state.currentLevel).toString(),
-      essenceRecoveryPerMinute: calculateTotalEssenceGeneration(state),
-      totalAllocation: calculateTotalAllocation(state),
-      netGeneration: calculateNetGeneration(state),
-    };
-
-    console.log('Derived state calculated:', {
-      totalAllocation: calculated.totalAllocation,
-      netGeneration: calculated.netGeneration
-    });
-
-    return calculated;
-  };
-
-  // Calculate derived state
   const calculatedState = calculateDerivedState(gameState);
 
   useEffect(() => {
@@ -65,10 +50,7 @@ export function useIdleTreeGameState() {
       const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
       if (savedState) {
         let parsedState: TreeGameState = JSON.parse(savedState);
-
-        // Migrate state if necessary
         parsedState = migrateGameState(parsedState);
-
         parsedState.currentEssence = BigInt(parsedState.currentEssence).toString();
         updateGameState(parsedState);
       } else {
@@ -97,12 +79,50 @@ export function useIdleTreeGameState() {
   const updateGameState = async (loadedState?: CurrentTreeGameState) => {
     const state = loadedState || gameState;
     const now = new Date();
-
     const essenceGainedAt = new Date(state.essenceGainedAt);
     const minutesPassed = Math.floor((now.getTime() - essenceGainedAt.getTime()) / 60000);
-    const essenceToAdd = BigInt(minutesPassed) * BigInt(calculateTotalEssenceGeneration(state));
-    const newEssence = BigInt(state.currentEssence) + essenceToAdd;
 
+    // 1. Calculate essence gain from net generation
+    const netEssenceToAdd = BigInt(minutesPassed) * BigInt(calculateNetGeneration(state));
+    let newEssence = BigInt(state.currentEssence) + netEssenceToAdd;
+
+    // 2. Process allocated essence for each active allocation
+    const newRootSaturation = { ...state.rootSaturation };
+    let surplusEssence = BigInt(0);
+
+    const world = worlds[0]; // Currently only using Midgard
+    const zoneMap = new Map(
+      world.regions.flatMap(region =>
+        region.zones.map(zone => [zone.id, zone])
+      )
+    );
+
+    // Process only zones that have allocations
+    Object.entries(state.rootEssenceAllocation).forEach(([zoneId, allocationAmount]) => {
+      const allocation = BigInt(allocationAmount);
+      if (allocation > 0) {
+        const zone = zoneMap.get(zoneId);
+        if (zone) {
+          const essenceAllocated = allocation * BigInt(minutesPassed);
+          const currentSaturation = BigInt(newRootSaturation[zoneId] || '0');
+          const maxSaturation = BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty);
+
+          const remainingCapacity = maxSaturation - currentSaturation;
+          const absorbed = remainingCapacity < essenceAllocated ? remainingCapacity : essenceAllocated;
+
+          newRootSaturation[zoneId] = (currentSaturation + absorbed).toString();
+
+          if (essenceAllocated > absorbed) {
+            surplusEssence += (essenceAllocated - absorbed);
+          }
+        }
+      }
+    });
+
+    // 3. Add surplus essence back to total
+    newEssence += surplusEssence;
+
+    // 4. Cap essence at max
     const maxEssence = calculateMaxEssence(state.currentLevel);
     const updatedEssence = newEssence > maxEssence ? maxEssence : newEssence;
 
@@ -118,6 +138,7 @@ export function useIdleTreeGameState() {
     await saveGame({
       ...state,
       currentEssence: updatedEssence.toString(),
+      rootSaturation: newRootSaturation,
       dailyCredits: newDailyCredits,
       essenceGainedAt: newEssenceGainedAt.toISOString(),
       dailyCreditsGainedAt: newDailyCreditsGainedAt.toISOString(),
@@ -125,31 +146,23 @@ export function useIdleTreeGameState() {
   };
 
   const updateAllocation = async (zoneId: string, amount: string) => {
-    console.log('updateAllocation called:', { zoneId, amount });
+    const newAllocation = { ...gameState.rootEssenceAllocation };
+
+    if (amount === '0') {
+      // Remove zero allocations from the map
+      delete newAllocation[zoneId];
+    } else {
+      newAllocation[zoneId] = amount;
+    }
 
     const newState = {
       ...gameState,
-      rootEssenceAllocation: {
-        ...gameState.rootEssenceAllocation,
-        [zoneId]: amount
-      }
+      rootEssenceAllocation: newAllocation
     };
 
-    console.log('Setting new state:', {
-      oldAllocation: gameState.rootEssenceAllocation,
-      newAllocation: newState.rootEssenceAllocation
-    });
-
-    setGameState(newState); // Immediately update the state
-    await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(newState)); // Save in background
+    setGameState(newState);
+    await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(newState));
   };
-
-  // Add an effect to log state changes
-  useEffect(() => {
-    console.log('gameState changed:', {
-      rootEssenceAllocation: gameState.rootEssenceAllocation
-    });
-  }, [gameState]);
 
   return {
     gameState: calculatedState,

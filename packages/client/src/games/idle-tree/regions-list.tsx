@@ -11,11 +11,6 @@ export function RegionsList() {
   const [isRegionsExpanded, setIsRegionsExpanded] = useState(false);
   const [expandedRegions, setExpandedRegions] = useState<{ [key: string]: boolean }>({});
 
-  console.log('RegionsList render:', {
-    rootEssenceAllocation: gameState.rootEssenceAllocation,
-    totalAllocation: gameState.totalAllocation
-  });
-
   if (loading || !worldData || !gameState) {
     return null;
   }
@@ -28,10 +23,8 @@ export function RegionsList() {
   };
 
   const handleAllocationChange = (zoneId: string, delta: number) => {
-    console.log('handleAllocationChange:', { zoneId, delta });
     const currentAllocation = BigInt(gameState.rootEssenceAllocation[zoneId] || '0');
     const newAllocation = (currentAllocation + BigInt(delta)).toString();
-    console.log('New allocation calculated:', { currentAllocation: currentAllocation.toString(), newAllocation });
     if (BigInt(newAllocation) >= 0) {
       updateAllocation(zoneId, newAllocation);
     }
