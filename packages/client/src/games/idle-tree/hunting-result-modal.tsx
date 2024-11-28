@@ -5,9 +5,9 @@ import { Creature } from '@terminus/idle-tree';
 interface HuntingResultModalProps {
   visible: boolean;
   onClose: () => void;
-  creature: Creature;
-  essenceGained: bigint;
-  creditsGained: number;
+  creature?: Creature;
+  essenceGained?: bigint;
+  creditsGained?: number;
 }
 
 export function HuntingResultModal({
@@ -17,6 +17,10 @@ export function HuntingResultModal({
   essenceGained,
   creditsGained,
 }: HuntingResultModalProps) {
+  if (!creature || essenceGained === undefined || creditsGained === undefined) {
+    return null;
+  }
+
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.modalOverlay}>
