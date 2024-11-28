@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import type { Database } from './database.types'
 
 // Environment variables should be configured in a .env file
 const supabaseUrl = process.env.SUPABASE_URL
@@ -9,11 +10,12 @@ if (!supabaseUrl || !supabaseServiceKey) {
 }
 
 // Create a single supabase client for interacting with your database
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+const supabase = createClient < Database > (supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
   }
 })
 
-export default supabase 
+export default supabase
+export type { Database } 
