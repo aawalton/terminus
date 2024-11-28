@@ -6,6 +6,25 @@ import {
 } from './idle-tree-game-logic';
 
 describe('Cultivation System', () => {
+  describe('Stage progression', () => {
+    test('follows defined progression sequence', () => {
+      const expectedStages = [
+        { level: 0, name: 'Mortal', essence: '100' },
+        { level: 1, name: 'Essence Gathering 1', essence: '200' },
+        { level: 2, name: 'Essence Gathering 2', essence: '300' },
+        { level: 3, name: 'Essence Gathering 3', essence: '500' },
+        { level: 4, name: 'Essence Gathering 4', essence: '800' },
+        { level: 10, name: 'Breakthrough to Soul Fire', essence: '21200' },
+        { level: 14, name: 'Soul Fire 1', essence: '14400' },
+      ];
+
+      expectedStages.forEach(({ level, name, essence }) => {
+        expect(getCultivationStage(level)).toBe(name);
+        expect(getFibonacciEssence(level).toString()).toBe(essence);
+      });
+    });
+  });
+
   describe('getCultivationStage', () => {
     describe('Basic tier progression', () => {
       test('starts at Mortal', () => {

@@ -27,6 +27,44 @@ import {
   CurrentTreeGameState,
 } from './idle-tree-types';
 
+interface CultivationStage {
+  tier: string;
+  name: string;
+  level: number;
+  essence: bigint;
+}
+
+const CULTIVATION_STAGES: CultivationStage[] = [
+  { tier: 'Mortal', name: 'Mortal', level: 0, essence: BigInt(100) },
+
+  // Essence Gathering Tier
+  { tier: 'Essence Gathering', name: 'Essence Gathering 1', level: 1, essence: BigInt(200) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 2', level: 2, essence: BigInt(300) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 3', level: 3, essence: BigInt(500) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 4', level: 4, essence: BigInt(800) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 5', level: 5, essence: BigInt(1300) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 6', level: 6, essence: BigInt(2100) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 7', level: 7, essence: BigInt(3400) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 8', level: 8, essence: BigInt(5500) },
+  { tier: 'Essence Gathering', name: 'Essence Gathering 9', level: 9, essence: BigInt(8900) },
+
+  // Breakthrough to Soul Fire
+  { tier: 'Breakthrough', name: 'Breakthrough to Soul Fire', level: 10, essence: BigInt(21200) },
+
+  // Soul Fire Tier starts at level 14
+  { tier: 'Soul Fire', name: 'Soul Fire 1', level: 14, essence: BigInt(14400) },
+  { tier: 'Soul Fire', name: 'Soul Fire 2', level: 15, essence: BigInt(23300) },
+  { tier: 'Soul Fire', name: 'Soul Fire 3', level: 16, essence: BigInt(37700) },
+  { tier: 'Soul Fire', name: 'Soul Fire 4', level: 17, essence: BigInt(61000) },
+  { tier: 'Soul Fire', name: 'Soul Fire 5', level: 18, essence: BigInt(98700) },
+  { tier: 'Soul Fire', name: 'Soul Fire 6', level: 19, essence: BigInt(159700) },
+  { tier: 'Soul Fire', name: 'Soul Fire 7', level: 20, essence: BigInt(258400) },
+  { tier: 'Soul Fire', name: 'Soul Fire 8', level: 21, essence: BigInt(418100) },
+  { tier: 'Soul Fire', name: 'Soul Fire 9', level: 22, essence: BigInt(676500) },
+
+  // Continue pattern for other tiers...
+];
+
 export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   treeName: null,
   currentLevel: 0,
@@ -62,24 +100,17 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
 };
 
 export function getCultivationStage(level: number): string {
-  const tiers = [
-    { name: 'Mortal', startLevel: 0, maxStage: 0 },
-    { name: 'Essence Gathering', startLevel: 1, maxStage: 9 },
-    { name: 'Soul Fire', startLevel: 14, maxStage: 9 },
-    { name: 'Star Core', startLevel: 23, maxStage: 9 },
-    { name: 'Nascent Soul', startLevel: 32, maxStage: 9 },
-    { name: 'Monarch', startLevel: 41, maxStage: 9 },
-  ];
-
-  for (let i = tiers.length - 1; i >= 0; i--) {
-    const tier = tiers[i];
-    if (level >= tier.startLevel) {
-      const stageNumber = tier.maxStage === 0 ? 0 : Math.min(level - tier.startLevel + 1, tier.maxStage);
-      return tier.maxStage === 0 ? tier.name : `${tier.name} ${stageNumber}`;
-    }
+  const stage = CULTIVATION_STAGES.find(s => s.level === level);
+  if (stage) {
+    return stage.name;
   }
 
-  return 'Unknown';
+  // Fallback for levels not explicitly defined
+  const lastMatchingStage = [...CULTIVATION_STAGES]
+    .reverse()
+    .find(s => level >= s.level);
+
+  return lastMatchingStage?.name ?? 'Unknown';
 }
 
 export function calculateAgeInDays(createdAt: string): number {
@@ -89,15 +120,18 @@ export function calculateAgeInDays(createdAt: string): number {
 }
 
 export function getFibonacciEssence(level: number): bigint {
-  if (level === 0) return BigInt(100); // Mortal
-  if (level === 1) return BigInt(200); // First level of Essence Gathering
-  if (level === 2) return BigInt(300); // Second level of Essence Gathering
+  const stage = CULTIVATION_STAGES.find(s => s.level === level);
+  if (stage) {
+    return stage.essence;
+  }
 
-  // For level 3 and above, follow Fibonacci sequence starting with 300, 500
-  let prev = BigInt(200);
-  let current = BigInt(300);
+  // Fallback for levels not explicitly defined
+  // This maintains compatibility with existing code
+  const lastStage = CULTIVATION_STAGES[CULTIVATION_STAGES.length - 1];
+  let prev = CULTIVATION_STAGES[CULTIVATION_STAGES.length - 2].essence;
+  let current = lastStage.essence;
 
-  for (let i = 3; i <= level; i++) {
+  for (let i = lastStage.level + 1; i <= level; i++) {
     const next = prev + current;
     prev = current;
     current = next;
