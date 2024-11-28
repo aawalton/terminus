@@ -37,6 +37,8 @@ export function RegionsList() {
     }
   };
 
+  const canIncreaseAllocation = BigInt(gameState.netGeneration) > 0;
+
   return (
     <View style={styles.container}>
       <ListItem.Accordion
@@ -109,6 +111,7 @@ export function RegionsList() {
                           </ListItem.Subtitle>
                           <Button
                             title="+"
+                            disabled={!canIncreaseAllocation}
                             onPress={() => handleAllocationChange(zone.id, 1)}
                             buttonStyle={styles.allocationButton}
                           />
