@@ -21,6 +21,7 @@ import {
   CultivationStage,
 } from './idle-tree-types';
 import cultivationStagesConfig from '../config/cultivation-stages.json';
+import { worlds } from './worlds';
 
 // Convert JSON stages to CultivationStage array with BigInt values
 export const CULTIVATION_STAGES: CultivationStage[] = cultivationStagesConfig.stages.map(stage => ({
@@ -37,7 +38,10 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
   dailyCredits: 1,
   dailyCreditsGainedAt: new Date().toISOString(),
   createdAt: new Date().toISOString(),
-  stateVersion: 3,
+  rootSaturation: {
+    'midgard-0-0': '59', // Spirit Meadow Vale's difficulty
+  },
+  stateVersion: 4,
 };
 
 export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
@@ -51,11 +55,20 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
     case 2:
       // Migrate to V3 by removing maxEssence
       const { maxEssence, ...stateWithoutMaxEssence } = state;
-      return {
+      return migrateGameState({
         ...stateWithoutMaxEssence,
         stateVersion: 3,
-      };
+      });
     case 3:
+      // Migrate to V4 by adding rootSaturation
+      return {
+        ...state,
+        rootSaturation: {
+          'midgard-0-0': '59', // Spirit Meadow Vale's difficulty
+        },
+        stateVersion: 4,
+      };
+    case 4:
       return state;
     default:
       throw new Error(`Unsupported state version: ${state['stateVersion']}`);

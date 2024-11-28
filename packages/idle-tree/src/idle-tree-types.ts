@@ -22,8 +22,16 @@ export type TreeGameStateV3 = Omit<TreeGameStateV2, 'maxEssence' | 'stateVersion
   stateVersion: 3;
 };
 
-export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3;
-export type CurrentTreeGameState = TreeGameStateV3;
+// V4 adds rootSaturation and changes version
+export type TreeGameStateV4 = Omit<TreeGameStateV3, 'stateVersion'> & {
+  rootSaturation: {
+    [zoneId: string]: string;
+  };
+  stateVersion: 4;
+};
+
+export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4;
+export type CurrentTreeGameState = TreeGameStateV4;
 
 // Calculated state interface
 export interface TreeGameStateCalculated extends CurrentTreeGameState {
