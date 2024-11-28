@@ -101,6 +101,39 @@ export type Database = {
         }
         Relationships: []
       }
+      cloud_saves: {
+        Row: {
+          created_at: string | null
+          deleted_at: string | null
+          game_id: string | null
+          id: string
+          state: Json | null
+          state_version: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          deleted_at?: string | null
+          game_id?: string | null
+          id?: string
+          state?: Json | null
+          state_version: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          deleted_at?: string | null
+          game_id?: string | null
+          id?: string
+          state?: Json | null
+          state_version?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       experience: {
         Row: {
           activity_id: string | null
