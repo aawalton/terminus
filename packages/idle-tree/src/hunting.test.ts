@@ -36,6 +36,15 @@ describe('Hunting System', () => {
     test('calculates final cost with root coverage', () => {
       const storedCost = BigInt(10);
 
+      // Zero coverage = maximum cost (100x)
+      expect(calculateFinalHuntingCost(storedCost, 0)).toBe(BigInt(1000));
+
+      // Negative coverage = maximum cost (100x)
+      expect(calculateFinalHuntingCost(storedCost, -0.1)).toBe(BigInt(1000));
+
+      // Very low coverage (0.01) = multiplier of 100
+      expect(calculateFinalHuntingCost(storedCost, 0.01)).toBe(BigInt(1000));
+
       // 50% coverage = multiplier of 2
       expect(calculateFinalHuntingCost(storedCost, 0.5)).toBe(BigInt(20));
 
@@ -44,6 +53,9 @@ describe('Hunting System', () => {
 
       // 75% coverage = multiplier of ~1.33 (134/100)
       expect(calculateFinalHuntingCost(storedCost, 0.75)).toBe(BigInt(13));
+
+      // Full coverage = minimum multiplier (1)
+      expect(calculateFinalHuntingCost(storedCost, 1)).toBe(BigInt(10));
     });
   });
 

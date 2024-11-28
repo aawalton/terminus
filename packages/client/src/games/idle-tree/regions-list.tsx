@@ -1,16 +1,23 @@
 import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ListItem, Button } from '@rneui/themed';
+import { ListItem, Button, Text } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
-import { calculateZoneExploration, calculateZoneEssenceGeneration } from '@terminus/idle-tree';
+import { calculateZoneExploration, calculateZoneEssenceGeneration, calculateFinalHuntingCost } from '@terminus/idle-tree';
 import { Icon } from '@rneui/themed';
+import { HuntingResultModal } from './hunting-result-modal';
 
 export function RegionsList() {
   const { worldData, loading } = useWorldData();
-  const { gameState, updateAllocation } = useIdleTree();
+  const { gameState, updateAllocation, hunt } = useIdleTree();
   const [isRegionsExpanded, setIsRegionsExpanded] = useState(false);
   const [expandedRegions, setExpandedRegions] = useState<{ [key: string]: boolean }>({});
+  const [huntingResult, setHuntingResult] = useState<{
+    visible: boolean;
+    creature?: any;
+    essenceGained?: bigint;
+    creditsGained?: number;
+  }>({ visible: false });
 
   if (loading || !worldData || !gameState) {
     return null;
@@ -31,6 +38,20 @@ export function RegionsList() {
     }
   };
 
+  const handleHunt = async (zone: any) => {
+    try {
+      const result = await hunt(zone);
+      setHuntingResult({
+        visible: true,
+        creature: result.creature,
+        essenceGained: result.essenceGained,
+        creditsGained: result.creditsGained,
+      });
+    } catch (error) {
+      console.error('Error during hunting:', error);
+    }
+  };
+
   const canIncreaseAllocation = BigInt(gameState.netGeneration) > 0;
 
   const accessibleRegions = worldData.regions.filter(
@@ -41,6 +62,14 @@ export function RegionsList() {
 
   return (
     <View style={styles.container}>
+      <HuntingResultModal
+        visible={huntingResult.visible}
+        onClose={() => setHuntingResult({ visible: false })}
+        creature={huntingResult.creature}
+        essenceGained={huntingResult.essenceGained!}
+        creditsGained={huntingResult.creditsGained!}
+      />
+
       <ListItem.Accordion
         content={
           <ListItem.Content>
@@ -80,7 +109,13 @@ export function RegionsList() {
                   zone.difficulty
                 );
                 const currentAllocation = BigInt(gameState.rootEssenceAllocation[zone.id] || '0');
-                const isFullySaturated = exploration >= 100;
+                const hasRoots = exploration > 0;
+
+                const huntingCost = calculateFinalHuntingCost(
+                  BigInt(gameState.zoneHuntingCosts[zone.id] || '0'),
+                  exploration / 100
+                );
+                const canHunt = hasRoots && BigInt(gameState.currentEssence) >= huntingCost;
 
                 return (
                   <ListItem
@@ -95,23 +130,34 @@ export function RegionsList() {
                       <ListItem.Subtitle style={styles.zoneStats}>
                         Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
                       </ListItem.Subtitle>
-                      {!isFullySaturated && (
-                        <View style={styles.allocationContainer}>
+                      <View style={styles.allocationContainer}>
+                        <Button
+                          title="-"
+                          disabled={currentAllocation <= 0}
+                          onPress={() => handleAllocationChange(zone.id, -1)}
+                          buttonStyle={styles.allocationButton}
+                        />
+                        <ListItem.Subtitle style={styles.allocationText}>
+                          Allocated: {currentAllocation.toString()}/min
+                        </ListItem.Subtitle>
+                        <Button
+                          title="+"
+                          disabled={!canIncreaseAllocation}
+                          onPress={() => handleAllocationChange(zone.id, 1)}
+                          buttonStyle={styles.allocationButton}
+                        />
+                      </View>
+                      {hasRoots && (
+                        <View style={styles.huntingContainer}>
                           <Button
-                            title="-"
-                            disabled={currentAllocation <= 0}
-                            onPress={() => handleAllocationChange(zone.id, -1)}
-                            buttonStyle={styles.allocationButton}
+                            title="Hunt"
+                            disabled={!canHunt}
+                            onPress={() => handleHunt(zone)}
+                            buttonStyle={styles.huntButton}
                           />
-                          <ListItem.Subtitle style={styles.allocationText}>
-                            Allocated: {currentAllocation.toString()}/min
-                          </ListItem.Subtitle>
-                          <Button
-                            title="+"
-                            disabled={!canIncreaseAllocation}
-                            onPress={() => handleAllocationChange(zone.id, 1)}
-                            buttonStyle={styles.allocationButton}
-                          />
+                          <Text style={styles.huntingCost}>
+                            Cost: {huntingCost.toString()} essence
+                          </Text>
                         </View>
                       )}
                     </ListItem.Content>
@@ -203,5 +249,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     marginLeft: 8,
+  },
+  huntingContainer: {
+    marginTop: 8,
+    alignItems: 'center',
+  },
+  huntButton: {
+    backgroundColor: '#8B4513',
+    borderRadius: 8,
+    paddingHorizontal: 24,
+    marginBottom: 4,
+  },
+  huntingCost: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
   },
 }); 

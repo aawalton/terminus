@@ -22,6 +22,11 @@ export function calculateFinalHuntingCost(
   storedCost: bigint,
   rootCoverage: number
 ): bigint {
+  // If coverage is 0, return maximum cost (100x base cost)
+  if (rootCoverage <= 0) {
+    return storedCost * BigInt(100);
+  }
+
   // Coverage is 0-1, so 1/coverage gives us the multiplier
   // We multiply by 100 first to maintain precision with BigInt
   const coverageMultiplier = BigInt(Math.ceil(100 / rootCoverage));
