@@ -61,52 +61,46 @@ export function useIdleTreeGameState() {
   };
 
   const saveGame = async (newState: CurrentTreeGameState) => {
-    const updatedState = { ...gameState, ...newState };
-    setGameState(updatedState);
-    await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify({
-      ...updatedState,
-      currentEssence: updatedState.currentEssence.toString(),
-      essenceRecoveryPerMinute: updatedState.essenceRecoveryPerMinute.toString(),
-    }));
-    return true;
+    try {
+      const updatedState = { ...gameState, ...newState };
+      setGameState(updatedState);
+      await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify({
+        ...updatedState,
+        currentEssence: updatedState.currentEssence.toString(),
+        essenceRecoveryPerMinute: updatedState.essenceRecoveryPerMinute.toString(),
+      }));
+      return true;
+    } catch (error) {
+      console.error('Error saving game state:', error)
+      return false;
+    }
   };
 
   const updateGameState = async (loadedState?: CurrentTreeGameState) => {
     const state = loadedState || gameState;
     const now = new Date();
 
-    // Calculate age in days (1 day = 1 hour)
     const createdAt = new Date(state.createdAt);
     const ageInHours = Math.floor((now.getTime() - createdAt.getTime()) / 3600000);
     const ageInDays = ageInHours;
 
-    // Update essence
     const essenceGainedAt = new Date(state.essenceGainedAt);
     const minutesPassed = Math.floor((now.getTime() - essenceGainedAt.getTime()) / 60000);
     const essenceToAdd = BigInt(minutesPassed) * BigInt(state.essenceRecoveryPerMinute);
     const newEssence = BigInt(state.currentEssence) + essenceToAdd;
 
-    // Ensure new essence does not exceed max essence
     const maxEssence = calculateMaxEssence(state.currentLevel);
     const updatedEssence = newEssence > maxEssence ? maxEssence : newEssence;
 
-    // Update daily credits
     const dailyCreditsGainedAt = new Date(state.dailyCreditsGainedAt);
     const hoursPassed = Math.floor((now.getTime() - dailyCreditsGainedAt.getTime()) / 3600000);
     const newDailyCredits = state.dailyCredits + hoursPassed;
 
-    // Update timestamps
     const newEssenceGainedAt = new Date(now);
-    newEssenceGainedAt.setSeconds(0, 0); // Truncate to the minute
+    newEssenceGainedAt.setSeconds(0, 0);
     const newDailyCreditsGainedAt = new Date(now);
-    newDailyCreditsGainedAt.setMinutes(0, 0, 0); // Truncate to the hour
+    newDailyCreditsGainedAt.setMinutes(0, 0, 0);
 
-    // Log the updates
-    console.log(`Updating game state...`);
-    console.log(`Essence gained: ${essenceToAdd.toString()} (Total: ${updatedEssence.toString()})`);
-    console.log(`Daily credits gained: ${hoursPassed} (Total: ${newDailyCredits})`);
-
-    // Save updated state with recalculated age if needed
     await saveGame({
       ...state,
       currentEssence: updatedEssence.toString(),
