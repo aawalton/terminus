@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { useIdleTreeGameState } from './use-idle-tree-game-state'
 import { TreeNameModal } from './tree-name-modal'
+import { RegionsList } from './regions-list'
 import { useLayoutEffect } from 'react'
 import { useNavigation } from 'expo-router'
 import { Button } from '@rneui/themed'
@@ -39,7 +40,7 @@ export default function IdleTree() {
   )
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {gameState.treeName && (
         <Text style={styles.treeName}>{gameState.treeName}</Text>
       )}
@@ -61,7 +62,9 @@ export default function IdleTree() {
           containerStyle={styles.advanceButtonContainer}
         />
       )}
-    </View>
+
+      {gameState.treeName && <RegionsList />}
+    </ScrollView>
   )
 }
 
