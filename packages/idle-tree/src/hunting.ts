@@ -6,35 +6,60 @@ export interface Creature {
   essence: bigint;
 }
 
-export function getBaseHuntingCost(zone: Zone): bigint {
-  return BigInt(zone.density * zone.difficulty);
+/**
+ * Calculate the maximum prey a zone can hold based on its size and root coverage
+ */
+export function calculateMaxZonePrey(zone: Zone, rootSaturation: string): number {
+  const coverage = BigInt(rootSaturation || '0') / (BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty));
+  return Math.floor(Number(coverage) * zone.size);
 }
 
-export function calculateHuntingCostIncrease(zone: Zone): bigint {
-  return BigInt(zone.density);
+/**
+ * Calculate the probability of generating new prey in a zone per minute
+ */
+export function calculatePreyGenerationProbability(zone: Zone, rootSaturation: string): number {
+  const saturation = BigInt(rootSaturation || '0');
+  return Number(saturation * BigInt(zone.size)) / (zone.difficulty * 60);
 }
 
-export function calculateHuntingCostReduction(zone: Zone): bigint {
-  return BigInt(zone.density);
-}
+/**
+ * Calculate how many new prey should be added based on time passed
+ * Returns the number of new prey to add
+ */
+export function calculateNewPrey(
+  zone: Zone,
+  rootSaturation: string,
+  currentPrey: string,
+  minutesPassed: number
+): number {
+  const maxPrey = calculateMaxZonePrey(zone, rootSaturation);
+  const current = Number(currentPrey || '0');
 
-export function calculateFinalHuntingCost(
-  storedCost: bigint,
-  rootCoverage: number
-): bigint {
-  // If coverage is 0, return maximum cost (100x base cost)
-  if (rootCoverage <= 0) {
-    return storedCost * BigInt(100);
+  if (current >= maxPrey) {
+    return 0;
   }
 
-  // Coverage is 0-1, so 1/coverage gives us the multiplier
-  // We multiply by 100 first to maintain precision with BigInt
-  const coverageMultiplier = BigInt(Math.ceil(100 / rootCoverage));
+  const probability = calculatePreyGenerationProbability(zone, rootSaturation);
+  let newPrey = 0;
 
-  // Calculate final cost with coverage multiplier, then divide by 100
-  return (storedCost * coverageMultiplier) / BigInt(100);
+  // For each minute, check if prey should be generated
+  for (let i = 0; i < minutesPassed; i++) {
+    if (Math.random() < probability) {
+      newPrey++;
+    }
+    // Stop if we've hit the max
+    if (current + newPrey >= maxPrey) {
+      return maxPrey - current;
+    }
+  }
+
+  return newPrey;
 }
 
+/**
+ * Generate a creature when hunting
+ * This remains mostly unchanged from the previous version
+ */
 export function generateCreature(zone: Zone): Creature {
   const roll = Math.random() * 100;
 
@@ -61,27 +86,27 @@ export function generateCreature(zone: Zone): Creature {
   };
 }
 
+/**
+ * Calculate rewards from hunting
+ * This remains unchanged from the previous version for now
+ */
 export function calculateHuntingRewards(creature: Creature, playerLevel: number): {
   essence: bigint;
   credits: number;
 } {
-  // Calculate essence reward (1% of creature essence)
   const essenceReward = creature.essence / BigInt(100);
 
-  // Calculate credits
-  let credits = 1 + creature.level; // Base credits + creature level
+  let credits = 1 + creature.level;
 
   const levelDifference = playerLevel - creature.level;
   if (levelDifference > 0) {
-    // Divide credits if player is higher level
     credits = Math.floor(credits / (levelDifference + 1));
   } else if (levelDifference < 0) {
-    // Multiply credits if player is lower level
     credits = credits * Math.abs(levelDifference);
   }
 
   return {
     essence: essenceReward,
-    credits: Math.max(1, credits) // Minimum 1 credit
+    credits: Math.max(1, credits)
   };
 } 

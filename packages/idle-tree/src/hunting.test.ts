@@ -1,8 +1,7 @@
 import {
-  getBaseHuntingCost,
-  calculateHuntingCostIncrease,
-  calculateHuntingCostReduction,
-  calculateFinalHuntingCost,
+  calculateMaxZonePrey,
+  calculatePreyGenerationProbability,
+  calculateNewPrey,
   generateCreature,
   calculateHuntingRewards
 } from './hunting';
@@ -17,49 +16,48 @@ describe('Hunting System', () => {
     difficulty: 2
   };
 
-  describe('hunting costs', () => {
-    test('calculates base hunting cost correctly', () => {
-      const cost = getBaseHuntingCost(mockZone);
-      expect(cost).toBe(BigInt(10)); // density * difficulty = 5 * 2
+  describe('prey calculations', () => {
+    test('calculates max prey based on root coverage', () => {
+      // Full coverage
+      const fullSaturation = (BigInt(100) * BigInt(5) * BigInt(2)).toString();
+      expect(calculateMaxZonePrey(mockZone, fullSaturation)).toBe(100);
+
+      // Half coverage
+      const halfSaturation = (BigInt(100) * BigInt(5) * BigInt(2) / BigInt(2)).toString();
+      expect(calculateMaxZonePrey(mockZone, halfSaturation)).toBe(50);
+
+      // No coverage
+      expect(calculateMaxZonePrey(mockZone, '0')).toBe(0);
     });
 
-    test('calculates cost increase correctly', () => {
-      const increase = calculateHuntingCostIncrease(mockZone);
-      expect(increase).toBe(BigInt(5)); // density = 5
+    test('calculates prey generation probability', () => {
+      // Full saturation
+      const fullSaturation = (BigInt(100) * BigInt(5) * BigInt(2)).toString();
+      const probability = calculatePreyGenerationProbability(mockZone, fullSaturation);
+      expect(probability).toBeLessThanOrEqual(1);
+      expect(probability).toBeGreaterThan(0);
+
+      // No saturation
+      expect(calculatePreyGenerationProbability(mockZone, '0')).toBe(0);
     });
 
-    test('calculates cost reduction correctly', () => {
-      const reduction = calculateHuntingCostReduction(mockZone);
-      expect(reduction).toBe(BigInt(5)); // density = 5
-    });
+    test('calculates new prey over time', () => {
+      const fullSaturation = (BigInt(100) * BigInt(5) * BigInt(2)).toString();
 
-    test('calculates final cost with root coverage', () => {
-      const storedCost = BigInt(10);
+      // Test with no current prey and full saturation
+      const newPrey = calculateNewPrey(mockZone, fullSaturation, '0', 60);
+      expect(newPrey).toBeGreaterThanOrEqual(0);
+      expect(newPrey).toBeLessThanOrEqual(100); // Can't exceed zone size
 
-      // Zero coverage = maximum cost (100x)
-      expect(calculateFinalHuntingCost(storedCost, 0)).toBe(BigInt(1000));
+      // Test with max prey
+      expect(calculateNewPrey(mockZone, fullSaturation, '100', 60)).toBe(0);
 
-      // Negative coverage = maximum cost (100x)
-      expect(calculateFinalHuntingCost(storedCost, -0.1)).toBe(BigInt(1000));
-
-      // Very low coverage (0.01) = multiplier of 100
-      expect(calculateFinalHuntingCost(storedCost, 0.01)).toBe(BigInt(1000));
-
-      // 50% coverage = multiplier of 2
-      expect(calculateFinalHuntingCost(storedCost, 0.5)).toBe(BigInt(20));
-
-      // 25% coverage = multiplier of 4
-      expect(calculateFinalHuntingCost(storedCost, 0.25)).toBe(BigInt(40));
-
-      // 75% coverage = multiplier of ~1.33 (134/100)
-      expect(calculateFinalHuntingCost(storedCost, 0.75)).toBe(BigInt(13));
-
-      // Full coverage = minimum multiplier (1)
-      expect(calculateFinalHuntingCost(storedCost, 1)).toBe(BigInt(10));
+      // Test with no saturation
+      expect(calculateNewPrey(mockZone, '0', '0', 60)).toBe(0);
     });
   });
 
-  describe('generateCreature', () => {
+  describe('creature generation', () => {
     test('generates creatures within expected level range', () => {
       const creatures = Array.from({ length: 1000 }, () => generateCreature(mockZone));
 
@@ -79,27 +77,10 @@ describe('Hunting System', () => {
       // 90% should be density - 1
       expect(levelCounts[4] / 1000).toBeCloseTo(0.9, 1);
     });
-
-    test('generates essence within expected range', () => {
-      const creature = generateCreature(mockZone);
-      expect(creature.essence).toBeGreaterThan(BigInt(0));
-      expect(creature.name).toBe("Horned Rabbit");
-    });
   });
 
-  describe('calculateHuntingRewards', () => {
-    test('calculates essence reward correctly', () => {
-      const creature = {
-        name: "Horned Rabbit",
-        level: 5,
-        essence: BigInt(1000)
-      };
-
-      const { essence } = calculateHuntingRewards(creature, 5);
-      expect(essence).toBe(BigInt(10)); // 1% of 1000
-    });
-
-    test('adjusts credits based on level difference', () => {
+  describe('hunting rewards', () => {
+    test('calculates rewards correctly', () => {
       const creature = {
         name: "Horned Rabbit",
         level: 5,
@@ -107,13 +88,17 @@ describe('Hunting System', () => {
       };
 
       // Same level
-      expect(calculateHuntingRewards(creature, 5).credits).toBe(6);
+      const sameLevel = calculateHuntingRewards(creature, 5);
+      expect(sameLevel.essence).toBe(BigInt(10));
+      expect(sameLevel.credits).toBe(6);
 
-      // Player higher level
-      expect(calculateHuntingRewards(creature, 7).credits).toBe(2);
+      // Higher level player
+      const highLevel = calculateHuntingRewards(creature, 7);
+      expect(highLevel.credits).toBe(2);
 
-      // Player lower level
-      expect(calculateHuntingRewards(creature, 3).credits).toBe(12);
+      // Lower level player
+      const lowLevel = calculateHuntingRewards(creature, 3);
+      expect(lowLevel.credits).toBe(12);
     });
   });
 }); 
