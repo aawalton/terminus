@@ -26,9 +26,9 @@ export function calculatePreyGenerationProbability(zone: Zone, rootSaturation: s
   const totalSaturation = BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty);
   const coverage = Number(BigInt(rootSaturation || '0')) / Number(totalSaturation);
 
-  // Base probability is coverage / (difficulty * 60)
-  // This means at 100% coverage and difficulty 1, you get 1/60 chance per minute (1 prey per hour on average)
-  return coverage / (zone.difficulty * 60);
+  // Base probability is coverage / 60
+  // This means at 100% coverage, you get 1/60 chance per minute (1 prey per hour on average)
+  return coverage / 60;
 }
 
 /**
