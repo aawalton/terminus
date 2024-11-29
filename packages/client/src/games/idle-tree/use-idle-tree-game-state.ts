@@ -1,26 +1,22 @@
 import { useState, useEffect } from 'react';
 import {
-  TreeGameState,
   CurrentTreeGameState,
   TreeGameStateCalculated,
   DEFAULT_GAME_STATE,
-  getCultivationStage,
-  calculateAgeInDays,
   calculateMaxEssence,
+  calculateNetGeneration,
+} from '@terminus/idle-tree';
+import { IdleTreeCloudService } from './idle-tree-cloud-service';
+import { worlds, Zone } from '@terminus/idle-tree';
+import {
+  calculateAgeInDays,
   calculateTotalEssenceGeneration,
   calculateTotalAllocation,
-  calculateNetGeneration,
-  worlds,
-  Zone,
-  getBaseHuntingCost,
-  calculateHuntingCostIncrease,
-  calculateHuntingCostReduction,
-  calculateFinalHuntingCost,
+  getCultivationStage,
   generateCreature,
   calculateHuntingRewards,
-  calculateZoneExploration,
+  calculateNewPrey
 } from '@terminus/idle-tree';
-import { IdleTreeCloudService } from './idle-tree-cloud-service'
 
 export function useIdleTreeGameState() {
   const [gameState, setGameState] = useState<CurrentTreeGameState>(DEFAULT_GAME_STATE);
@@ -145,25 +141,32 @@ export function useIdleTreeGameState() {
     const maxEssence = calculateMaxEssence(state.currentLevel);
     const updatedEssence = newEssence > maxEssence ? maxEssence : newEssence;
 
+    // 5. Update daily credits
     const dailyCreditsGainedAt = new Date(state.dailyCreditsGainedAt);
     const hoursPassed = Math.floor((now.getTime() - dailyCreditsGainedAt.getTime()) / 3600000);
     const newDailyCredits = state.dailyCredits + hoursPassed;
+
+    // 6. Update prey counts
+    const preyCheckedAt = new Date(state.preyCheckedAt);
+    const preyMinutesPassed = Math.floor((now.getTime() - preyCheckedAt.getTime()) / 60000);
+    const newPrey = { ...state.zonePrey };
+
+    // Process prey generation for each zone
+    for (const [zoneId, zone] of zoneMap) {
+      const currentPrey = newPrey[zoneId] || '0';
+      const rootSaturation = newRootSaturation[zoneId] || '0';
+      const addedPrey = calculateNewPrey(zone, rootSaturation, currentPrey, preyMinutesPassed);
+      if (addedPrey > 0) {
+        newPrey[zoneId] = (Number(currentPrey) + addedPrey).toString();
+      }
+    }
 
     const newEssenceGainedAt = new Date(now);
     newEssenceGainedAt.setSeconds(0, 0);
     const newDailyCreditsGainedAt = new Date(now);
     newDailyCreditsGainedAt.setMinutes(0, 0, 0);
-
-    // Reduce hunting costs
-    const newHuntingCosts = { ...state.zoneHuntingCosts };
-    for (const [zoneId, cost] of Object.entries(newHuntingCosts)) {
-      const zone = zoneMap.get(zoneId);
-      if (zone) {
-        const currentCost = BigInt(cost);
-        const reduction = calculateHuntingCostReduction(zone);
-        newHuntingCosts[zoneId] = Math.max(0, Number(currentCost - reduction)).toString();
-      }
-    }
+    const newPreyCheckedAt = new Date(now);
+    newPreyCheckedAt.setSeconds(0, 0);
 
     const newState = {
       ...state,
@@ -173,7 +176,8 @@ export function useIdleTreeGameState() {
       dailyCredits: newDailyCredits,
       essenceGainedAt: newEssenceGainedAt.toISOString(),
       dailyCreditsGainedAt: newDailyCreditsGainedAt.toISOString(),
-      zoneHuntingCosts: newHuntingCosts,
+      preyCheckedAt: newPreyCheckedAt.toISOString(),
+      zonePrey: newPrey,
     };
 
     await saveGame(newState);
@@ -198,19 +202,14 @@ export function useIdleTreeGameState() {
 
   const hunt = async (zone: Zone) => {
     try {
-      // Calculate hunting cost
-      const exploration = calculateZoneExploration(
-        gameState.rootSaturation[zone.id] || '0',
-        zone.size,
-        zone.density,
-        zone.difficulty
-      );
-      const huntingCost = calculateFinalHuntingCost(
-        BigInt(gameState.zoneHuntingCosts[zone.id] || '0'),
-        exploration / 100
-      );
+      // Verify we have prey available
+      const currentPrey = Number(gameState.zonePrey[zone.id] || '0');
+      if (currentPrey <= 0) {
+        throw new Error('No prey available in this zone');
+      }
 
       // Verify we can afford the hunt
+      const huntingCost = BigInt(zone.difficulty);
       if (BigInt(gameState.currentEssence) < huntingCost) {
         throw new Error('Not enough essence to hunt');
       }
@@ -222,10 +221,9 @@ export function useIdleTreeGameState() {
         gameState.currentLevel
       );
 
-      // Update hunting cost
-      const newHuntingCosts = { ...gameState.zoneHuntingCosts };
-      const currentCost = BigInt(newHuntingCosts[zone.id] || '0');
-      newHuntingCosts[zone.id] = (currentCost + calculateHuntingCostIncrease(zone)).toString();
+      // Update prey count
+      const newPrey = { ...gameState.zonePrey };
+      newPrey[zone.id] = (currentPrey - 1).toString();
 
       // Update essence (deduct cost and add reward) and credits
       const newEssence = BigInt(gameState.currentEssence) - huntingCost + essenceReward;
@@ -241,7 +239,7 @@ export function useIdleTreeGameState() {
         ...gameState,
         currentEssence: cappedEssence.toString(),
         sacrificialCredits: newSacrificalCredits,
-        zoneHuntingCosts: newHuntingCosts,
+        zonePrey: newPrey,
       });
 
       if (!success) {

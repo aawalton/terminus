@@ -23,6 +23,8 @@ export function HuntingResultModal({
     return null;
   }
 
+  const netEssence = essenceGained - huntingCost;
+
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.modalOverlay}>
@@ -36,6 +38,9 @@ export function HuntingResultModal({
           </Text>
           <Text style={styles.rewardInfo}>
             Gained {essenceGained.toString()} essence
+          </Text>
+          <Text style={styles.netInfo}>
+            Net gain: {netEssence.toString()} essence
           </Text>
           <Text style={styles.rewardInfo}>
             Gained {creditsGained} sacrificial credit{creditsGained === 1 ? '' : 's'}
@@ -80,6 +85,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 8,
+  },
+  netInfo: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#27ae60', // Green color for net gain
+    fontWeight: 'bold',
   },
   closeButton: {
     marginTop: 16,

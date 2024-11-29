@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { ListItem, Button, Text } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
-import { calculateZoneExploration, calculateZoneEssenceGeneration, calculateFinalHuntingCost, type Creature, type Zone } from '@terminus/idle-tree';
+import { calculateZoneExploration, calculateZoneEssenceGeneration, type Creature, type Zone } from '@terminus/idle-tree';
 import { Icon } from '@rneui/themed';
 import { HuntingResultModal } from './hunting-result-modal';
 
@@ -124,11 +124,9 @@ export function RegionsList() {
                 const currentAllocation = BigInt(gameState.rootEssenceAllocation[zone.id] || '0');
                 const hasRoots = exploration > 0;
 
-                const huntingCost = calculateFinalHuntingCost(
-                  BigInt(gameState.zoneHuntingCosts[zone.id] || '0'),
-                  exploration / 100
-                );
-                const canHunt = hasRoots && BigInt(gameState.currentEssence) >= huntingCost;
+                const currentPrey = Number(gameState.zonePrey[zone.id] || '0');
+                const huntingCost = BigInt(zone.difficulty);
+                const canHunt = hasRoots && currentPrey > 0 && BigInt(gameState.currentEssence) >= huntingCost;
 
                 return (
                   <ListItem
@@ -142,6 +140,9 @@ export function RegionsList() {
                       </ListItem.Title>
                       <ListItem.Subtitle style={styles.zoneStats}>
                         Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
+                      </ListItem.Subtitle>
+                      <ListItem.Subtitle style={styles.zoneStats}>
+                        Prey: {currentPrey} • Hunting Cost: {zone.difficulty} essence
                       </ListItem.Subtitle>
                       <View style={styles.allocationContainer}>
                         <Button
@@ -168,9 +169,16 @@ export function RegionsList() {
                             onPress={() => handleHunt(zone)}
                             buttonStyle={styles.huntButton}
                           />
-                          <Text style={styles.huntingCost}>
-                            Cost: {huntingCost.toString()} essence
-                          </Text>
+                          {!canHunt && currentPrey === 0 && (
+                            <Text style={styles.huntingCost}>
+                              No prey available
+                            </Text>
+                          )}
+                          {!canHunt && currentPrey > 0 && (
+                            <Text style={styles.huntingCost}>
+                              Need {zone.difficulty} essence to hunt
+                            </Text>
+                          )}
                         </View>
                       )}
                     </ListItem.Content>

@@ -1,3 +1,5 @@
+// For this file, follow the pattern of repexporting all types and all exports, rather than using individual named exports.
+
 // Re-export types
 export type * from './idle-tree-types';
 export type * from './worlds';
