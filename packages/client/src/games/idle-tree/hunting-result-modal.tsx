@@ -8,6 +8,7 @@ interface HuntingResultModalProps {
   creature?: Creature;
   essenceGained?: bigint;
   creditsGained?: number;
+  huntingCost?: bigint;
 }
 
 export function HuntingResultModal({
@@ -16,8 +17,9 @@ export function HuntingResultModal({
   creature,
   essenceGained,
   creditsGained,
+  huntingCost,
 }: HuntingResultModalProps) {
-  if (!creature || essenceGained === undefined || creditsGained === undefined) {
+  if (!creature || essenceGained === undefined || creditsGained === undefined || huntingCost === undefined) {
     return null;
   }
 
@@ -28,6 +30,9 @@ export function HuntingResultModal({
           <Text style={styles.title}>Hunt Successful!</Text>
           <Text style={styles.creatureInfo}>
             Defeated {creature.name} (Level {creature.level})
+          </Text>
+          <Text style={styles.costInfo}>
+            Cost: {huntingCost.toString()} essence
           </Text>
           <Text style={styles.rewardInfo}>
             Gained {essenceGained.toString()} essence
@@ -82,5 +87,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 12,
     minWidth: 120,
+  },
+  costInfo: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#e74c3c',
   },
 }); 

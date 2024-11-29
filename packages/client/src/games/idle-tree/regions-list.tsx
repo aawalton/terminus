@@ -17,11 +17,13 @@ export function RegionsList() {
     creature?: Creature;
     essenceGained?: bigint;
     creditsGained?: number;
+    huntingCost?: bigint;
   }>({
     visible: false,
     creature: undefined,
     essenceGained: undefined,
-    creditsGained: undefined
+    creditsGained: undefined,
+    huntingCost: undefined
   });
 
   if (loading || !worldData || !gameState) {
@@ -51,6 +53,7 @@ export function RegionsList() {
         creature: result.creature,
         essenceGained: result.essenceGained,
         creditsGained: result.creditsGained,
+        huntingCost: result.huntingCost
       });
     } catch (error) {
       console.error('Error during hunting:', error);
@@ -75,8 +78,9 @@ export function RegionsList() {
         visible={huntingResult.visible}
         onClose={() => setHuntingResult({ visible: false })}
         creature={huntingResult.creature}
-        essenceGained={huntingResult.essenceGained!}
-        creditsGained={huntingResult.creditsGained!}
+        essenceGained={huntingResult.essenceGained}
+        creditsGained={huntingResult.creditsGained}
+        huntingCost={huntingResult.huntingCost}
       />
 
       <ListItem.Accordion

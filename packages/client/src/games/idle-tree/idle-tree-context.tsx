@@ -6,6 +6,7 @@ interface HuntResult {
   creature: Creature;
   essenceGained: bigint;
   creditsGained: number;
+  huntingCost: bigint;
 }
 
 interface IdleTreeContextType {

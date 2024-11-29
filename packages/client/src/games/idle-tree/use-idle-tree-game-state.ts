@@ -229,12 +229,17 @@ export function useIdleTreeGameState() {
 
       // Update essence (deduct cost and add reward) and credits
       const newEssence = BigInt(gameState.currentEssence) - huntingCost + essenceReward;
+      const maxEssence = calculateMaxEssence(gameState.currentLevel);
+
+      // Cap the essence at max
+      const cappedEssence = newEssence > maxEssence ? maxEssence : newEssence;
+      const actualEssenceGained = cappedEssence - (BigInt(gameState.currentEssence) - huntingCost);
       const newSacrificalCredits = gameState.sacrificialCredits + creditsReward;
 
       // Save new state
       const success = await saveGame({
         ...gameState,
-        currentEssence: newEssence.toString(),
+        currentEssence: cappedEssence.toString(),
         sacrificialCredits: newSacrificalCredits,
         zoneHuntingCosts: newHuntingCosts,
       });
@@ -245,8 +250,9 @@ export function useIdleTreeGameState() {
 
       return {
         creature,
-        essenceGained: essenceReward,
+        essenceGained: actualEssenceGained,
         creditsGained: creditsReward,
+        huntingCost,
       };
     } catch (error) {
       console.error('Error during hunting:', error);
