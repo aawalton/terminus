@@ -125,7 +125,7 @@ export function RegionsList() {
                 const hasRoots = exploration > 0;
 
                 const currentPrey = Number(gameState.zonePrey[zone.id] || '0');
-                const huntingCost = BigInt(zone.difficulty);
+                const huntingCost = BigInt(region.dangerLevel);
                 const canHunt = hasRoots && currentPrey > 0 && BigInt(gameState.currentEssence) >= huntingCost;
 
                 return (
@@ -142,7 +142,7 @@ export function RegionsList() {
                         Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
                       </ListItem.Subtitle>
                       <ListItem.Subtitle style={styles.zoneStats}>
-                        Prey: {currentPrey} • Hunting Cost: {zone.difficulty} essence
+                        Prey: {currentPrey} • Hunting Cost: {region.dangerLevel} essence
                       </ListItem.Subtitle>
                       <View style={styles.allocationContainer}>
                         <Button
@@ -176,7 +176,7 @@ export function RegionsList() {
                           )}
                           {!canHunt && currentPrey > 0 && (
                             <Text style={styles.huntingCost}>
-                              Need {zone.difficulty} essence to hunt
+                              Need {region.dangerLevel} essence to hunt
                             </Text>
                           )}
                         </View>

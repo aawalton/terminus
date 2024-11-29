@@ -216,14 +216,24 @@ export function useIdleTreeGameState() {
 
   const hunt = async (zone: Zone) => {
     try {
+      // Find the region that contains this zone
+      const world = worlds[0];
+      const region = world.regions.find(r =>
+        r.zones.some(z => z.id === zone.id)
+      );
+
+      if (!region) {
+        throw new Error('Region not found for zone');
+      }
+
       // Verify we have prey available
       const currentPrey = Number(gameState.zonePrey[zone.id] || '0');
       if (currentPrey <= 0) {
         throw new Error('No prey available in this zone');
       }
 
-      // Verify we can afford the hunt
-      const huntingCost = BigInt(zone.difficulty);
+      // Update hunting cost to use region danger level
+      const huntingCost = BigInt(region.dangerLevel);
       if (BigInt(gameState.currentEssence) < huntingCost) {
         throw new Error('Not enough essence to hunt');
       }
