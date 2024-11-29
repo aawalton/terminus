@@ -46,7 +46,12 @@ export function useIdleTreeGameState() {
   useEffect(() => {
     if (!isLoaded) return;
 
-    const intervalId = setInterval(() => updateGameState(), 6000);
+    const intervalId = setInterval(() => {
+      setGameState(currentState => {
+        updateGameState(currentState);
+        return currentState;
+      });
+    }, 60000);
     return () => clearInterval(intervalId);
   }, [isLoaded]);
 
@@ -70,22 +75,21 @@ export function useIdleTreeGameState() {
 
   const saveGame = async (newState: CurrentTreeGameState) => {
     try {
-      const updatedState = { ...gameState, ...newState }
-      setGameState(updatedState)
-      const success = await IdleTreeCloudService.saveGameState(updatedState)
-      if (!success) {
-        console.error('Cloud service returned false when saving game state')
-        return false
-      }
-      return true
-    } catch (error) {
-      console.error('Error saving game state:', error)
-      return false
-    }
-  }
+      setGameState(newState);
+      const success = await IdleTreeCloudService.saveGameState(newState);
 
-  const updateGameState = async (loadedState?: CurrentTreeGameState) => {
-    const state = loadedState || gameState;
+      if (!success) {
+        console.error('Failed to save game state to cloud');
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error('Error saving game state:', error);
+      return false;
+    }
+  };
+
+  const updateGameState = async (state: CurrentTreeGameState) => {
     const now = new Date();
     const essenceGainedAt = new Date(state.essenceGainedAt);
     const minutesPassed = Math.floor((now.getTime() - essenceGainedAt.getTime()) / 60000);
@@ -161,7 +165,7 @@ export function useIdleTreeGameState() {
       }
     }
 
-    await saveGame({
+    const newState = {
       ...state,
       currentEssence: updatedEssence.toString(),
       rootSaturation: newRootSaturation,
@@ -170,14 +174,15 @@ export function useIdleTreeGameState() {
       essenceGainedAt: newEssenceGainedAt.toISOString(),
       dailyCreditsGainedAt: newDailyCreditsGainedAt.toISOString(),
       zoneHuntingCosts: newHuntingCosts,
-    });
+    };
+
+    await saveGame(newState);
   };
 
   const updateAllocation = async (zoneId: string, amount: string) => {
     const newAllocation = { ...gameState.rootEssenceAllocation };
 
     if (amount === '0') {
-      // Remove zero allocations from the map
       delete newAllocation[zoneId];
     } else {
       newAllocation[zoneId] = amount;
@@ -188,7 +193,6 @@ export function useIdleTreeGameState() {
       rootEssenceAllocation: newAllocation
     };
 
-    // Replace the local storage operation with cloud save
     await saveGame(newState);
   };
 
