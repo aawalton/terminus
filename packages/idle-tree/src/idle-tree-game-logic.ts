@@ -42,8 +42,9 @@ export const DEFAULT_GAME_STATE: CurrentTreeGameState = {
     'midgard-0-0': '59',
   },
   rootEssenceAllocation: {},
-  zoneHuntingCosts: {},
-  stateVersion: 8,
+  zonePrey: {},
+  preyCheckedAt: new Date().toISOString(),
+  stateVersion: 9,
 };
 
 export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => {
@@ -93,6 +94,14 @@ export const migrateGameState = (state: TreeGameState): CurrentTreeGameState => 
         stateVersion: 8,
       });
     case 8:
+      const { zoneHuntingCosts, ...stateWithoutHuntingCosts } = state;
+      return {
+        ...stateWithoutHuntingCosts,
+        zonePrey: {},
+        preyCheckedAt: new Date().toISOString(),
+        stateVersion: 9,
+      };
+    case 9:
       return state;
     default:
       throw new Error(`Unsupported state version: ${state['stateVersion']}`);

@@ -57,8 +57,17 @@ export type TreeGameStateV8 = Omit<TreeGameStateV7, 'stateVersion'> & {
   stateVersion: 8;
 };
 
-export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6 | TreeGameStateV7 | TreeGameStateV8;
-export type CurrentTreeGameState = TreeGameStateV8;
+// V9 removes zoneHuntingCosts and adds prey tracking
+export type TreeGameStateV9 = Omit<TreeGameStateV8, 'zoneHuntingCosts' | 'stateVersion'> & {
+  zonePrey: {
+    [zoneId: string]: string;  // BigInt as string
+  };
+  preyCheckedAt: string; // timestamp
+  stateVersion: 9;
+};
+
+export type TreeGameState = TreeGameStateV1 | TreeGameStateV2 | TreeGameStateV3 | TreeGameStateV4 | TreeGameStateV5 | TreeGameStateV6 | TreeGameStateV7 | TreeGameStateV8 | TreeGameStateV9;
+export type CurrentTreeGameState = TreeGameStateV9;
 
 // Calculated state interface
 export interface TreeGameStateCalculated extends CurrentTreeGameState {
