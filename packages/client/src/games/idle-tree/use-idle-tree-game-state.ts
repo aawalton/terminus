@@ -5,6 +5,8 @@ import {
   DEFAULT_GAME_STATE,
   calculateMaxEssence,
   calculateNetGeneration,
+  calculateMaxZonePrey,
+  calculatePreyGenerationProbability,
 } from '@terminus/idle-tree';
 import { IdleTreeCloudService } from './idle-tree-cloud-service';
 import { worlds, Zone } from '@terminus/idle-tree';
@@ -42,14 +44,15 @@ export function useIdleTreeGameState() {
   useEffect(() => {
     if (!isLoaded) return;
 
-    const intervalId = setInterval(() => {
-      setGameState(currentState => {
-        updateGameState(currentState);
-        return currentState;
-      });
+    const intervalId = setInterval(async () => {
+      const currentState = gameState;
+      const newState = await updateGameState(currentState);
+      if (newState) {
+        setGameState(newState);
+      }
     }, 6000);
     return () => clearInterval(intervalId);
-  }, [isLoaded]);
+  }, [isLoaded, gameState]);
 
   const loadGame = async () => {
     try {
@@ -155,6 +158,8 @@ export function useIdleTreeGameState() {
     for (const [zoneId, zone] of zoneMap) {
       const currentPrey = newPrey[zoneId] || '0';
       const rootSaturation = newRootSaturation[zoneId] || '0';
+      const maxPrey = calculateMaxZonePrey(zone, rootSaturation);
+      const probability = calculatePreyGenerationProbability(zone, rootSaturation);
 
       const addedPrey = calculateNewPrey(zone, rootSaturation, currentPrey, preyMinutesPassed);
       if (addedPrey > 0) {
@@ -185,7 +190,11 @@ export function useIdleTreeGameState() {
       zonePrey: newPrey,
     };
 
-    await saveGame(newState);
+    const success = await saveGame(newState);
+    if (success) {
+      return newState;  // Return the new state if save was successful
+    }
+    return null;  // Return null if save failed
   };
 
   const updateAllocation = async (zoneId: string, amount: string) => {
