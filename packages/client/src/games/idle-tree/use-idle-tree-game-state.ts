@@ -5,6 +5,8 @@ import {
   DEFAULT_GAME_STATE,
   calculateMaxEssence,
   calculateNetGeneration,
+  calculateMaxZonePrey,
+  calculatePreyGenerationProbability,
 } from '@terminus/idle-tree';
 import { IdleTreeCloudService } from './idle-tree-cloud-service';
 import { worlds, Zone } from '@terminus/idle-tree';
@@ -47,7 +49,7 @@ export function useIdleTreeGameState() {
         updateGameState(currentState);
         return currentState;
       });
-    }, 60000);
+    }, 6000);
     return () => clearInterval(intervalId);
   }, [isLoaded]);
 
@@ -155,8 +157,23 @@ export function useIdleTreeGameState() {
     for (const [zoneId, zone] of zoneMap) {
       const currentPrey = newPrey[zoneId] || '0';
       const rootSaturation = newRootSaturation[zoneId] || '0';
+      const maxPrey = calculateMaxZonePrey(zone, rootSaturation);
+      const probability = calculatePreyGenerationProbability(zone, rootSaturation);
+
+      console.log('Processing zone prey:', {
+        zoneId,
+        currentPrey,
+        rootSaturation,
+        maxPrey,
+        probability,
+      });
+
       const addedPrey = calculateNewPrey(zone, rootSaturation, currentPrey, preyMinutesPassed);
       if (addedPrey > 0) {
+        console.log('Added prey:', {
+          zoneId,
+          addedPrey,
+        });
         newPrey[zoneId] = (Number(currentPrey) + addedPrey).toString();
       }
     }

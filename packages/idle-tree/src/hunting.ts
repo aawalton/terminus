@@ -10,21 +10,29 @@ export interface Creature {
  * Calculate the maximum prey a zone can hold based on its size and root coverage
  */
 export function calculateMaxZonePrey(zone: Zone, rootSaturation: string): number {
-  const coverage = BigInt(rootSaturation || '0') / (BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty));
-  return Math.floor(Number(coverage) * zone.size);
+  // Calculate coverage as a percentage (0-1)
+  const totalSaturation = BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty);
+  const coverage = Number(BigInt(rootSaturation || '0')) / Number(totalSaturation);
+
+  // Max prey is proportional to coverage
+  return Math.floor(zone.size * coverage);
 }
 
 /**
  * Calculate the probability of generating new prey in a zone per minute
  */
 export function calculatePreyGenerationProbability(zone: Zone, rootSaturation: string): number {
-  const saturation = BigInt(rootSaturation || '0');
-  return Number(saturation * BigInt(zone.size)) / (zone.difficulty * 60);
+  // Calculate coverage as a percentage (0-1)
+  const totalSaturation = BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty);
+  const coverage = Number(BigInt(rootSaturation || '0')) / Number(totalSaturation);
+
+  // Base probability is coverage / (difficulty * 60)
+  // This means at 100% coverage and difficulty 1, you get 1/60 chance per minute (1 prey per hour on average)
+  return coverage / (zone.difficulty * 60);
 }
 
 /**
  * Calculate how many new prey should be added based on time passed
- * Returns the number of new prey to add
  */
 export function calculateNewPrey(
   zone: Zone,
@@ -43,13 +51,9 @@ export function calculateNewPrey(
   let newPrey = 0;
 
   // For each minute, check if prey should be generated
-  for (let i = 0; i < minutesPassed; i++) {
+  for (let i = 0; i < minutesPassed && current + newPrey < maxPrey; i++) {
     if (Math.random() < probability) {
       newPrey++;
-    }
-    // Stop if we've hit the max
-    if (current + newPrey >= maxPrey) {
-      return maxPrey - current;
     }
   }
 
@@ -58,18 +62,18 @@ export function calculateNewPrey(
 
 /**
  * Generate a creature when hunting
- * This remains mostly unchanged from the previous version
  */
 export function generateCreature(zone: Zone): Creature {
-  const roll = Math.random() * 100;
+  // Generate a number between 0 and 1
+  const roll = Math.random();
 
   // Determine creature level based on probability
   let level: number;
-  if (roll < 90) {
-    level = Math.max(1, zone.density - 1);
-  } else if (roll < 99) {
+  if (roll < 0.90) {  // 90% chance
+    level = zone.density - 1;
+  } else if (roll < 0.99) {  // 9% chance
     level = zone.density;
-  } else {
+  } else {  // 1% chance
     level = zone.density + 1;
   }
 
@@ -88,7 +92,6 @@ export function generateCreature(zone: Zone): Creature {
 
 /**
  * Calculate rewards from hunting
- * This remains unchanged from the previous version for now
  */
 export function calculateHuntingRewards(creature: Creature, playerLevel: number): {
   essence: bigint;
