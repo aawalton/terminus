@@ -21,7 +21,7 @@ import {
   CultivationStage,
 } from './idle-tree-types';
 import cultivationStagesConfig from '../config/cultivation-stages.json';
-import { worlds } from './worlds';
+import { worlds, type Zone } from './worlds';
 
 // Convert JSON stages to CultivationStage array with BigInt values
 export const CULTIVATION_STAGES: CultivationStage[] = cultivationStagesConfig.stages.map(stage => ({
@@ -223,4 +223,13 @@ export function calculateNetGeneration(gameState: CurrentTreeGameState): string 
   const totalGeneration = BigInt(calculateTotalEssenceGeneration(gameState));
   const totalAllocation = BigInt(calculateTotalAllocation(gameState));
   return (totalGeneration - totalAllocation).toString();
+}
+
+export function isZoneSaturated(
+  currentSaturation: string | bigint,
+  zone: Zone
+): boolean {
+  const saturation = typeof currentSaturation === 'string' ? BigInt(currentSaturation) : currentSaturation;
+  const maxSaturation = BigInt(zone.size) * BigInt(zone.density) * BigInt(zone.difficulty);
+  return saturation >= maxSaturation;
 } 

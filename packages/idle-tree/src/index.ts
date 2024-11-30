@@ -9,3 +9,5 @@ export type * from './hunting';
 export * from './idle-tree-game-logic';
 export * from './worlds';
 export * from './hunting';
+
+export { isZoneSaturated } from './idle-tree-game-logic';

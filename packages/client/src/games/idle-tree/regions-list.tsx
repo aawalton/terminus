@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { ListItem, Button, Text } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
-import { calculateZoneExploration, calculateZoneEssenceGeneration, type Creature, type Zone } from '@terminus/idle-tree';
+import { calculateZoneExploration, calculateZoneEssenceGeneration, isZoneSaturated, type Creature, type Zone } from '@terminus/idle-tree';
 import { Icon } from '@rneui/themed';
 import { HuntingResultModal } from './hunting-result-modal';
 
@@ -123,6 +123,7 @@ export function RegionsList() {
                 );
                 const currentAllocation = BigInt(gameState.rootEssenceAllocation[zone.id] || '0');
                 const hasRoots = exploration > 0;
+                const isSaturated = isZoneSaturated(essenceInvested, zone);
 
                 const currentPrey = Number(gameState.zonePrey[zone.id] || '0');
                 const huntingCost = BigInt(region.dangerLevel);
@@ -144,23 +145,25 @@ export function RegionsList() {
                       <ListItem.Subtitle style={styles.zoneStats}>
                         Prey: {currentPrey} • Hunting Cost: {region.dangerLevel} essence
                       </ListItem.Subtitle>
-                      <View style={styles.allocationContainer}>
-                        <Button
-                          title="-"
-                          disabled={currentAllocation <= 0}
-                          onPress={() => handleAllocationChange(zone.id, -1)}
-                          buttonStyle={styles.allocationButton}
-                        />
-                        <ListItem.Subtitle style={styles.allocationText}>
-                          Allocated: {currentAllocation.toString()}/min
-                        </ListItem.Subtitle>
-                        <Button
-                          title="+"
-                          disabled={!canIncreaseAllocation}
-                          onPress={() => handleAllocationChange(zone.id, 1)}
-                          buttonStyle={styles.allocationButton}
-                        />
-                      </View>
+                      {!isSaturated && (
+                        <View style={styles.allocationContainer}>
+                          <Button
+                            title="-"
+                            disabled={currentAllocation <= 0}
+                            onPress={() => handleAllocationChange(zone.id, -1)}
+                            buttonStyle={styles.allocationButton}
+                          />
+                          <ListItem.Subtitle style={styles.allocationText}>
+                            Allocated: {currentAllocation.toString()}/min
+                          </ListItem.Subtitle>
+                          <Button
+                            title="+"
+                            disabled={!canIncreaseAllocation}
+                            onPress={() => handleAllocationChange(zone.id, 1)}
+                            buttonStyle={styles.allocationButton}
+                          />
+                        </View>
+                      )}
                       {hasRoots && (
                         <View style={styles.huntingContainer}>
                           <Button
