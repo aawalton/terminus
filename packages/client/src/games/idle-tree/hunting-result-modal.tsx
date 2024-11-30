@@ -1,50 +1,60 @@
-import { Modal, View, StyleSheet } from 'react-native';
+import { Modal, View, StyleSheet, ScrollView } from 'react-native';
 import { Button, Text } from '@rneui/themed';
-import { Creature } from '@terminus/idle-tree';
+import { CreatureSummary } from '@terminus/idle-tree';
 
 interface HuntingResultModalProps {
   visible: boolean;
   onClose: () => void;
-  creature?: Creature;
-  essenceGained?: bigint;
-  creditsGained?: number;
-  huntingCost?: bigint;
+  creatureSummaries?: CreatureSummary[];
+  totalEssenceGained?: bigint;
+  totalCreditsGained?: number;
+  totalHuntingCost?: bigint;
 }
 
 export function HuntingResultModal({
   visible,
   onClose,
-  creature,
-  essenceGained,
-  creditsGained,
-  huntingCost,
+  creatureSummaries,
+  totalEssenceGained,
+  totalCreditsGained,
+  totalHuntingCost,
 }: HuntingResultModalProps) {
-  if (!creature || essenceGained === undefined || creditsGained === undefined || huntingCost === undefined) {
+  if (!creatureSummaries || totalEssenceGained === undefined ||
+    totalCreditsGained === undefined || totalHuntingCost === undefined) {
     return null;
   }
 
-  const netEssence = essenceGained - huntingCost;
+  const netEssence = totalEssenceGained - totalHuntingCost;
 
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.title}>Hunt Successful!</Text>
-          <Text style={styles.creatureInfo}>
-            Defeated {creature.name} (Level {creature.level})
-          </Text>
-          <Text style={styles.costInfo}>
-            Cost: {huntingCost.toString()} essence
-          </Text>
-          <Text style={styles.rewardInfo}>
-            Gained {essenceGained.toString()} essence
-          </Text>
-          <Text style={styles.netInfo}>
-            Net gain: {netEssence.toString()} essence
-          </Text>
-          <Text style={styles.rewardInfo}>
-            Gained {creditsGained} sacrificial credit{creditsGained === 1 ? '' : 's'}
-          </Text>
+          <ScrollView style={styles.scrollView}>
+            <Text style={styles.title}>Hunt Successful!</Text>
+
+            <Text style={styles.sectionTitle}>Creatures Defeated:</Text>
+            {creatureSummaries.map((summary, index) => (
+              <Text key={index} style={styles.contentText}>
+                {summary.name} (Level {summary.level}) x{summary.count}
+              </Text>
+            ))}
+
+            <Text style={[styles.contentText, styles.costText]}>
+              Total Cost: {totalHuntingCost.toString()} essence
+            </Text>
+            <Text style={styles.contentText}>
+              Total Essence Gained: {totalEssenceGained.toString()} essence
+            </Text>
+            <Text style={[styles.contentText, styles.netGainText]}>
+              Net Gain: {netEssence.toString()} essence
+            </Text>
+            <Text style={styles.contentText}>
+              Total Credits Gained: {totalCreditsGained} sacrificial credit
+              {totalCreditsGained === 1 ? '' : 's'}
+            </Text>
+          </ScrollView>
+
           <Button
             title="Close"
             onPress={onClose}
@@ -69,6 +79,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: '80%',
     maxWidth: 400,
+    maxHeight: '80%',
+  },
+  scrollView: {
+    flexGrow: 0,
   },
   title: {
     fontSize: 24,
@@ -76,21 +90,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
-  creatureInfo: {
+  sectionTitle: {
     fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  rewardInfo: {
-    fontSize: 16,
-    textAlign: 'center',
+    fontWeight: 'bold',
     marginBottom: 8,
   },
-  netInfo: {
+  contentText: {
     fontSize: 16,
-    textAlign: 'center',
     marginBottom: 8,
-    color: '#27ae60', // Green color for net gain
+  },
+  costText: {
+    color: '#e74c3c',
+    marginTop: 8,
+  },
+  netGainText: {
+    color: '#27ae60',
     fontWeight: 'bold',
   },
   closeButton: {
@@ -99,11 +113,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 12,
     minWidth: 120,
-  },
-  costInfo: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 8,
-    color: '#e74c3c',
   },
 }); 

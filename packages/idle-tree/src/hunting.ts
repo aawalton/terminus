@@ -6,6 +6,19 @@ export interface Creature {
   essence: bigint;
 }
 
+export interface CreatureSummary {
+  name: string;
+  level: number;
+  count: number;
+}
+
+interface BatchHuntingResult {
+  creatureSummaries: CreatureSummary[];
+  totalEssenceGained: bigint;
+  totalCreditsGained: number;
+  totalHuntingCost: bigint;
+}
+
 /**
  * Calculate the maximum prey a zone can hold based on its size and root coverage
  */
@@ -110,5 +123,53 @@ export function calculateHuntingRewards(creature: Creature, playerLevel: number)
   return {
     essence: essenceReward,
     credits: Math.max(1, credits)
+  };
+}
+
+export function generateBatchCreatures(zone: Zone, count: number): Creature[] {
+  return Array.from({ length: count }, () => generateCreature(zone));
+}
+
+export function calculateBatchHuntingResults(
+  creatures: Creature[],
+  playerLevel: number
+): BatchHuntingResult {
+  // Calculate totals
+  const results = creatures.reduce(
+    (acc, creature) => {
+      const rewards = calculateHuntingRewards(creature, playerLevel);
+      return {
+        essence: acc.essence + rewards.essence,
+        credits: acc.credits + rewards.credits,
+        creatures: [...acc.creatures, creature],
+      };
+    },
+    { essence: BigInt(0), credits: 0, creatures: [] as Creature[] }
+  );
+
+  // Group creatures by type and level
+  const creatureSummaries = creatures.reduce((acc, creature) => {
+    const key = `${creature.name}-${creature.level}`;
+    const existing = acc.find(
+      (summary) => summary.name === creature.name && summary.level === creature.level
+    );
+
+    if (existing) {
+      existing.count++;
+    } else {
+      acc.push({
+        name: creature.name,
+        level: creature.level,
+        count: 1,
+      });
+    }
+    return acc;
+  }, [] as CreatureSummary[]);
+
+  return {
+    creatureSummaries,
+    totalEssenceGained: results.essence,
+    totalCreditsGained: results.credits,
+    totalHuntingCost: BigInt(0), // This will be calculated at the game state level
   };
 } 

@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { ListItem, Button, Text } from '@rneui/themed';
 import { useWorldData } from './use-world-data';
 import { useIdleTree } from './idle-tree-context';
-import { calculateZoneExploration, calculateZoneEssenceGeneration, isZoneSaturated, type Creature, type Zone } from '@terminus/idle-tree';
+import { calculateZoneExploration, calculateZoneEssenceGeneration, isZoneSaturated, type Creature, type Zone, type CreatureSummary } from '@terminus/idle-tree';
 import { Icon } from '@rneui/themed';
 import { HuntingResultModal } from './hunting-result-modal';
 
@@ -14,16 +14,16 @@ export function RegionsList() {
   const [expandedRegions, setExpandedRegions] = useState<{ [key: string]: boolean }>({});
   const [huntingResult, setHuntingResult] = useState<{
     visible: boolean;
-    creature?: Creature;
-    essenceGained?: bigint;
-    creditsGained?: number;
-    huntingCost?: bigint;
+    creatureSummaries?: CreatureSummary[];
+    totalEssenceGained?: bigint;
+    totalCreditsGained?: number;
+    totalHuntingCost?: bigint;
   }>({
     visible: false,
-    creature: undefined,
-    essenceGained: undefined,
-    creditsGained: undefined,
-    huntingCost: undefined
+    creatureSummaries: undefined,
+    totalEssenceGained: undefined,
+    totalCreditsGained: undefined,
+    totalHuntingCost: undefined
   });
 
   if (loading || !worldData || !gameState) {
@@ -50,10 +50,10 @@ export function RegionsList() {
       const result = await hunt(zone);
       setHuntingResult({
         visible: true,
-        creature: result.creature,
-        essenceGained: result.essenceGained,
-        creditsGained: result.creditsGained,
-        huntingCost: result.huntingCost
+        creatureSummaries: result.creatureSummaries,
+        totalEssenceGained: result.totalEssenceGained,
+        totalCreditsGained: result.totalCreditsGained,
+        totalHuntingCost: result.totalHuntingCost
       });
     } catch (error) {
       console.error('Error during hunting:', error);
@@ -77,10 +77,10 @@ export function RegionsList() {
       <HuntingResultModal
         visible={huntingResult.visible}
         onClose={() => setHuntingResult({ visible: false })}
-        creature={huntingResult.creature}
-        essenceGained={huntingResult.essenceGained}
-        creditsGained={huntingResult.creditsGained}
-        huntingCost={huntingResult.huntingCost}
+        creatureSummaries={huntingResult.creatureSummaries}
+        totalEssenceGained={huntingResult.totalEssenceGained}
+        totalCreditsGained={huntingResult.totalCreditsGained}
+        totalHuntingCost={huntingResult.totalHuntingCost}
       />
 
       <ListItem.Accordion
@@ -126,8 +126,9 @@ export function RegionsList() {
                 const isSaturated = isZoneSaturated(essenceInvested, zone);
 
                 const currentPrey = Number(gameState.zonePrey[zone.id] || '0');
-                const huntingCost = BigInt(region.dangerLevel);
-                const canHunt = hasRoots && currentPrey > 0 && BigInt(gameState.currentEssence) >= huntingCost;
+                const huntingCostPerPrey = BigInt(region.dangerLevel);
+                const totalHuntingCost = huntingCostPerPrey * BigInt(currentPrey);
+                const canHunt = hasRoots && currentPrey > 0 && BigInt(gameState.currentEssence) >= totalHuntingCost;
 
                 return (
                   <ListItem
@@ -143,7 +144,7 @@ export function RegionsList() {
                         Roots: {exploration.toFixed(2)}% • Generation: {essenceGeneration}/min
                       </ListItem.Subtitle>
                       <ListItem.Subtitle style={styles.zoneStats}>
-                        Prey: {currentPrey} • Hunting Cost: {region.dangerLevel} essence
+                        Prey: {currentPrey} • Total Hunting Cost: {totalHuntingCost.toString()} essence
                       </ListItem.Subtitle>
                       {!isSaturated && (
                         <>
@@ -211,7 +212,7 @@ export function RegionsList() {
                       {hasRoots && (
                         <View style={styles.huntingContainer}>
                           <Button
-                            title="Hunt"
+                            title={currentPrey === 1 ? "Hunt" : `Hunt All (${currentPrey})`}
                             disabled={!canHunt}
                             onPress={() => handleHunt(zone)}
                             buttonStyle={styles.huntButton}
@@ -223,7 +224,7 @@ export function RegionsList() {
                           )}
                           {!canHunt && currentPrey > 0 && (
                             <Text style={styles.huntingCost}>
-                              Need {region.dangerLevel} essence to hunt
+                              Need {totalHuntingCost.toString()} essence to hunt
                             </Text>
                           )}
                         </View>

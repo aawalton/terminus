@@ -1,12 +1,12 @@
 import { createContext, useContext, ReactNode } from 'react';
-import { TreeGameStateCalculated, Zone, Creature } from '@terminus/idle-tree';
+import { TreeGameStateCalculated, Zone, type CreatureSummary } from '@terminus/idle-tree';
 import { useIdleTreeGameState } from './use-idle-tree-game-state';
 
 interface HuntResult {
-  creature: Creature;
-  essenceGained: bigint;
-  creditsGained: number;
-  huntingCost: bigint;
+  creatureSummaries: CreatureSummary[];
+  totalEssenceGained: bigint;
+  totalCreditsGained: number;
+  totalHuntingCost: bigint;
 }
 
 interface IdleTreeContextType {
