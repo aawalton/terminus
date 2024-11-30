@@ -2634,6 +2634,7 @@ __metadata:
     "@rneui/themed": "npm:^4.0.0-rc.8"
     "@supabase/supabase-js": "npm:^2.46.1"
     "@terminus/idle-tree": "workspace:*"
+    "@terminus/supabase": "workspace:*"
     "@types/jest": "npm:^29.5.14"
     "@types/react": "npm:~18.3.12"
     date-fns: "npm:^4.1.0"
