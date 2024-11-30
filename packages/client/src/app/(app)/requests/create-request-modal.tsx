@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     gap: 8,
     marginTop: 16,
   },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    minWidth: 120,
+    flex: 1,
   },
   submitButton: {
     backgroundColor: '#2196F3',
