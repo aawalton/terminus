@@ -206,6 +206,45 @@ export type Database = {
         }
         Relationships: []
       }
+      requests: {
+        Row: {
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string | null
+          deleted_at: string | null
+          description: string
+          id: string
+          requested_at: string | null
+          requested_by: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string | null
+          deleted_at?: string | null
+          description: string
+          id?: string
+          requested_at?: string | null
+          requested_by?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string | null
+          deleted_at?: string | null
+          description?: string
+          id?: string
+          requested_at?: string | null
+          requested_by?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       skills: {
         Row: {
           created_at: string | null
