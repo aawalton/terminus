@@ -300,7 +300,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 4,
     marginTop: 8,
-    marginBottom: 8,
   },
   allocationButton: {
     minWidth: 40,
