@@ -6,6 +6,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { capitalize } from 'lodash';
 
 function CustomDrawerContent(props: any) {
   const [statusExpanded, setStatusExpanded] = useState(false);
@@ -105,12 +106,13 @@ export default function AppLayout() {
   return (
     <Drawer
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
+      screenOptions={(props) => ({
         headerShown: true,
         drawerType: 'front',
         swipeEnabled: true,
         swipeEdgeWidth: 100,
-      }}
+        title: capitalize(props.route.name)
+      })}
     />
   );
 } 
