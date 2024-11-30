@@ -297,9 +297,10 @@ const styles = StyleSheet.create({
   allocationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
+    flexWrap: 'wrap',
     gap: 4,
+    marginTop: 8,
+    marginBottom: 8,
   },
   allocationButton: {
     minWidth: 40,
