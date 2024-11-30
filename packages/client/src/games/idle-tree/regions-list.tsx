@@ -146,23 +146,67 @@ export function RegionsList() {
                         Prey: {currentPrey} • Hunting Cost: {region.dangerLevel} essence
                       </ListItem.Subtitle>
                       {!isSaturated && (
-                        <View style={styles.allocationContainer}>
-                          <Button
-                            title="-"
-                            disabled={currentAllocation <= 0}
-                            onPress={() => handleAllocationChange(zone.id, -1)}
-                            buttonStyle={styles.allocationButton}
-                          />
-                          <ListItem.Subtitle style={styles.allocationText}>
+                        <>
+                          <ListItem.Subtitle style={styles.zoneStats}>
                             Allocated: {currentAllocation.toString()}/min
                           </ListItem.Subtitle>
-                          <Button
-                            title="+"
-                            disabled={!canIncreaseAllocation}
-                            onPress={() => handleAllocationChange(zone.id, 1)}
-                            buttonStyle={styles.allocationButton}
-                          />
-                        </View>
+                          <View style={styles.allocationContainer}>
+                            {currentAllocation > 1 && (
+                              <Button
+                                title={`-${currentAllocation.toString()}`}
+                                disabled={currentAllocation <= 0}
+                                onPress={() => handleAllocationChange(zone.id, -Number(currentAllocation))}
+                                buttonStyle={styles.allocationButton}
+                              />
+                            )}
+                            <Button
+                              title="-1"
+                              disabled={currentAllocation <= 0}
+                              onPress={() => handleAllocationChange(zone.id, -1)}
+                              buttonStyle={styles.allocationButton}
+                            />
+                            {Number(gameState.netGeneration) > 0 && (
+                              <Button
+                                title="+1"
+                                disabled={!canIncreaseAllocation}
+                                onPress={() => handleAllocationChange(zone.id, 1)}
+                                buttonStyle={styles.allocationButton}
+                              />
+                            )}
+                            {Number(gameState.netGeneration) > 10 && (
+                              <Button
+                                title="+10"
+                                disabled={!canIncreaseAllocation}
+                                onPress={() => handleAllocationChange(zone.id, 10)}
+                                buttonStyle={styles.allocationButton}
+                              />
+                            )}
+                            {Number(gameState.netGeneration) > 100 && (
+                              <Button
+                                title="+100"
+                                disabled={!canIncreaseAllocation}
+                                onPress={() => handleAllocationChange(zone.id, 100)}
+                                buttonStyle={styles.allocationButton}
+                              />
+                            )}
+                            {Number(gameState.netGeneration) > 1000 && (
+                              <Button
+                                title="+1000"
+                                disabled={!canIncreaseAllocation}
+                                onPress={() => handleAllocationChange(zone.id, 1000)}
+                                buttonStyle={styles.allocationButton}
+                              />
+                            )}
+                            {Number(gameState.netGeneration) > 1 && (
+                              <Button
+                                title={`+${gameState.netGeneration}`}
+                                disabled={!canIncreaseAllocation}
+                                onPress={() => handleAllocationChange(zone.id, Number(gameState.netGeneration))}
+                                buttonStyle={styles.allocationButton}
+                              />
+                            )}
+                          </View>
+                        </>
                       )}
                       {hasRoots && (
                         <View style={styles.huntingContainer}>
@@ -254,21 +298,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 8,
+    gap: 4,
   },
   allocationButton: {
     minWidth: 40,
     height: 40,
     padding: 0,
-    marginHorizontal: 0,
     backgroundColor: '#2196F3',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  allocationText: {
-    flex: 1,
-    textAlign: 'center',
-    minWidth: 120,
   },
   lockedRegion: {
     backgroundColor: '#f5f5f5',
