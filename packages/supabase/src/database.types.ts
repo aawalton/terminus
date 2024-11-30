@@ -213,6 +213,7 @@ export type Database = {
           created_at: string | null
           deleted_at: string | null
           description: string
+          edited_at: string | null
           id: string
           requested_at: string | null
           requested_by: string | null
@@ -225,6 +226,7 @@ export type Database = {
           created_at?: string | null
           deleted_at?: string | null
           description: string
+          edited_at?: string | null
           id?: string
           requested_at?: string | null
           requested_by?: string | null
@@ -237,6 +239,7 @@ export type Database = {
           created_at?: string | null
           deleted_at?: string | null
           description?: string
+          edited_at?: string | null
           id?: string
           requested_at?: string | null
           requested_by?: string | null

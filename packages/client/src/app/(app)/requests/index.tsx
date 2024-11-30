@@ -3,18 +3,35 @@ import { useRequests } from './use-requests';
 import { Button, ListItem, Text } from '@rneui/themed';
 import { useState } from 'react';
 import { CreateRequestModal } from './create-request-modal';
+import { EditRequestModal } from './edit-request-modal';
+import type { Database } from '@terminus/supabase';
+
+type Request = Database['status']['Tables']['requests']['Row'];
 
 export default function Requests() {
-  const { requests, loading, error, createRequest } = useRequests();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { requests, loading, error, createRequest, editRequest, isRequestOwner } = useRequests();
+  const [createModalVisible, setCreateModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [expandedRequests, setExpandedRequests] = useState<{ [key: string]: boolean }>({});
+  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
 
   const handleCreateRequest = async (title: string, description: string) => {
     try {
       await createRequest(title, description);
-      setIsModalVisible(false);
+      setCreateModalVisible(false);
     } catch (error) {
       console.error('Failed to create request:', error);
+    }
+  };
+
+  const handleEditRequest = async (title: string, description: string) => {
+    try {
+      if (!selectedRequest) return;
+      await editRequest(selectedRequest.id, title, description);
+      setEditModalVisible(false);
+      setSelectedRequest(null);
+    } catch (error) {
+      console.error('Failed to edit request:', error);
     }
   };
 
@@ -71,14 +88,33 @@ export default function Requests() {
               <ListItem.Content>
                 <Text style={styles.description}>{item.description}</Text>
                 <View style={styles.metadata}>
-                  <Text style={styles.metadataText}>
-                    Requested at: {new Date(item.requested_at || '').toLocaleDateString()}
-                  </Text>
-                  {item.completed_at && (
-                    <Text style={styles.metadataText}>
-                      Completed at: {new Date(item.completed_at).toLocaleDateString()}
-                    </Text>
-                  )}
+                  <View style={styles.metadataContainer}>
+                    <View style={styles.timestampsContainer}>
+                      <Text style={styles.metadataText}>
+                        Requested at: {new Date(item.requested_at || '').toLocaleDateString()}
+                      </Text>
+                      {item.edited_at && item.edited_at !== item.requested_at && (
+                        <Text style={styles.metadataText}>
+                          Edited at: {new Date(item.edited_at).toLocaleDateString()}
+                        </Text>
+                      )}
+                      {item.completed_at && (
+                        <Text style={styles.metadataText}>
+                          Completed at: {new Date(item.completed_at).toLocaleDateString()}
+                        </Text>
+                      )}
+                    </View>
+                    {isRequestOwner(item.requested_by) && (
+                      <Button
+                        title="Edit"
+                        onPress={() => {
+                          setSelectedRequest(item);
+                          setEditModalVisible(true);
+                        }}
+                        buttonStyle={styles.editButton}
+                      />
+                    )}
+                  </View>
                 </View>
               </ListItem.Content>
             </ListItem>
@@ -93,15 +129,25 @@ export default function Requests() {
       <View style={styles.header}>
         <Button
           title="Create Request"
-          onPress={() => setIsModalVisible(true)}
+          onPress={() => setCreateModalVisible(true)}
           buttonStyle={styles.createButton}
         />
       </View>
 
       <CreateRequestModal
-        visible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
+        visible={createModalVisible}
+        onClose={() => setCreateModalVisible(false)}
         onSubmit={handleCreateRequest}
+      />
+
+      <EditRequestModal
+        visible={editModalVisible}
+        onClose={() => {
+          setEditModalVisible(false);
+          setSelectedRequest(null);
+        }}
+        onSubmit={handleEditRequest}
+        request={selectedRequest}
       />
 
       {renderContent()}
@@ -145,11 +191,30 @@ const styles = {
     marginBottom: 8,
   },
   metadata: {
+    width: '100%' as const,
     marginTop: 8,
+  },
+  metadataContainer: {
+    width: '100%' as const,
+    flexDirection: 'row' as const,
+    justifyContent: 'space-between' as const,
+    alignItems: 'flex-end' as const,
+  },
+  timestampsContainer: {
+    flex: 1,
   },
   metadataText: {
     fontSize: 12,
     color: '#666',
     marginTop: 4,
+  },
+  editButton: {
+    backgroundColor: '#2196F3',
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    minWidth: 60,
+    height: 28,
+    marginLeft: 16,
   },
 }; 
